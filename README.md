@@ -27,6 +27,23 @@ ElegantOTA provides a beautiful interface to upload Over the Air `.bin` updates 
 <br>
 <br>
 
+<h2>How to Install</h2>
+
+###### Directly Through Arduino IDE ( Currently Submitted for Approval. Use Mannual Install till it gets Approved.)
+Go to Sketch > Include Library > Library Manager > Search for "ElegantOTA" > Install
+
+###### Manual Install
+
+For Windows: Download the [Repository](https://github.com/ayushsharma82/ElegantOTA/archive/master.zip) and extract the .zip in Documents>Arduino>Libraries>{Place "ElegantOTA" folder Here}
+
+For Linux: Download the [Repository](https://github.com/ayushsharma82/ElegantOTA/archive/master.zip) and extract the .zip in Sketchbook>Libraries>{Place "ElegantOTA" folder Here}
+
+###### Manually through IDE
+
+Download the [Repository](https://github.com/ayushsharma82/ElegantOTA/archive/master.zip), Go to Sketch>Include Library>Add .zip Library> Select the Downloaded .zip File.
+
+<br>
+
 <h2>Documentation</h2>
 <p>ElegantOTA is a dead simple library which does your work in just 1 Line. Honestly, It's just a wrapper library which injects it's own elegant webpage instead of the ugly upload page which comes by default in Arduino Library.</p>
 
