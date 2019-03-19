@@ -13,7 +13,10 @@
 <hr/>
 
 
-<p align="center">Push OTAs to ESP8266 Elegantly!</p>
+<p align="center">Push OTAs to ESP8266 Elegantly! </p>
+<p align="center">
+ElegantOTA provides a beautiful interface to upload Over the Air `.bin` updates to your ESP Modules with precise status and progress displayed over UI. This Library shows the current upload progress of your OTA and once finished, it will display the status of your OTA.
+</p>
 
 <br>
 <br>
@@ -32,6 +35,8 @@
  Paste this - `ElegantOTA.begin(&server);`  line above your `server.begin();`
  
  That's all!
+ 
+ Now copy the IPAddress displayed over your Serial Monitor and go to `http://<IPAddress>/update` in browser. ( where `<IPAddress>` is the IP of your ESP Module)
  
 <br>
 <h2>Example</h2>
