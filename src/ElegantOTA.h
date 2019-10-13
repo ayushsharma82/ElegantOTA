@@ -18,13 +18,26 @@
 class ElegantOtaClass{
     public:
         #if defined(ESP8266)
-            void begin(ESP8266WebServer *server){
+            void begin(ESP8266WebServer *server, const char * username = "", const char * password = ""){
                 _server = server;
 
-                _server->on("/update", HTTP_GET, [&](){
-                    _server->sendHeader("Content-Encoding", "gzip");
-                    _server->send_P(200, "text/html", (const char*)ELEGANT_HTML, ELEGANT_HTML_SIZE);
-                });
+				// If a username is actually given use authentication
+				if(0 < strlen(username)){
+					_username = username;
+					_password = password;
+					_server->on("/update", HTTP_GET, [&](){
+						if (!_server->authenticate(_username, _password)) {
+						  return _server->requestAuthentication();
+						}
+						_server->sendHeader("Content-Encoding", "gzip");
+						_server->send_P(200, "text/html", (const char*)ELEGANT_HTML, ELEGANT_HTML_SIZE);
+					});
+				} else {
+					_server->on("/update", HTTP_GET, [&](){
+						_server->sendHeader("Content-Encoding", "gzip");
+						_server->send_P(200, "text/html", (const char*)ELEGANT_HTML, ELEGANT_HTML_SIZE);
+					});
+				}                
 
                 _httpUpdater.setup(server);
             }
@@ -34,6 +47,8 @@ class ElegantOtaClass{
         #if defined(ESP8266)
             ESP8266WebServer *_server;
             ESP8266HTTPUpdateServer _httpUpdater;
+			const char * _username;
+			const char * _password;
         #endif
 };
 
