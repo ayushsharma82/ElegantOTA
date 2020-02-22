@@ -8,7 +8,7 @@
 &nbsp;
 <img src="https://img.shields.io/github/license/ayushsharma82/ElegantOTA.svg?style=for-the-badge" />
 &nbsp;
-<a href="https://www.patreon.com/asrocks5" target="_blank"><img src="https://img.shields.io/badge/patreon-donate-orange.svg?style=for-the-badge&logo=patreon" /></a>
+<a href="https://www.buymeacoffee.com/6QGVpSj" target="_blank"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-%245-orange?style=for-the-badge&logo=buy-me-a-coffee" /></a>
 </p>
 <hr/>
 
@@ -21,7 +21,6 @@ ElegantOTA provides a beautiful interface to upload Over the Air `.bin` updates 
 <br>
 <br>
 
-<h2 align="center">Preview</h2>
 <p align="center"><img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/elegantOtaDemo.gif"></p>
 
 <br>
@@ -52,8 +51,15 @@ Download the [Repository](https://github.com/ayushsharma82/ElegantOTA/archive/ma
  Paste this - `ElegantOTA.begin(&server);`  line above your `server.begin();`
  
  That's all!
- 
- Now copy the IPAddress displayed over your Serial Monitor and go to `http://<IPAddress>/update` in browser. ( where `<IPAddress>` is the IP of your ESP Module)
+
+<hr/>
+
+Now copy the IPAddress displayed over your Serial Monitor and go to `http://<IPAddress>/update` in browser. ( where `<IPAddress>` is the IP of your ESP Module)
+
+<hr/>
+
+By default, ElegantOTA uses your chip id as a unique id for your esp chip on webpage. If you want to set a custom id, then you can set it via `ElegantOTA.setID("abcd123");`. Best to place it above `ElegantOTA.begin` function.
+
  
 <br>
 <h2>Example</h2>
@@ -107,9 +113,9 @@ void loop(void) {
 <h2>Contributions</h2>
 <p>Every Contribution to this repository is highly appriciated! Don't fear to create pull requests which enhance or fix the library as ultimatly you are going to help everybody.</p>
 <p>
-If you want to donate to the author then <b>you can become my patron</b>, It really helps me keep these libraries updated:
+If you want to donate to the author then <b>you can buy me a coffee</b>, It really helps me keep these libraries updated:
 <br/><br/>
-<a href="https://www.patreon.com/asrocks5" target="_blank"><img src="https://img.shields.io/badge/patreon-donate-orange.svg?style=for-the-badge&logo=patreon" /></a>
+<a href="https://www.buymeacoffee.com/6QGVpSj" target="_blank"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-%245-orange?style=for-the-badge&logo=buy-me-a-coffee" /></a>
 </p>
 <br/>
 <br/>
