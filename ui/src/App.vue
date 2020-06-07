@@ -229,6 +229,9 @@ $primary-color: #488EFF;
   bottom: 0;
   left: 0;
   margin: 1rem;
+  .card{
+    box-shadow: none;
+  }
 }
 
 .pt-3{
