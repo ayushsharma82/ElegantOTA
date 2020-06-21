@@ -13,7 +13,7 @@
 <hr/>
 
 
-<p align="center">Push OTAs to ESP8266 Elegantly! </p>
+<p align="center">Push OTAs to ESP8266 or ESP32 Elegantly! </p>
 <p align="center">
 ElegantOTA provides a beautiful interface to upload Over the Air `.bin` updates to your ESP Modules with precise status and progress displayed over UI. This Library shows the current upload progress of your OTA and once finished, it will display the status of your OTA.
 </p>
@@ -62,7 +62,7 @@ By default, ElegantOTA uses your chip id as a unique id for your esp chip on web
 
  
 <br>
-<h2>Example</h2>
+<h2>ESP8266 Example</h2>
  
 ```
 
