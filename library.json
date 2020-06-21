@@ -1,7 +1,7 @@
 {
   "name": "ElegantOTA",
   "keywords": "ElegantOTA, OTA, Update, ESP8266, ESP32, Over, the, air",
-  "description": "Perform OTAs for ESP8266 Elegantly!",
+  "description": "Perform OTAs for ESP8266 or ESP32 Elegantly!",
   "repository":
   {
     "type": "git",
@@ -15,7 +15,7 @@
       "maintainer": true
     }
   ],
-  "version": "1.1.0",
+  "version": "2.2.0",
   "frameworks": "arduino",
   "platforms": "espressif"
 }
