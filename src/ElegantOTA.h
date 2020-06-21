@@ -72,12 +72,62 @@ class ElegantOtaClass{
 				
                 }
             }
+        #elif defined(ESP32)
+
+            void begin(WebServer *server, const char * username = "", const char * password = ""){
+                _server = server;
+
+				if(strlen(username) > 0){
+
+                    _username = username;
+                    _password = password;
+
+					_server->on("/update", HTTP_GET, [&](){
+						if (!_server->authenticate(_username.c_str(), _password.c_str())) {
+						  return _server->requestAuthentication();
+						}
+						_server->sendHeader("Content-Encoding", "gzip");
+						_server->send_P(200, "text/html", (const char*)ELEGANT_HTML, ELEGANT_HTML_SIZE);
+					});
+
+                    _server->on("/update/identity", HTTP_GET, [&](){
+                        if (!_server->authenticate(_username.c_str(), _password.c_str())) {
+						  return _server->requestAuthentication();
+						}
+
+                        #if defined(ESP8266)
+                            _server->send(200, "application/json", "{\"id\": "+_id+", \"hardware\": \"ESP8266\"}");
+                        #elif defined(ESP32)
+                            _server->send(200, "application/json", "{\"id\": "+_id+", \"hardware\": \"ESP32\"}");
+                        #endif
+					});
+
+				} else {
+
+					_server->on("/update", HTTP_GET, [&](){
+						_server->sendHeader("Content-Encoding", "gzip");
+						_server->send_P(200, "text/html", (const char*)ELEGANT_HTML, ELEGANT_HTML_SIZE);
+					});
+
+                    _server->on("/update/identity", HTTP_GET, [&](){
+                        #if defined(ESP8266)
+                            _server->send(200, "application/json", "{\"id\": "+_id+", \"hardware\": \"ESP8266\"}");
+                        #elif defined(ESP32)
+                            _server->send(200, "application/json", "{\"id\": "+_id+", \"hardware\": \"ESP32\"}");
+                        #endif
+					});
+				
+                }
+            }
         #endif
 
     private:
         #if defined(ESP8266)
             ESP8266WebServer *_server;
             ESP8266HTTPUpdateServer _httpUpdater;
+        #endif
+        #if defined(ESP32)
+            WebServer *_server;
         #endif
         String _username;
         String _password;
