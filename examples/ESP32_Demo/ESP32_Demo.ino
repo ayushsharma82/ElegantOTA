@@ -3,8 +3,8 @@
 #include <WebServer.h>
 #include <ElegantOTA.h>
 
-const char* ssid = "hotspotk2c";
-const char* password = "frenzy99";
+const char* ssid = "....";
+const char* password = "....";
 
 WebServer server(80);
 
