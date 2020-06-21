@@ -23,6 +23,36 @@
               </g>
             </svg>
             <span style="vertical-align: middle;" class="ml-2"> {{ OTAError }} </span>
+            <br>
+            <br>
+            <div class="mt-3">
+              <button class="btn btn-light mr-2" @click="clear">
+                <svg xmlns="http://www.w3.org/2000/svg" class="pt-1" width="16px" height="16px" viewBox="0 0 24 24">
+                  <g data-name="Layer 2">
+                    <g data-name="arrow-back">
+                      <rect width="24" height="24" transform="rotate(90 12 12)" opacity="0" />
+                      <path
+                        fill="currentColor"
+                        d="M19 11H7.14l3.63-4.36a1 1 0 1 0-1.54-1.28l-5 6a1.19 1.19 0 0 0-.09.15c0 .05 0 .08-.07.13A1 1 0 0 0 4 12a1 1 0 0 0 .07.36c0 .05 0 .08.07.13a1.19 1.19 0 0 0 .09.15l5 6A1 1 0 0 0 10 19a1 1 0 0 0 .64-.23 1 1 0 0 0 .13-1.41L7.14 13H19a1 1 0 0 0 0-2z" />
+                    </g>
+                  </g>
+                </svg>
+                Back
+              </button>
+              <button class="btn btn-primary ml-2" @click="retryOTA">
+                <svg xmlns="http://www.w3.org/2000/svg" class="pt-1" width="16px" height="16px" viewBox="0 0 24 24">
+                  <g data-name="Layer 2">
+                    <g data-name="refresh">
+                      <rect width="24" height="24" opacity="0" />
+                      <path
+                        fill="currentColor"
+                        d="M20.3 13.43a1 1 0 0 0-1.25.65A7.14 7.14 0 0 1 12.18 19 7.1 7.1 0 0 1 5 12a7.1 7.1 0 0 1 7.18-7 7.26 7.26 0 0 1 4.65 1.67l-2.17-.36a1 1 0 0 0-1.15.83 1 1 0 0 0 .83 1.15l4.24.7h.17a1 1 0 0 0 .34-.06.33.33 0 0 0 .1-.06.78.78 0 0 0 .2-.11l.09-.11c0-.05.09-.09.13-.15s0-.1.05-.14a1.34 1.34 0 0 0 .07-.18l.75-4a1 1 0 0 0-2-.38l-.27 1.45A9.21 9.21 0 0 0 12.18 3 9.1 9.1 0 0 0 3 12a9.1 9.1 0 0 0 9.18 9A9.12 9.12 0 0 0 21 14.68a1 1 0 0 0-.7-1.25z" />
+                    </g>
+                  </g>
+                </svg>
+                Retry
+              </button>
+            </div>
           </div>
         </div>
         <div class="col-12 mt-3 pt-2 p-centered" v-else-if="!loading && !uploading && OTASuccess" key="success">
@@ -35,6 +65,21 @@
               </g>
             </svg>
             <span style="vertical-align: middle;" class="ml-2 mb-2"> OTA Success </span>
+            <br>
+            <br>
+            <button class="btn btn-primary mt-3" @click="clear">
+              <svg xmlns="http://www.w3.org/2000/svg" class="pt-1" width="16px" height="16px" viewBox="0 0 24 24">
+                <g data-name="Layer 2">
+                  <g data-name="arrow-back">
+                    <rect width="24" height="24" transform="rotate(90 12 12)" opacity="0" />
+                    <path
+                      fill="currentColor"
+                      d="M19 11H7.14l3.63-4.36a1 1 0 1 0-1.54-1.28l-5 6a1.19 1.19 0 0 0-.09.15c0 .05 0 .08-.07.13A1 1 0 0 0 4 12a1 1 0 0 0 .07.36c0 .05 0 .08.07.13a1.19 1.19 0 0 0 .09.15l5 6A1 1 0 0 0 10 19a1 1 0 0 0 .64-.23 1 1 0 0 0 .13-1.41L7.14 13H19a1 1 0 0 0 0-2z" />
+                  </g>
+                </g>
+              </svg>
+              Back
+            </button>
           </div>
         </div>
         <div class="col-12 mt-3 p-centered" v-else-if="!loading && !uploading" key="otainput">
@@ -136,6 +181,17 @@ export default {
       request.open('post', '/update');
       request.send(formData);
     },
+
+    retryOTA() {
+      this.OTAError = null;
+      this.OTASuccess = false;
+      this.uploadOTA();
+    },
+
+    clear() {
+      this.OTAError = null;
+      this.OTASuccess = false;
+    },
   },
 
   mounted() {
@@ -167,6 +223,7 @@ $primary-color: #488EFF;
 @import "~spectre.css/src/typography";
 
 @import "~spectre.css/src/labels";
+@import "~spectre.css/src/buttons";
 @import "~spectre.css/src/tooltips";
 @import "~spectre.css/src/cards";
 @import "~spectre.css/src/bars";
