@@ -144,7 +144,7 @@ export default {
       OTASuccess: false,
 
       type: 'firmware',
-      files: null,
+      file: null,
       deviceData: {
         id: null,
         hardware: null,
@@ -153,10 +153,13 @@ export default {
   },
 
   methods: {
-    uploadOTA() {
+    uploadOTA(event) {
       this.uploading = true;
       const formData = new FormData();
-      formData.append(this.type, this.$refs.file.files[0]);
+      if(event !== null){
+        this.file = event.target.files[0];
+      }
+      formData.append(this.type, this.file);
       const request = new XMLHttpRequest();
 
       request.addEventListener('load', () => {
@@ -185,7 +188,7 @@ export default {
     retryOTA() {
       this.OTAError = null;
       this.OTASuccess = false;
-      this.uploadOTA();
+      this.uploadOTA(null);
     },
 
     clear() {
