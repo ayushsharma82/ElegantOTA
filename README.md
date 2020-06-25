@@ -2,9 +2,9 @@
 
 <hr/>
 <p align="center">
-<!-- <img src="https://img.shields.io/travis/com/ayushsharma82/ESP-DASH.svg?style=for-the-badge" />
-&nbsp; -->
 <img src="https://img.shields.io/github/last-commit/ayushsharma82/ElegantOTA.svg?style=for-the-badge" />
+&nbsp;
+<img src="https://img.shields.io/travis/com/ayushsharma82/ElegantOTA/master?style=for-the-badge" />
 &nbsp;
 <img src="https://img.shields.io/github/license/ayushsharma82/ElegantOTA.svg?style=for-the-badge" />
 &nbsp;
