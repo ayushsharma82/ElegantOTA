@@ -145,8 +145,8 @@ export default {
     uploadOTA(event) {
       this.uploading = true;
       const formData = new FormData();
-      if(event !== null){
-        this.file = event.target.files[0];
+      if (event !== null) {
+        [this.file] = event.target.files;
       }
       formData.append(this.type, this.file, this.type);
       const request = new XMLHttpRequest();
@@ -192,7 +192,7 @@ export default {
         this.deviceData = await response.json();
         this.loading = false;
       }
-    })
+    });
   },
 
 };
