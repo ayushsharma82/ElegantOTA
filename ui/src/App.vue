@@ -142,13 +142,49 @@ export default {
   },
 
   methods: {
+    fileMD5(file) {
+      return new Promise((resolve, reject) => {
+        const blobSlice = File.prototype.slice
+          || File.prototype.mozSlice || File.prototype.webkitSlice;
+        const chunkSize = 2097152; // Read in chunks of 2MB
+        const chunks = Math.ceil(file.size / chunkSize);
+        const spark = new this.SparkMD5.ArrayBuffer();
+        const fileReader = new FileReader();
+        let currentChunk = 0;
+        let loadNext;
+
+        fileReader.onload = (e) => {
+          spark.append(e.target.result); // Append array buffer
+          currentChunk += 1;
+
+          if (currentChunk < chunks) {
+            loadNext();
+          } else {
+            const md5 = spark.end();
+            resolve(md5);
+          }
+        };
+
+        fileReader.onerror = (e) => {
+          reject(e);
+        };
+
+        loadNext = () => {
+          const start = currentChunk * chunkSize;
+          const end = ((start + chunkSize) >= file.size) ? file.size : start + chunkSize;
+
+          fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
+        };
+
+        loadNext();
+      });
+    },
     uploadOTA(event) {
       this.uploading = true;
       const formData = new FormData();
       if (event !== null) {
         [this.file] = event.target.files;
       }
-      formData.append(this.type, this.file, this.type);
       const request = new XMLHttpRequest();
 
       request.addEventListener('load', () => {
@@ -170,8 +206,19 @@ export default {
       });
 
       request.withCredentials = true;
-      request.open('post', '/update');
-      request.send(formData);
+
+      this.fileMD5(this.file)
+        .then((md5) => {
+          formData.append('MD5', md5);
+          formData.append(this.type, this.file, this.type);
+          request.open('post', '/update');
+          request.send(formData);
+        })
+        .catch(() => {
+          this.OTAError = 'Unknown error while upload, check the console for details.';
+          this.uploading = false;
+          this.progress = 0;
+        });
     },
 
     retryOTA() {
@@ -187,12 +234,8 @@ export default {
   },
 
   mounted() {
-    fetch('/update/identity').then(async (response) => {
-      if (response.ok) {
-        this.deviceData = await response.json();
-        this.loading = false;
-      }
-    });
+    this.deviceData = { id: '540985', hardware: 'ESP8266' };
+    this.loading = false;
   },
 
 };
