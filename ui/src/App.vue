@@ -234,8 +234,12 @@ export default {
   },
 
   mounted() {
-    this.deviceData = { id: '540985', hardware: 'ESP8266' };
-    this.loading = false;
+    fetch('/update/identity').then(async (response) => {
+      if (response.ok) {
+        this.deviceData = await response.json();
+        this.loading = false;
+      }
+    })
   },
 
 };
