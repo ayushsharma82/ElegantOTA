@@ -31,8 +31,14 @@ gzip(HTML, { numiterations: 15 }, (err, output) => {
     return console.error(err);
   }
 
-  const FILE = `const uint32_t ELEGANT_HTML_SIZE = ${output.length};
-const uint8_t ELEGANT_HTML[] PROGMEM = { ${output} };`;
+  const FILE = `#ifndef ElegantOTAWebpage_h
+#define ElegantOTAWebpage_h
+
+const uint32_t ELEGANT_HTML_SIZE = ${output.length};
+const uint8_t ELEGANT_HTML[] PROGMEM = { ${output} };
+
+#endif
+`;
 
   FS.writeFileSync(path.resolve(__dirname, '../src/elegantWebpage.h'), FILE);
   console.log(`[COMPRESS] Compressed Build Files to elegantWebpage.h: ${output.length} Bytes`);
