@@ -75,6 +75,7 @@ class ElegantOtaClass{
                         #endif
 					});
 
+					//TODO: handle MD5 paramter
                     _httpUpdater.setup(server, "/update");
 				
                 }
@@ -123,6 +124,8 @@ class ElegantOtaClass{
                         if (!_server->authenticate(_username.c_str(), _password.c_str())) {
 						  return;
 						}
+						//TODO: handle MD5 paramter
+
                         // Perform upload
                         HTTPUpload& upload = _server->upload();
                         if (upload.status == UPLOAD_FILE_START) {
@@ -173,6 +176,8 @@ class ElegantOtaClass{
                         _server->send(200, "text/plain", (Update.hasError()) ? "FAIL" : "OK");
                         ESP.restart();
                     }, [&](){
+						//TODO: handle MD5 paramter
+
                         // Perform upload
                         HTTPUpload& upload = _server->upload();
                         if (upload.status == UPLOAD_FILE_START) {
