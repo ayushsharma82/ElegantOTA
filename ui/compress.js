@@ -26,6 +26,31 @@ const HTML = `
 </html>
 `;
 
+function chunkArray(myArray, chunk_size) {
+  let index = 0;
+  const arrayLength = myArray.length;
+  const tempArray = [];
+  for (index = 0; index < arrayLength; index += chunk_size) {
+    myChunk = myArray.slice(index, index + chunk_size);
+    // Do something if you want with the group
+    tempArray.push(myChunk);
+  }
+  return tempArray;
+}
+
+function addLineBreaks(buffer) {
+  let data = '';
+  const chunks = chunkArray(buffer, 30);
+  chunks.forEach((chunk, index) => {
+    data += chunk.join(',');
+    if (index + 1 !== chunks.length) {
+      data += ',\n';
+    }
+  });
+  return data;
+}
+
+
 gzip(HTML, { numiterations: 15 }, (err, output) => {
   if (err) {
     return console.error(err);
@@ -35,11 +60,13 @@ gzip(HTML, { numiterations: 15 }, (err, output) => {
 #define ElegantOTAWebpage_h
 
 const uint32_t ELEGANT_HTML_SIZE = ${output.length};
-const uint8_t ELEGANT_HTML[] PROGMEM = { ${output} };
+const uint8_t ELEGANT_HTML[] PROGMEM = { 
+${addLineBreaks(output)} 
+};
 
 #endif
 `;
 
   FS.writeFileSync(path.resolve(__dirname, '../src/elegantWebpage.h'), FILE);
-  console.log(`[COMPRESS] Compressed Build Files to elegantWebpage.h: ${output.length} Bytes`);
+  console.log(`[COMPRESS] Compressed Build Files to elegantWebpage.h: ${ (output.length/1024).toFixed(2) }KB`);
 });
