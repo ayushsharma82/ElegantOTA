@@ -28,7 +28,7 @@ ElegantOTA provides a beautiful interface to upload Over the Air `.bin` updates 
 
 <h2>How to Install</h2>
 
-###### Directly Through Arduino IDE ( Currently Submitted for Approval. Use Mannual Install till it gets Approved.)
+###### Directly Through Arduino IDE ( Currently Submitted for Approval. Use Manual Install till it gets Approved.)
 Go to Sketch > Include Library > Library Manager > Search for "ElegantOTA" > Install
 
 ###### Manual Install
@@ -69,7 +69,7 @@ By default, ElegantOTA uses your chip id as a unique id for your esp chip on web
 <br>
 
 <h2>Contributions</h2>
-<p>Every Contribution to this repository is highly appriciated! Don't fear to create pull requests which enhance or fix the library as ultimatly you are going to help everybody.</p>
+<p>Every Contribution to this repository is highly appreciated! Don't fear to create pull requests which enhance or fix the library as ultimately you are going to help everybody.</p>
 <p>
 If you want to donate to the author then <b>you can buy me a coffee</b>, It really helps me keep these libraries updated:
 <br/><br/>
