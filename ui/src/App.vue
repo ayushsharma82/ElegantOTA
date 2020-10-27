@@ -239,7 +239,7 @@ export default {
         this.deviceData = await response.json();
         this.loading = false;
       }
-    })
+    });
   },
 
 };
