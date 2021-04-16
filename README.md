@@ -61,6 +61,12 @@ Now copy the IPAddress displayed over your Serial Monitor and go to `http://<IPA
 By default, ElegantOTA uses your chip id as a unique id for your esp chip on webpage. If you want to set a custom id, then you can set it via `ElegantOTA.setID("abcd123");`. Best to place it above `ElegantOTA.begin` function.
 
  
+ <br>
+ 
+ #### Additional Security:
+ 
+ If you would like to add login to your OTA webpage, then please replace `ElegantOTA.begin(&server);` with `ElegantOTA.begin(&server, "username", "password");`. This will prevent unauthorized requests to your OTA webpage and prevent unauthorized firmware upload to your MCU.
+  
 <br>
 <h2>Examples</h2>
  
