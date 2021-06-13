@@ -68,6 +68,10 @@ By default, ElegantOTA uses your chip id as a unique id for your esp chip on web
  If you would like to add login to your OTA webpage, then please replace `ElegantOTA.begin(&server);` with `ElegantOTA.begin(&server, "username", "password");`. This will prevent unauthorized requests to your OTA webpage and prevent unauthorized firmware upload to your MCU.
   
 <br>
+
+<b>Antivirus Issue:</b> If you have an antivirus on your PC with internet security, the progress bar on webpage will instantly show 100% because of request caching by your antivirus software. There is no fix for this unless you want to disable your antivirus or whitelist your local IP addresses in it. ( Same is the case with iOS, safari will cache the outgoing requests )
+
+<br>
 <h2>Examples</h2>
  
  Checkout code examples for ESP8266 and ESP32 in `examples` directory. [Click Here](https://github.com/ayushsharma82/ElegantOTA/tree/master/examples)
