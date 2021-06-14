@@ -237,5 +237,5 @@ class ElegantOtaClass{
         
 };
 
-ElegantOtaClass ElegantOTA;
+extern ElegantOtaClass ElegantOTA;
 #endif
