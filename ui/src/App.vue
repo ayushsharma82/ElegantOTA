@@ -234,12 +234,14 @@ export default {
   },
 
   mounted() {
-    fetch('/update/identity').then(async (response) => {
-      if (response.ok) {
-        this.deviceData = await response.json();
-        this.loading = false;
-      }
-    });
+    if (process.env.NODE_ENV === 'production') {
+      fetch('/update/identity').then(async (response) => {
+        if (response.ok) {
+          this.deviceData = await response.json();
+          this.loading = false;
+        }
+      });
+    }
   },
 
 };
