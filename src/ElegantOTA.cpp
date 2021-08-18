@@ -64,6 +64,12 @@ void ElegantOtaClass::setID(const char* id){
         }
         _server->sendHeader("Connection", "close");
         _server->send(200, "text/plain", (Update.hasError()) ? "FAIL" : "OK");
+        #if defined(ESP32)
+          // Needs some time for Core 0 to send response
+          delay(100);
+          yield();
+          delay(100);
+        #endif
         ESP.restart();
       }, [&](){
         // Actual OTA Download
