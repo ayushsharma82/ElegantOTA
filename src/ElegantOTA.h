@@ -43,7 +43,8 @@ class ElegantOtaClass{
 
       char _username[64];
       char _password[64];
-      String _id;
+      bool authenticate;
+      String _id = getID();
       
 };
 

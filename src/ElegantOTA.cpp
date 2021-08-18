@@ -22,11 +22,14 @@ void ElegantOtaClass::setID(const char* id){
 #endif
     _server = server;
 
-    strlcpy(_username, username, sizeof(_username));
-    strlcpy(_password, password, sizeof(_password));
+    if (strlen(username) > 0) {
+      strlcpy(_username, username, sizeof(_username));
+      strlcpy(_password, password, sizeof(_password));
+      authenticate = true;
+    }
 
     _server->on("/update", HTTP_GET, [&](){
-      if (strlen(_username) > 0 && !_server->authenticate(_username, _password)) {
+      if (authenticate && !_server->authenticate(_username, _password)) {
         return _server->requestAuthentication();
       }
       _server->sendHeader("Content-Encoding", "gzip");
@@ -34,18 +37,18 @@ void ElegantOtaClass::setID(const char* id){
     });
 
     _server->on("/update/identity", HTTP_GET, [&](){
-      if (strlen(_username) > 0 && !_server->authenticate(_username, _password)) {
+      if (authenticate && !_server->authenticate(_username, _password)) {
         return _server->requestAuthentication();
       }
 
       #if defined(ESP8266)
-          _server->send(200, "application/json", "{\"id\": "+_id+", \"hardware\": \"ESP8266\"}");
+          _server->send(200, "application/json", "{\"id\": \""+_id+"\", \"hardware\": \"ESP8266\"}");
       #elif defined(ESP32)
-          _server->send(200, "application/json", "{\"id\": "+_id+", \"hardware\": \"ESP32\"}");
+          _server->send(200, "application/json", "{\"id\": \""+_id+"\", \"hardware\": \"ESP32\"}");
       #endif
 
       #if defined(ESP8266)
-        if (strlen(_username) > 0) {
+        if (authenticate) {
           _httpUpdater.setup(server, "/update");
         } else {
           _httpUpdater.setup(server, "/update", _username, _password);
@@ -56,7 +59,7 @@ void ElegantOtaClass::setID(const char* id){
 
     #if defined(ESP32)
       _server->on("/update", HTTP_POST, [&](){
-        if (strlen(_username) > 0 && !_server->authenticate(_username, _password)) {
+        if (authenticate && !_server->authenticate(_username, _password)) {
           return;
         }
         _server->sendHeader("Connection", "close");
@@ -64,7 +67,7 @@ void ElegantOtaClass::setID(const char* id){
         ESP.restart();
       }, [&](){
         // Actual OTA Download
-        if (strlen(_username) > 0 && !_server->authenticate(_username, _password)) {
+        if (authenticate && !_server->authenticate(_username, _password)) {
           return;
         }
 
