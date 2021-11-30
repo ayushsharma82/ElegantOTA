@@ -22,6 +22,8 @@
 
 class ElegantOtaClass{
   public:
+      ElegantOtaClass();
+      
       void setID(const char* id);
 
       #if defined(ESP8266)      
@@ -39,13 +41,10 @@ class ElegantOtaClass{
           WebServer *_server;
       #endif
 
-      const String getID();
-
       char _username[64];
       char _password[64];
-      bool authenticate;
-      String _id = getID();
-      
+      char _id[64];
+      bool authenticate;      
 };
 
 extern ElegantOtaClass ElegantOTA;

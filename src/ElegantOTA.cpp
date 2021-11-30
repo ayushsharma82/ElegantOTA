@@ -1,18 +1,19 @@
 #include "ElegantOTA.h"
 
-const String ElegantOtaClass::getID(){
+
+ElegantOtaClass::ElegantOtaClass(){
   String id = "";
   #if defined(ESP8266)
-      id = String(ESP.getChipId());
+      id = String(ESP.getChipId()).c_str();
   #elif defined(ESP32)
-      id = String((uint32_t)ESP.getEfuseMac(), HEX);
+      id = String((uint32_t)ESP.getEfuseMac(), HEX).c_str();
   #endif
   id.toUpperCase();
-  return id;
+  this->setID(id.c_str());
 }
 
 void ElegantOtaClass::setID(const char* id){
-  _id = id;
+  strlcpy(_id, id, sizeof(_id));
 }
 
 #if defined(ESP8266)
@@ -42,9 +43,9 @@ void ElegantOtaClass::setID(const char* id){
       }
 
       #if defined(ESP8266)
-          _server->send(200, "application/json", "{\"id\": \""+_id+"\", \"hardware\": \"ESP8266\"}");
+          _server->send(200, "application/json", String(String("{\"id\": \"")+String(_id)+String("\", \"hardware\": \"ESP8266\"}")).c_str());
       #elif defined(ESP32)
-          _server->send(200, "application/json", "{\"id\": \""+_id+"\", \"hardware\": \"ESP32\"}");
+          _server->send(200, "application/json", String(String("{\"id\": \"")+String(_id)+String("\", \"hardware\": \"ESP32\"}")).c_str());
       #endif
 
       #if defined(ESP8266)
