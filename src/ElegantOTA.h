@@ -22,29 +22,29 @@
 
 class ElegantOtaClass{
   public:
-      ElegantOtaClass();
-      
-      void setID(const char* id);
+    ElegantOtaClass();
+    
+    void setID(const char* id);
 
-      #if defined(ESP8266)      
-        void begin(ESP8266WebServer *server, const char * username = "", const char * password = "");
-      #elif defined(ESP32)
-        void begin(WebServer *server, const char * username = "", const char * password = "");
-      #endif
-
+    #if defined(ESP8266)      
+      void begin(ESP8266WebServer *server, const char * username = "", const char * password = "");
+    #elif defined(ESP32)
+      void begin(WebServer *server, const char * username = "", const char * password = "");
+    #endif
+    
   private:
-      #if defined(ESP8266)
-          ESP8266WebServer *_server;
-          ESP8266HTTPUpdateServer _httpUpdater;
-      #endif
-      #if defined(ESP32)
-          WebServer *_server;
-      #endif
+    #if defined(ESP8266)
+        ESP8266WebServer *_server;
+        ESP8266HTTPUpdateServer _httpUpdater;
+    #endif
+    #if defined(ESP32)
+        WebServer *_server;
+    #endif
 
-      char _username[64];
-      char _password[64];
-      char _id[64];
-      bool authenticate;      
+    char _username[64];
+    char _password[64];
+    char _id[128];
+    bool authenticate;      
 };
 
 extern ElegantOtaClass ElegantOTA;
