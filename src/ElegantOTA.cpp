@@ -10,9 +10,9 @@ ElegantOtaClass::ElegantOtaClass(){
 
 void ElegantOtaClass::setID(const char* id){
   #if defined(ESP8266)
-    sprintf(_id, "{ \"id\": \"%s\", \"hardware\": \"ESP8266\" }", id);
+    snprintf(_id, sizeof(_id), "{ \"id\": \"%s\", \"hardware\": \"ESP8266\" }");
   #elif defined(ESP32)
-    sprintf(_id, "{ \"id\": \"%s\", \"hardware\": \"ESP32\" }", id);
+    snprintf(_id, sizeof(_id), "{ \"id\": \"%s\", \"hardware\": \"ESP32\" }", id);
   #endif
 }
 
