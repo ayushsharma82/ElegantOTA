@@ -1,18 +1,19 @@
 #include "ElegantOTA.h"
 
-const String ElegantOtaClass::getID(){
-  String id = "";
+ElegantOtaClass::ElegantOtaClass(){
   #if defined(ESP8266)
-      id = String(ESP.getChipId());
+    this->setID(String((uint32_t)ESP.getChipId(), HEX).c_str());
   #elif defined(ESP32)
-      id = String((uint32_t)ESP.getEfuseMac(), HEX);
+    this->setID(String((uint32_t)ESP.getEfuseMac(), HEX).c_str());
   #endif
-  id.toUpperCase();
-  return id;
 }
 
 void ElegantOtaClass::setID(const char* id){
-  _id = id;
+  #if defined(ESP8266)
+    snprintf(_id, sizeof(_id), "{ \"id\": \"%s\", \"hardware\": \"ESP8266\" }", id);
+  #elif defined(ESP32)
+    snprintf(_id, sizeof(_id), "{ \"id\": \"%s\", \"hardware\": \"ESP32\" }", id);
+  #endif
 }
 
 #if defined(ESP8266)
@@ -40,24 +41,16 @@ void ElegantOtaClass::setID(const char* id){
       if (authenticate && !_server->authenticate(_username, _password)) {
         return _server->requestAuthentication();
       }
-
-      #if defined(ESP8266)
-          _server->send(200, "application/json", "{\"id\": \""+_id+"\", \"hardware\": \"ESP8266\"}");
-      #elif defined(ESP32)
-          _server->send(200, "application/json", "{\"id\": \""+_id+"\", \"hardware\": \"ESP32\"}");
-      #endif
-
-      #if defined(ESP8266)
-        if (authenticate) {
-          _httpUpdater.setup(server, "/update");
-        } else {
-          _httpUpdater.setup(server, "/update", _username, _password);
-        }
-      #endif
+      _server->send(200, "application/json", _id);
     });
 
-
-    #if defined(ESP32)
+    #if defined(ESP8266)
+      if (authenticate) {
+        _httpUpdater.setup(server, "/update");
+      } else {
+        _httpUpdater.setup(server, "/update", _username, _password);
+      }
+    #elif defined(ESP32)
       _server->on("/update", HTTP_POST, [&](){
         if (authenticate && !_server->authenticate(_username, _password)) {
           return;
