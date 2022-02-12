@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.25.0",
     "core-js": "^3.6.4",
     "spark-md5": "^3.0.1",
     "spectre.css": "^0.5.8",

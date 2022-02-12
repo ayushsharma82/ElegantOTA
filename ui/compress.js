@@ -68,5 +68,5 @@ ${addLineBreaks(output)}
 `;
 
   FS.writeFileSync(path.resolve(__dirname, '../src/elegantWebpage.h'), FILE);
-  console.log(`[COMPRESS] Compressed Build Files to elegantWebpage.h: ${ (output.length/1024).toFixed(2) }KB`);
+  console.log(`[COMPRESS] Compressed Build Files to elegantWebpage.h: ${(output.length / 1024).toFixed(2)}KB`);
 });
