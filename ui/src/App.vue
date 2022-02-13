@@ -199,7 +199,7 @@
                   for="firmwareSource"
                   true-value="remoteSource"
                   false-value="localSource"
-                /><i class="form-icon"></i> Remote Update
+                /><i class="form-icon"></i> Remote Source
               </label>
             </div>
             <div class="form-group pt-2 mt-2">
@@ -227,16 +227,19 @@
               <div class="input-group">
                 <input
                   class="form-input"
+                  :class="remoteSourceValid ? 'is-success' : 'is-error'"
                   type="url"
                   v-model="remoteSourceUrl"
                   placeholder="http://my-fqdn-or-ip/updatePath"
+                  @change="validateRemoteUrl"
                 />
                 <button
                   id="fetchSubmit"
                   class="btn btn-primary input-group-btn"
+                  :disabled="!remoteSourceValid"
                   @click="downloadOTA"
                 >
-                  Fetch Update
+                  Start Upload
                 </button>
               </div>
             </div>
@@ -299,11 +302,12 @@ export default {
       OTAError: null,
       OTASuccess: false,
 
-      source: 'local',
-      remoteSourceUrl: '',
-      type: 'firmware',
-      file: null,
-      fwFile: null,
+      source: 'local', // Var to hold source location
+      remoteSourceUrl: '', // Var to hold remote location URL
+      remoteSourceValid: false, // Bool to hold status of URL
+      type: 'firmware', // Var to define update type Firmware or Filesystem
+      file: null, // Var to hold file for local upload
+      fwFile: null, // Var to hold file for remote download/upload
       deviceData: {
         id: null,
         hardware: null,
@@ -312,6 +316,20 @@ export default {
   },
 
   methods: {
+    // Function to validate remote file URL
+    validateRemoteUrl() {
+      const url = this.remoteSourceUrl; // Set the URL var
+
+      // Now let's check if it's a .bin file
+      if (url.endsWith('.bin')) {
+        this.remoteSourceValid = true; // Since it is, set the bool
+        this.loading = true; // Start loading animation
+        this.getRemoteFirmware(url); // Auto fetch the file
+      } else {
+        // Otherwise, don't fetch/allow upload
+        this.remoteSourceValid = false;
+      }
+    },
     fileMD5(file) {
       return new Promise((resolve, reject) => {
         const blobSlice = File.prototype.slice
@@ -363,10 +381,13 @@ export default {
 
             // Since status == 200, set the file property
             [this.fwFile] = [newFwFile];
+
+            this.loading = false; // Stop loading animation
           }
         });
       } catch (err) {
         // On error, show the error
+        this.loading = false; // Stop loading animation
         this.OTAError = 'Errpr Fetching Firmware Update';
         this.uploading = false;
         this.progress = 0;
@@ -380,37 +401,40 @@ export default {
       const fwUrl = this.remoteSourceUrl;
       this.getRemoteFirmware(fwUrl);
 
-      // Now upload file
-      const uploadRequest = new XMLHttpRequest();
-      uploadRequest.addEventListener('load', () => {
-        // request.response will hold the response from the server
-        if (uploadRequest.status === 200) {
-          this.OTASuccess = true;
-        } else if (uploadRequest.status !== 500) {
-          this.OTAError = `[HTTP ERROR] ${uploadRequest.statusText}`;
-        } else {
-          this.OTAError = uploadRequest.responseText;
-        }
-        this.uploading = false;
-        this.progress = 0;
-      });
-      // Upload progress
-      uploadRequest.upload.addEventListener('progress', (e) => {
-        this.progress = Math.trunc((e.loaded / e.total) * 100);
-      });
-      uploadRequest.withCredentials = true;
-      this.fileMD5(this.fwFile)
-        .then((md5) => {
-          formData.append('MD5', md5);
-          formData.append(this.type, this.fwFile, this.type);
-          uploadRequest.open('post', '/update');
-          uploadRequest.send(formData);
-        })
-        .catch(() => {
-          this.OTAError = 'Unknown error while upload, check the console for details.';
+      if (this.fwFile !== null) {
+        // Now upload file
+        const uploadRequest = new XMLHttpRequest();
+        uploadRequest.addEventListener('load', () => {
+          // request.response will hold the response from the server
+          if (uploadRequest.status === 200) {
+            this.OTASuccess = true;
+          } else if (uploadRequest.status !== 500) {
+            this.OTAError = `[HTTP ERROR] ${uploadRequest.statusText}`;
+          } else {
+            this.OTAError = uploadRequest.responseText;
+          }
           this.uploading = false;
           this.progress = 0;
         });
+
+        // Upload progress
+        uploadRequest.upload.addEventListener('progress', (e) => {
+          this.progress = Math.trunc((e.loaded / e.total) * 100);
+        });
+        uploadRequest.withCredentials = true;
+        this.fileMD5(this.fwFile)
+          .then((md5) => {
+            formData.append('MD5', md5);
+            formData.append(this.type, this.fwFile, this.type);
+            uploadRequest.open('post', '/update');
+            uploadRequest.send(formData);
+          })
+          .catch(() => {
+            this.OTAError = 'Unknown error while upload, check the console for details.';
+            this.uploading = false;
+            this.progress = 0;
+          });
+      }
     },
     uploadOTA(event) {
       this.uploading = true;
