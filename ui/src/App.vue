@@ -347,30 +347,40 @@ export default {
     getRemoteFirmware(url) {
       try {
         axios({
-          url,
-          method: 'GET',
-          responseType: 'blob',
+          url, // our Remote Source URL
+          responseType: 'arraybuffer', // important
+          method: 'GET', // method
+          headers: {
+            Accept: 'application/octet-stream', // important
+          },
         }).then((response) => {
           if (response.status === 200) {
-            // log http 200
+            // Create the file object
+            const newFwFile = new File([response.data], 'firmware.bin', {
+              type: 'application/octet-stream',
+              lastModified: new Date().getTime(),
+            });
+
+            // Since status == 200, set the file property
+            [this.fwFile] = [newFwFile];
           }
-          const fwBlob = new Blob([response.data]);
-          const fwFile = fwBlob;
-          return fwFile;
         });
       } catch (err) {
-        // handle error
+        // On error, show the error
+        this.OTAError = 'Errpr Fetching Firmware Update';
+        this.uploading = false;
+        this.progress = 0;
       }
     },
     downloadOTA() {
       this.uploading = true;
       const formData = new FormData();
 
+      // Fetch our .bin file from the set URL
       const fwUrl = this.remoteSourceUrl;
-      // [this.file] = event.target.files;
-      // const vm = this;
-      [this.fwFile] = this.getRemoteFirmware(fwUrl);
+      this.getRemoteFirmware(fwUrl);
 
+      // Now upload file
       const uploadRequest = new XMLHttpRequest();
       uploadRequest.addEventListener('load', () => {
         // request.response will hold the response from the server
