@@ -1,6 +1,22 @@
 name: Arduino Library CI
 
-on: [pull_request, push, repository_dispatch]
+on: 
+  push:
+    paths-ignore:
+      - '**/**.md'
+      - '/keywords.txt'
+      - '/library.json'
+      - '/library.properties'
+      - '/ui'
+      - '/docs'
+  pull_request:
+    paths-ignore:
+      - '**/**.md'
+      - '/keywords.txt'
+      - '/library.json'
+      - '/library.properties'
+      - '/ui'
+      - '/docs'
 
 jobs:
   build:
