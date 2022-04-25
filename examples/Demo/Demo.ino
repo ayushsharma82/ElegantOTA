@@ -1,3 +1,12 @@
+ /*
+  ElegantOTA Demo Example - This example will work for both ESP8266 & ESP32 microcontrollers.
+  -----
+  Author: Ayush Sharma ( https://github.com/ayushsharma82 )
+  
+  Important Notice: Star the repository on Github if you like the library! :)
+  Repository Link: https://github.com/ayushsharma82/ElegantOTA
+*/
+
 #if defined(ESP8266)
   #include <ESP8266WiFi.h>
   #include <WiFiClient.h>
