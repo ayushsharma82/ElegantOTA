@@ -6,6 +6,8 @@
     #define ELEGANTOTA_USE_ASYNC_SERVER 0
 #endif
 
+#include "./www/elegantWebpage.h"
+
 #ifdef ARDUINO
     #include <Arduino.h>
     #if defined(ESP8266) || defined(ESP32)
