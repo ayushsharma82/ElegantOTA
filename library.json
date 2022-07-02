@@ -2,6 +2,7 @@
   "name": "ElegantOTA",
   "keywords": "ElegantOTA, OTA, Update, ESP8266, ESP32, Over, the, air",
   "description": "Perform OTAs for ESP8266 or ESP32 Elegantly!",
+  "headers": "ElegantOTA.h",
   "repository":
   {
     "type": "git",
@@ -15,7 +16,21 @@
       "maintainer": true
     }
   ],
-  "version": "2.2.9",
+  "export": {
+    "include": [
+      "LICENSE",
+      "library.json",
+      "library.properties",
+      "README.md",
+      "keywords.txt",
+      "src/*",
+      "examples/*"
+    ]
+  },
+  "build": {
+    "libLDFMode": "chain+"
+  },
+  "version": "3.0.0",
   "frameworks": "arduino",
   "platforms": "espressif"
 }

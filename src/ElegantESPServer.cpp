@@ -28,13 +28,6 @@ ElegantESPServer::ElegantESPServer() {
         _server->send_P(200, "text/html", (const char*)ELEGANT_HTML, ELEGANT_HTML_SIZE);
     });
 
-    _server->on("/update/identity", HTTP_GET, [&](){
-        if (authenticate && !_server->authenticate(_username, _password)) {
-            return _server->requestAuthentication();
-        }
-        _server->send(200, "application/json", _id);
-    });
-
     _server->on("/update", HTTP_POST, [&](){
         if (authenticate && !_server->authenticate(_username, _password)) {
           return;
@@ -95,7 +88,7 @@ ElegantESPServer::ElegantESPServer() {
                     _trigger_ota_fail();
                     return _server->send(500, "text/plain", "OTA update failed due to size constraints");
                 }
-                ELEGANTOTA_DEBUG_LOG("[ElegantOTA] OTA update Started: %s - %lu bytes\n", upload.filename.c_str(), upload.totalSize);
+                ELEGANTOTA_DEBUG_LOG("[ElegantOTA] OTA update Started: %s - %d bytes\n", upload.filename.c_str(), upload.totalSize);
         } else if (upload.status == UPLOAD_FILE_WRITE) {
             // Handle Upload Write
             if (Update.write(upload.buf, upload.currentSize) != upload.currentSize) {

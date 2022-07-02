@@ -6,30 +6,17 @@ void ElegantESPAsyncServer::begin(AsyncWebServer *server, const char* username, 
 
     if(strlen(username) > 0){
         _authenticate = true;
-        _username = username;
-        _password = password;
+        strlcpy(_username, username, sizeof(_username));
+        strlcpy(_password, password, sizeof(_password));
     }else{
         _authenticate = false;
-        _username = "";
-        _password = "";
+        memset(_username, 0, sizeof(_username));
+        memset(_password, 0, sizeof(_password));
     }
-
-    _server->on("/update/identity", HTTP_GET, [&](AsyncWebServerRequest *request){
-        if(_authenticate){
-            if(!request->authenticate(_username.c_str(), _password.c_str())){
-                return request->requestAuthentication();
-            }
-        }
-        #if defined(ESP8266)
-            request->send(200, "application/json", "{\"id\": \""+_id+"\", \"hardware\": \"ESP8266\"}");
-        #elif defined(ESP32)
-            request->send(200, "application/json", "{\"id\": \""+_id+"\", \"hardware\": \"ESP32\"}");
-        #endif
-    });
 
     _server->on("/update", HTTP_GET, [&](AsyncWebServerRequest *request){
         if(_authenticate){
-            if(!request->authenticate(_username.c_str(), _password.c_str())){
+            if(!request->authenticate(_username, _password)){
                 return request->requestAuthentication();
             }
         }
@@ -40,7 +27,7 @@ void ElegantESPAsyncServer::begin(AsyncWebServer *server, const char* username, 
 
     _server->on("/update", HTTP_POST, [&](AsyncWebServerRequest *request) {
         if(_authenticate){
-            if(!request->authenticate(_username.c_str(), _password.c_str())){
+            if(!request->authenticate(_username, _password)){
                 return request->requestAuthentication();
             }
         }
@@ -50,11 +37,11 @@ void ElegantESPAsyncServer::begin(AsyncWebServer *server, const char* username, 
         response->addHeader("Connection", "close");
         response->addHeader("Access-Control-Allow-Origin", "*");
         request->send(response);
-        restart();
+        // TODO: Check for auto reboot and create an RTOS Task for ESP32 only to reboot after some time for the response to reach the client.
     }, [&](AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final) {
         //Upload handler chunks in data
         if(_authenticate){
-            if(!request->authenticate(_username.c_str(), _password.c_str())){
+            if(!request->authenticate(_username, _password)){
                 return request->requestAuthentication();
             }
         }
@@ -63,7 +50,7 @@ void ElegantESPAsyncServer::begin(AsyncWebServer *server, const char* username, 
         if (_on_ota_start_ptr != NULL) {
             bool ok = (*_on_ota_start_ptr)();
             if (!ok) {
-                return _server->send(500, "text/plain", "Task aborted. Application is busy.");
+                return request->send(500, "text/plain", "Task aborted. Application is busy.");
             }
         }
 

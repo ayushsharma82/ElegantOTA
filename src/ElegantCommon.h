@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <string.h>
 
+#include "elegantWebpage.h"
 
 #ifndef ELEGANTOTA_DEBUG
     #define ELEGANTOTA_DEBUG 1

@@ -1,7 +1,7 @@
 #ifndef ELEGANTOTA_ESP_SERVER_H
 #define ELEGANTOTA_ESP_SERVER_H
 
-#include "../common/ElegantCommon.h"
+#include "ElegantCommon.h"
 
 // Include Arduino Dependencies
 #include <Arduino.h>
@@ -11,12 +11,12 @@
     #include "ESP8266WiFi.h"
     #include "WiFiClient.h"
     #include "ESP8266WebServer.h"
+    #include <flash_hal.h>
 #elif defined(ESP32)
     #include "WiFi.h"
     #include "WebServer.h"
+    #include "Update.h"
 #endif
-
-#include "Update.h"
 
 
 class ElegantESPServer: virtual public ElegantCommon {
