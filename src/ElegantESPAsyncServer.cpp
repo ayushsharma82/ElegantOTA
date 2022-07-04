@@ -1,3 +1,4 @@
+#if defined(ARDUINO) && (defined(ESP32) || defined(ESP8266)) && ELEGANTOTA_USE_ASYNC_SERVER == 1
 #include "ElegantESPAsyncServer.h"
 
 
@@ -112,3 +113,5 @@ void ElegantESPAsyncServer::begin(AsyncWebServer *server, const char* username, 
         }
     });
 }
+
+#endif

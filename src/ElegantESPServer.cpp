@@ -1,3 +1,4 @@
+#if defined(ARDUINO) && (defined(ESP32) || defined(ESP8266)) && ELEGANTOTA_USE_ASYNC_SERVER == 0
 #include "ElegantESPServer.h"
 
 
@@ -124,3 +125,5 @@ ElegantESPServer::ElegantESPServer() {
 
 ElegantESPServer::~ElegantESPServer() {
 }
+
+#endif
