@@ -28,12 +28,21 @@ def on_upload(source, target, env):
     firmware_path = str(source[0])
     upload_url = env.GetProjectOption('upload_url')
 
+    ota_type = 'firmware'
+
+    if "spiffs.bin" in firmware_path:
+        ota_type = 'filesystem'
+
+    print(f"Uploading type image: {ota_type}")
+
     with open(firmware_path, 'rb') as firmware:
+
         md5 = hashlib.md5(firmware.read()).hexdigest()
         firmware.seek(0)
+        
         encoder = MultipartEncoder(fields={
             'MD5': md5, 
-            'firmware': ('firmware', firmware, 'application/octet-stream')}
+            ota_type: (ota_type, firmware, 'application/octet-stream')}
         )
 
         bar = tqdm(desc='Upload Progress',
@@ -49,5 +58,5 @@ def on_upload(source, target, env):
         response = requests.post(upload_url, data=monitor, headers={'Content-Type': monitor.content_type})
         bar.close()
         print(response,response.text)
-            
+           
 env.Replace(UPLOADCMD=on_upload)
