@@ -25,7 +25,9 @@ class ElegantOtaClass{
     ElegantOtaClass();
     
     void setID(const char* id);
-
+    void onOTAStart(void callable(void));
+    void onOTAProgress(void callable(void));
+    void onOTAEnd(void callable(void));
     #if defined(ESP8266)      
       void begin(ESP8266WebServer *server, const char * username = "", const char * password = "");
     #elif defined(ESP32)
@@ -45,6 +47,12 @@ class ElegantOtaClass{
     char _password[64];
     char _id[128];
     bool authenticate;      
+    bool _preUpdateRequired = false;
+    bool _progressUpdateRequired = false;
+    bool _postUpdateRequired = false;
+    void (*preUpdateCallback)();
+    void (*progressUpdateCallback)();
+    void (*postUpdateCallback)();
 };
 
 extern ElegantOtaClass ElegantOTA;

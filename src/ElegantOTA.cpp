@@ -72,8 +72,10 @@ void ElegantOtaClass::setID(const char* id){
 
         HTTPUpload& upload = _server->upload();
         if (upload.status == UPLOAD_FILE_START) {
-            Serial.setDebugOutput(true);
-            Serial.printf("Update Received: %s\n", upload.filename.c_str());
+// Serial output must be active to see the callback serial prints
+//            Serial.setDebugOutput(true);
+//            Serial.printf("Update Received: %s\n", upload.filename.c_str());
+            if (_preUpdateRequired) preUpdateCallback();
             if (upload.name == "filesystem") {
                 if (!Update.begin(UPDATE_SIZE_UNKNOWN, U_SPIFFS)) { //start with max available size
                     Update.printError(Serial);
@@ -87,18 +89,36 @@ void ElegantOtaClass::setID(const char* id){
             if (Update.write(upload.buf, upload.currentSize) != upload.currentSize) {
                 Update.printError(Serial);
             }
+            if (_progressUpdateRequired) progressUpdateCallback();
         } else if (upload.status == UPLOAD_FILE_END) {
             if (Update.end(true)) { //true to set the size to the current progress
-                Serial.printf("Update Success: %u\nRebooting...\n", upload.totalSize);
+//                Serial.printf("Update Success: %u\nRebooting...\n", upload.totalSize);
             } else {
                 Update.printError(Serial);
             }
-            Serial.setDebugOutput(false);
+	    if (_postUpdateRequired) postUpdateCallback();
+//            Serial.setDebugOutput(false);
         } else {
-            Serial.printf("Update Failed Unexpectedly (likely broken connection): status=%d\n", upload.status);
+//            Serial.printf("Update Failed Unexpectedly (likely broken connection): status=%d\n", upload.status);
         }
       });
     #endif
   }
+
+void ElegantOtaClass::onOTAStart(void callable(void)){
+    preUpdateCallback = callable;
+    _preUpdateRequired = true ;
+}
+
+void ElegantOtaClass::onOTAProgress(void callable(void)){
+    progressUpdateCallback= callable;
+    _progressUpdateRequired = true ;
+}
+
+void ElegantOtaClass::onOTAEnd(void callable(void)){
+    postUpdateCallback = callable;
+    _postUpdateRequired = true ;
+}
+
 
 ElegantOtaClass ElegantOTA;
