@@ -4,6 +4,7 @@
 #include "Arduino.h"
 #include "stdlib_noniso.h"
 #include "elegantWebpage.h"
+#include "DigitalSignatureVerifier.h"
 
 #if defined(ESP8266)
     #define HARDWARE "ESP8266"
@@ -23,7 +24,7 @@
 class ElegantOtaClass{
   public:
     ElegantOtaClass();
-    
+    void setDigitalSignature(UpdaterHashClass* hash, DigitalSignatureVerifier* verifier);
     void setID(const char* id);
     void onOTAStart(void callable(void));
     void onOTAProgress(void callable(void));
@@ -50,9 +51,16 @@ class ElegantOtaClass{
     bool _preUpdateRequired = false;
     bool _progressUpdateRequired = false;
     bool _postUpdateRequired = false;
+	uint8_t * _updateData;
+	size_t _updateDataLen;
     void (*preUpdateCallback)();
     void (*progressUpdateCallback)();
     void (*postUpdateCallback)();
+	size_t _sig_len;
+	uint8_t * signature;
+	bool verify;
+	UpdaterHashClass* _hash;
+	DigitalSignatureVerifier* _verifier; 
 };
 
 extern ElegantOtaClass ElegantOTA;
