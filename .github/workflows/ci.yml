@@ -78,9 +78,7 @@ jobs:
       - name: Skip AsyncDemo Example
         run: |
           cd examples
-          pwd
           cd AsyncDemo
-          ls
           touch .esp32.test.skip
           touch .esp8266.test.skip
 
