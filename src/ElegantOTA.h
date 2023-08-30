@@ -35,6 +35,7 @@ _____ _                        _    ___ _____  _
 
 #if defined(ESP8266)
   #include "FS.h"
+  #include "LittleFS.h"
   #include "Updater.h"
   #include "StreamString.h"
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
