@@ -40,11 +40,32 @@ jobs:
       - name: Set configuration
         run: arduino-cli config set library.enable_unsafe_install true 
 
+      - name: Skip AsyncDemo Example
+      - run: |
+          echo "Skipping AsyncDemo"
+          cd examples/AsyncDemo
+          touch examples/AsyncDemo/.esp32.test.skip
+          touch examples/AsyncDemo/.esp8266.test.skip
+
+      - name: Test Sync Demo
+        run: python3 ci/build_platform.py esp8266 esp32
+
       - name: Install test dependencies
         run: arduino-cli lib install --git-url https://github.com/me-no-dev/ESPAsyncWebServer --git-url https://github.com/me-no-dev/ESPAsyncTCP --git-url https://github.com/me-no-dev/AsyncTCP
       
-      - name: List Directories
-        run: ls
+      - name: Skip SyncDemo Example
+        run: |
+          echo "Removing skip files from AsyncDemo"
+          rm examples/AsyncDemo/.esp32.test.skip
+          rm examples/AsyncDemo/.esp8266.test.skip
+          echo "Skipping SyncDemo"
+          touch examples/Demo/.esp32.test.skip
+          touch examples/Demo/.esp8266.test.skip
 
-      - name: Test Sync Demo
+      - name: Configure ElegantOTA to Async Mode
+        run: |
+          sed -i 's/ELEGANTOTA_USE_SPIFFS 0/ELEGANTOTA_USE_SPIFFS 1/' src/ElegantOTA.h
+          sed -i 's/ELEGANTOTA_USE_ASYNC_WEBSERVER 0/ELEGANTOTA_USE_ASYNC_WEBSERVER 1/' src/ElegantOTA.h
+      
+      - name: Test Async Demo
         run: python3 ci/build_platform.py esp8266 esp32
