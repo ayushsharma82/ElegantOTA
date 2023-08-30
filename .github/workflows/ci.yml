@@ -43,8 +43,8 @@ jobs:
       - name: Skip AsyncDemo Example
         run: |
           echo "Skipping AsyncDemo"
-          touch /examples/AsyncDemo/.esp32.test.skip
-          touch /examples/AsyncDemo/.esp8266.test.skip
+          touch ${HOME}/examples/AsyncDemo/.esp32.test.skip
+          touch ${HOME}/examples/AsyncDemo/.esp8266.test.skip
 
       - name: Test Sync Demo
         run: python3 ci/build_platform.py esp8266 esp32
@@ -55,11 +55,11 @@ jobs:
       - name: Skip SyncDemo Example
         run: |
           echo "Removing skip files from AsyncDemo"
-          rm /examples/AsyncDemo/.esp32.test.skip
-          rm /examples/AsyncDemo/.esp8266.test.skip
+          rm ${HOME}/examples/AsyncDemo/.esp32.test.skip
+          rm ${HOME}/examples/AsyncDemo/.esp8266.test.skip
           echo "Skipping SyncDemo"
-          touch /examples/Demo/.esp32.test.skip
-          touch /examples/Demo/.esp8266.test.skip
+          touch ${HOME}/examples/Demo/.esp32.test.skip
+          touch ${HOME}/examples/Demo/.esp8266.test.skip
 
       - name: Configure ElegantOTA to Async Mode
         run: |
