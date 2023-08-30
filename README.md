@@ -1,17 +1,17 @@
-<p align="center"><img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/logo.svg?sanitize=true" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/v3/docs/feature.png?sanitize=true&raw=true" width="700"></p>
 
-<hr/>
+<br/>
 <p align="center">
 <img src="https://img.shields.io/github/last-commit/ayushsharma82/ElegantOTA.svg?style=for-the-badge" />
 &nbsp;
 <img src="https://img.shields.io/github/actions/workflow/status/ayushsharma82/ElegantOTA/ci.yml?branch=master&style=for-the-badge" />
 </p>
-<hr/>
+<br/>
 
 
-<p align="center">Push OTAs to ESP8266 or ESP32 Elegantly! </p>
+<p align="center">OTA update provider library for ESP8266 & ESP32 microcontrollers</p>
 <p align="center">
-ElegantOTA provides a beautiful interface to upload Over the Air `.bin` updates to your ESP Modules with precise status and progress displayed over UI. This Library shows the current upload progress of your OTA and once finished, it will display the status of your OTA.
+ElegantOTA provides a beautiful user interface to upload Over-the-Air firmware/filesystem updates to your hardware with precise status and progress displayed over UI. ElegantOTA is designed to make the process of OTA updates slick and simple!
 </p>
 
 <br>
