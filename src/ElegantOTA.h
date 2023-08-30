@@ -56,12 +56,10 @@ _____ _                        _    ___ _____  _
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
     #include "ESPAsyncTCP.h"
     #include "ESPAsyncWebServer.h"
-    #define ELEGANTOTA_WEBSERVER AsyncWebServer
   #else
     #include "ESP8266WiFi.h"
     #include "WiFiClient.h"
     #include "ESP8266WebServer.h"
-    #define ELEGANTOTA_WEBSERVER ESP8266WebServer
   #endif
   #define HARDWARE "ESP8266"
 #elif defined(ESP32)
@@ -75,12 +73,10 @@ _____ _                        _    ___ _____  _
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
     #include "AsyncTCP.h"
     #include "ESPAsyncWebServer.h"
-    #define ELEGANTOTA_WEBSERVER AsyncWebServer
   #else
     #include "WiFi.h"
     #include "WiFiClient.h"
     #include "WebServer.h"
-    #define ELEGANTOTA_WEBSERVER WebServer
   #endif
   #define HARDWARE "ESP32"
 #endif
@@ -94,7 +90,17 @@ enum OTA_Mode {
 class ElegantOTAClass{
   public:
     ElegantOTAClass();
-    void begin(ELEGANTOTA_WEBSERVER *server, const char * username = "", const char * password = "");
+
+    #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
+      void begin(AsyncWebServer *server, const char * username = "", const char * password = "");
+    #else
+      #if defined(ESP8266)
+        void begin(ESP8266WebServer *server, const char * username = "", const char * password = "");
+      #elif defined(ESP32)
+        void begin(WebServer *server, const char * username = "", const char * password = "");
+      #endif
+    #endif
+    
     void setAuth(const char * username, const char * password);
     void clearAuth();
     void loop();
@@ -104,7 +110,15 @@ class ElegantOTAClass{
     void onEnd(void callable(bool success));
     
   private:
-    ELEGANTOTA_WEBSERVER *_server;
+    #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
+      AsyncWebServer *_server;
+    #else
+      #if defined(ESP8266)
+        ESP8266WebServer *_server;
+      #elif defined(ESP32)
+        WebServer *_server;
+      #endif
+    #endif
 
     bool _authenticate;      
     char _id[128];
