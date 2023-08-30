@@ -23,7 +23,6 @@ _____ _                        _    ___ _____  _
 #include "stdlib_noniso.h"
 #include "elop.h"
 
-#define ELEGANTOTA_USE_SPIFFS 0
 #define ELEGANTOTA_USE_ASYNC_WEBSERVER 0
 #define ELEGANTOTA_DEBUG 1
 #define UPDATE_DEBUG 1
@@ -35,11 +34,7 @@ _____ _                        _    ___ _____  _
 #endif
 
 #if defined(ESP8266)
-  #if ELEGANTOTA_USE_SPIFFS == 1
-    #include "FS.h"
-  #else
-    #include "LittleFS.h"
-  #endif
+  #include "FS.h"
   #include "Updater.h"
   #include "StreamString.h"
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
@@ -52,14 +47,7 @@ _____ _                        _    ___ _____  _
   #endif
   #define HARDWARE "ESP8266"
 #elif defined(ESP32)
-  #if ELEGANTOTA_USE_SPIFFS == 1
-    #include "FS.h"
-    #include "SPIFFS.h"
-  #else
-    #include "FS.h"
-    #define SPIFFS LittleFS
-    #include "LittleFS.h"
-  #endif
+  #include "FS.h"
   #include "Update.h"
   #include "StreamString.h"
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
