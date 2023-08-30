@@ -1,3 +1,4 @@
+<p><br/></p>
 <p align="center"><img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/v3/docs/feature.png?sanitize=true&raw=true" width="700"></p>
 
 <br/>
