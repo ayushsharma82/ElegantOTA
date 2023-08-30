@@ -40,6 +40,14 @@ jobs:
       - name: Set configuration
         run: arduino-cli config set library.enable_unsafe_install true 
 
+      - name: List directory
+        run: |
+          ls
+          cd examples
+          ls
+          cd src
+          ls
+
       - name: Skip AsyncDemo Example
         run: |
           echo "Skipping AsyncDemo"
