@@ -10,9 +10,9 @@
 <br/>
 
 
-<p align="center">OTA update provider library for ESP8266 & ESP32 microcontrollers</p>
+<p align="center">OTA update library for ESP8266 & ESP32 microcontrollers</p>
 <p align="center">
-ElegantOTA provides a beautiful user interface to upload Over-the-Air firmware/filesystem updates to your hardware with precise status and progress displayed over UI. ElegantOTA is designed to make the process of OTA updates slick and simple!
+ElegantOTA provides a beautiful user interface to upload over-the-air firmware/filesystem updates to your hardware with precise status and progress. ElegantOTA is designed to make the process of OTA updates slick and simple!
 </p>
 
 <br>
