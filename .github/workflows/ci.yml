@@ -41,7 +41,7 @@ jobs:
         run: arduino-cli config set library.enable_unsafe_install true 
 
       - name: Skip AsyncDemo Example
-      - run: |
+        run: |
           echo "Skipping AsyncDemo"
           cd examples/AsyncDemo
           touch examples/AsyncDemo/.esp32.test.skip
