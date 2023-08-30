@@ -40,21 +40,14 @@ jobs:
       - name: Set configuration
         run: arduino-cli config set library.enable_unsafe_install true 
 
-      - name: List directory
-        run: |
-          ls
-          cd ${HOME}
-          cd examples
-          pwd
-          ls
-          cd src
-          ls
-
       - name: Skip AsyncDemo Example
         run: |
-          echo "Skipping AsyncDemo"
-          touch ${HOME}/examples/AsyncDemo/.esp32.test.skip
-          touch ${HOME}/examples/AsyncDemo/.esp8266.test.skip
+          cd examples
+          pwd
+          cd AsyncDemo
+          ls
+          touch .esp32.test.skip
+          touch .esp8266.test.skip
 
       - name: Test Sync Demo
         run: python3 ci/build_platform.py esp8266 esp32
