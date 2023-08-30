@@ -53,8 +53,11 @@ _____ _                        _    ___ _____  _
   #define HARDWARE "ESP8266"
 #elif defined(ESP32)
   #if ELEGANTOTA_USE_SPIFFS == 1
+    #include "FS.h"
     #include "SPIFFS.h"
   #else
+    #include "FS.h"
+    #define SPIFFS LittleFS
     #include "LittleFS.h"
   #endif
   #include "Update.h"
