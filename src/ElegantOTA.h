@@ -23,21 +23,10 @@ _____ _                        _    ___ _____  _
 #include "stdlib_noniso.h"
 #include "elop.h"
 
-#ifndef ELEGANTOTA_USE_SPIFFS
-  #define ELEGANTOTA_USE_SPIFFS 0
-#endif
-
-#ifndef ELEGANTOTA_USE_ASYNC_WEBSERVER
-  #define ELEGANTOTA_USE_ASYNC_WEBSERVER 0
-#endif
-
-#ifndef ELEGANTOTA_DEBUG
-  #define ELEGANTOTA_DEBUG 1
-#endif
-
-#ifndef UPDATE_DEBUG
-  #define UPDATE_DEBUG 1
-#endif
+#define ELEGANTOTA_USE_SPIFFS 0
+#define ELEGANTOTA_USE_ASYNC_WEBSERVER 0
+#define ELEGANTOTA_DEBUG 1
+#define UPDATE_DEBUG 1
 
 #if ELEGANTOTA_DEBUG
   #define ELEGANTOTA_DEBUG_MSG(x) Serial.printf("%s %s", "[ElegantOTA] ", x)
@@ -100,7 +89,7 @@ class ElegantOTAClass{
         void begin(WebServer *server, const char * username = "", const char * password = "");
       #endif
     #endif
-    
+
     void setAuth(const char * username, const char * password);
     void clearAuth();
     void loop();

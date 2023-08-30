@@ -24,7 +24,7 @@ void ElegantOTAClass::begin(AsyncWebServer *server, const char * username, const
       if(_authenticate && !request->authenticate(_username, _password)){
         return request->requestAuthentication();
       }
-      AsyncWebServerResponse *response = request->beginResponse_P(200, "text/html", ELEGANT_HTML, sizeof(ELEGANT_HTML)));
+      AsyncWebServerResponse *response = request->beginResponse_P(200, "text/html", ELEGANT_HTML, sizeof(ELEGANT_HTML));
       response->addHeader("Content-Encoding", "gzip");
       request->send(response);
     });
@@ -40,8 +40,8 @@ void ElegantOTAClass::begin(AsyncWebServer *server, const char * username, const
 
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
     _server->on("/ota/start", HTTP_GET, [&](AsyncWebServerRequest *request) {
-      if (_authenticate && !_server->authenticate(_username, _password)) {
-        return _server->requestAuthentication();
+      if (_authenticate && !request->authenticate(_username, _password)) {
+        return request->requestAuthentication();
       }
 
       // Get header x-ota-mode value, if present
