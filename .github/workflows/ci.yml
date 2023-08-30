@@ -43,6 +43,7 @@ jobs:
       - name: List directory
         run: |
           ls
+          cd ${HOME}
           cd examples
           pwd
           ls
