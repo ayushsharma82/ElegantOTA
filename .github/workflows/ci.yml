@@ -42,6 +42,9 @@ jobs:
 
       - name: Install test dependencies
         run: arduino-cli lib install --git-url https://github.com/me-no-dev/ESPAsyncWebServer --git-url https://github.com/me-no-dev/ESPAsyncTCP --git-url https://github.com/me-no-dev/AsyncTCP
-        
-      - name: test platforms
+      
+      - name: List Directories
+        run: ls
+
+      - name: Test Sync Demo
         run: python3 ci/build_platform.py esp8266 esp32
