@@ -98,16 +98,16 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Get Started',
-                to: '/docs/get-started',
+                label: 'Getting Started',
+                to: '/getting-started',
               },
               {
-                label: 'Cards',
-                to: '/docs/cards',
+                label: 'Examples',
+                to: '/examples',
               },
               {
-                label: 'Charts',
-                to: '/docs/charts',
+                label: 'Commercial License',
+                to: '/commercial-license',
               },
             ],
           },
@@ -116,7 +116,7 @@ const config = {
             items: [
               {
                 label: 'Github',
-                href: 'https://github.com/ayushsharma82/ESP-DASH/',
+                href: 'https://github.com/ayushsharma82/ElegantOTA/',
               },
               {
                 label: 'Twitter',
@@ -133,11 +133,11 @@ const config = {
             items: [
               {
                 label: 'Create an Issue (Repo)',
-                href: 'https://github.com/ayushsharma82/ESP-DASH/issues',
+                href: 'https://github.com/ayushsharma82/ElegantOTA/issues',
               },
               {
                 label: 'Contact me',
-                href: 'https://www.espdash.pro/support',
+                href: 'https://elegantota.pro/support',
               },
             ],
           },
