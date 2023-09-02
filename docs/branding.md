@@ -1,7 +1,7 @@
 ---
 title: Branding
 sidebar_label: Branding (Pro)
-sidebar_position: 11
+sidebar_position: 13
 ---
 
 <div className="pro-label">

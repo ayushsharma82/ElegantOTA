@@ -1,7 +1,7 @@
 ---
 title: Firmware Version
 sidebar_label: Firmware Version (Pro)
-sidebar_position: 10
+sidebar_position: 11
 ---
 
 <div className="pro-label">

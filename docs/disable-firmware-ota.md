@@ -1,7 +1,7 @@
 ---
 title: Disable Firmware OTA
 sidebar_label: Disable Firmware OTA (Pro)
-sidebar_position: 7
+sidebar_position: 8
 ---
 
 <div className="pro-label">

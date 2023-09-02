@@ -1,7 +1,7 @@
 ---
 title: Commercial License
 sidebar_label: Commercial License
-sidebar_position: 12
+sidebar_position: 14
 ---
 
 ElegantOTA Lite (open-source version) and ElegantOTA Pro are two different versions of the same OTA (Over-The-Air) update library, each with its own set of features and licensing terms. Here's a comparison between ElegantOTA Lite, which is open-source and AGPL-3.0 based, and ElegantOTA Pro:

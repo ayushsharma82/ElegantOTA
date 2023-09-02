@@ -1,7 +1,7 @@
 ---
 title: Hardware ID
 sidebar_label: Hardware ID (Pro)
-sidebar_position: 9
+sidebar_position: 10
 ---
 
 <div className="pro-label">

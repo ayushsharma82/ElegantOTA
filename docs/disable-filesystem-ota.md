@@ -1,7 +1,7 @@
 ---
 title: Disable Filesystem OTA
 sidebar_label: Disable Filesystem OTA (Pro)
-sidebar_position: 8
+sidebar_position: 9
 ---
 
 <div className="pro-label">
