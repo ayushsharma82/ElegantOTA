@@ -19,10 +19,6 @@
 
 */
 
-// IMPORTANT NOTE: This compiler flag is required for ElegantOTA to use AsyncWebServer!
-#define ELEGANTOTA_USE_SPIFFS 1
-#define ELEGANTOTA_USE_ASYNC_WEBSERVER 1
-
 #if defined(ESP8266)
   #include <ESP8266WiFi.h>
   #include <ESPAsyncTCP.h>
