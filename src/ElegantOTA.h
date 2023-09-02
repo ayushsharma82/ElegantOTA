@@ -101,8 +101,7 @@ class ElegantOTAClass{
       #endif
     #endif
 
-    bool _authenticate;      
-    char _id[128];
+    bool _authenticate;
     char _username[64];
     char _password[64];
 
