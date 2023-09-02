@@ -232,7 +232,7 @@ void ElegantOTAClass::begin(AsyncWebServer *server, const char * username, const
         return _server->requestAuthentication();
       }
       // Post-OTA update callback
-      if (postUpdateCallback != NULL) postUpdateCallback(Update.hasError());
+      if (postUpdateCallback != NULL) postUpdateCallback(!Update.hasError());
       _server->sendHeader("Connection", "close");
       _server->send((Update.hasError()) ? 400 : 200, "text/plain", (Update.hasError()) ? _update_error_str.c_str() : "OK");
       // Set reboot flag
