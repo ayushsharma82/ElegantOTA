@@ -52,7 +52,7 @@ void onOTAProgress(size_t current, size_t final) {
   // Log every 1 second
   if (millis() - ota_progress_millis > 1000) {
     ota_progress_millis = millis();
-    Serial.printf("OTA update progress: %u%%\r", (final > 0 && current > 0) ? (current / (final / 100)) : 0);
+    Serial.printf("OTA Progress Current: %u bytes, Final: %u bytes\n", current, final);
   }
 }
 
