@@ -2,15 +2,7 @@
 
 ElegantOTAClass::ElegantOTAClass(){}
 
-#if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
-void ElegantOTAClass::begin(AsyncWebServer *server, const char * username, const char * password){
-#else
-  #if defined(ESP8266)
-    void ElegantOTAClass::begin(ESP8266WebServer *server, const char * username, const char * password){
-  #elif defined(ESP32)
-    void ElegantOTAClass::begin(WebServer *server, const char * username, const char * password){
-  #endif
-#endif
+void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username, const char * password){
   _server = server;
 
   if (strlen(username) > 0) {
