@@ -44,7 +44,7 @@ _____ _                        _    ___ _____  _
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
     #include "ESPAsyncTCP.h"
     #include "ESPAsyncWebServer.h"
-    #define ELEGANTOTA_WEBSERVER ESPAsyncWebServer
+    #define ELEGANTOTA_WEBSERVER AsyncWebServer
   #else
     #include "ESP8266WiFi.h"
     #include "WiFiClient.h"
