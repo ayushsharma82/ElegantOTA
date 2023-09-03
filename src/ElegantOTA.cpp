@@ -203,6 +203,11 @@ void ElegantOTAClass::begin(AsyncWebServer *server, const char * username, const
             }
         }
 
+        if (!index) {
+          // Reset progress size on first frame
+          _current_progress_size = 0;
+        }
+
         // Write chunked data to the free sketch space
         if(len){
             if (Update.write(data, len) != len) {
@@ -250,6 +255,7 @@ void ElegantOTAClass::begin(AsyncWebServer *server, const char * username, const
           return;
         }
         Serial.printf("Update Received: %s\n", upload.filename.c_str());
+        _current_progress_size = 0;
       } else if (upload.status == UPLOAD_FILE_WRITE) {
           if (Update.write(upload.buf, upload.currentSize) != upload.currentSize) {
             #if UPDATE_DEBUG == 1
