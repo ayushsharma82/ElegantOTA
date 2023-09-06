@@ -23,12 +23,19 @@ ElegantOTA provides a beautiful user interface to upload over-the-air firmware/f
 <br/>
 <br/>
 
+## Features
+- 🔥 Quick & Simple OTA procedure.
+- 🏀 Get useful insight on progress and status of your upload.
+- 🎷 No need to learn HTML/CSS/JS.
+- 🛫 Ready to use with 3 lines of code.
+
+<br/>
+
 ## Supported MCUs
 ElegantOTA works on the following microcontrollers/boards:
 - ESP8266
 - ESP32
-  
-( support for more microcontrollers coming soon )
+- *( more coming soon )*
 
 <br/>
 <br/>
@@ -40,6 +47,30 @@ ElegantOTA works on the following microcontrollers/boards:
 
 <!-- <b>Antivirus Issue:</b> If you have an antivirus on your PC with internet security, the progress bar on webpage will instantly show 100% because of request caching by your antivirus software. There is no fix for this unless you want to disable your antivirus or whitelist your local IP addresses in it. ( Same is the case with iOS, safari will cache the outgoing requests ) -->
 
+<br>
+
+<h2>Want More? Upgrade to Pro</h2>
+
+ElegantOTA Pro comes with the following extended functionality:
+- New Drag & Drop Zone
+- Disable certain OTA modes
+- Hardware ID & Firmware Version on portal
+- Custom title
+- Branding (Custom Logo)
+- Commercial License
+- Atlast, It is a fantastic way to support the developer for the time went into the making & maintaining the library.
+
+<br> <b>Available here: </b>
+
+- [Official Website](https://elegantota.pro)
+
+<br/>
+
+<a href="https://elegantota.pro" target="_blank">
+  <img src="/docs/pro-preview.png" alt="ElegantOTA Pro">
+</a>
+
+<br>
 <br>
 
 <h2>Contributions</h2>
