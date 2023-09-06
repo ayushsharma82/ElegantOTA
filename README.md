@@ -18,16 +18,11 @@ ElegantOTA provides a beautiful user interface to upload over-the-air firmware/f
 <br/>
 <br/>
 
-<p align="center"><img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/elegantOtaDemo.gif"></p>
-
-<br/>
-<br/>
-
 ## Features
-- 🔥 Quick & Simple OTA procedure.
-- 🏀 Get useful insight on progress and status of your upload.
-- 🎷 No need to learn HTML/CSS/JS.
-- 🛫 Ready to use with 3 lines of code.
+- 🔥 Quick & Simple OTA procedure
+- 🏀 Get useful insight on progress and status of your OTA update
+- 🎷 No need to learn HTML/CSS/JS
+- 🛫 Ready to use within 3 lines of code
 
 <br/>
 
@@ -49,7 +44,13 @@ ElegantOTA works on the following microcontrollers/boards:
 
 <br>
 
-<h2>Want More? Upgrade to Pro</h2>
+## Open-Source Preview
+<img src="/docs/preview.png?raw=true">
+
+<br>
+<br>
+
+## Want More? Upgrade to Pro
 
 ElegantOTA Pro comes with the following extended functionality:
 - New Drag & Drop Zone
