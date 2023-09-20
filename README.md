@@ -1,11 +1,11 @@
 <p><br/></p>
-<p align="center"><img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/v3/docs/feature.png?sanitize=true&raw=true" width="700"></p>
+<p align="center"><img src="/docs/feature.png?sanitize=true&raw=true" width="700"></p>
 
 <br/>
 <p align="center">
 <img src="https://img.shields.io/github/last-commit/ayushsharma82/ElegantOTA.svg?style=for-the-badge" />
 &nbsp;
-<img src="https://img.shields.io/github/actions/workflow/status/ayushsharma82/ElegantOTA/ci.yml?branch=v3&style=for-the-badge" />
+<img src="https://img.shields.io/github/actions/workflow/status/ayushsharma82/ElegantOTA/ci.yml?branch=master&style=for-the-badge" />
 </p>
 <br/>
 
