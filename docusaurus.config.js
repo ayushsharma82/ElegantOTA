@@ -84,7 +84,7 @@ const config = {
             dropdownActiveClassDisabled: true,
           },
           {
-            href: "https://github.com/ayushsharma82/ESP-DASH/",
+            href: "https://github.com/ayushsharma82/ElegantOTA/",
             position: "right",
             className: "header-github-link",
             "aria-label": "GitHub repository",
