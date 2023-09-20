@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'ElegantOTA Docs',
   tagline: 'OTA update library for ESP8266 & ESP32 microcontrollers',
-  url: 'https://docs.espdash.pro',
+  url: 'https://docs.elegantota.pro',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
