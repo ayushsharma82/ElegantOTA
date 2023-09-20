@@ -66,7 +66,7 @@ ElegantOTA Pro comes with the following extended functionality:
 
 <br> <b>Available here: </b>
 
-- [Official Website](https://elegantota.pro)
+- [Official Website ( elegantota.pro )](https://elegantota.pro)
 
 <br/>
 
