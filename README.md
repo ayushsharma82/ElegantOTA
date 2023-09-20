@@ -45,6 +45,9 @@ ElegantOTA works on the following microcontrollers/boards:
 <br>
 
 ## Open-Source Preview
+*Preview might appear as blurry due to image optimization.*
+<br>
+
 <img src="/docs/demo.gif?raw=true" width="600">
 
 <br>
