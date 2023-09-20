@@ -45,7 +45,7 @@ ElegantOTA works on the following microcontrollers/boards:
 <br>
 
 ## Open-Source Preview
-<img src="/docs/preview.png?raw=true">
+<img src="/docs/demo.gif?raw=true">
 
 <br>
 <br>
@@ -68,7 +68,7 @@ ElegantOTA Pro comes with the following extended functionality:
 <br/>
 
 <a href="https://elegantota.pro" target="_blank">
-  <img src="/docs/pro-preview.png" alt="ElegantOTA Pro">
+  <img src="/docs/pro-preview.jpg" alt="ElegantOTA Pro">
 </a>
 
 <br>
