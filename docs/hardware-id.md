@@ -13,13 +13,13 @@ sidebar_position: 10
     </i>
 </div>
 
-<!-- <br/> -->
-<!-- <br/> -->
+<br/>
+<br/>
 
-<!-- <img src="/img/v4/tabs.png" alt="Concept Diagram" width="300px" /> -->
+<img src="/v3/img/hardware-id.png" alt="Hardware ID" width="400px" />
 
-<!-- <br/> -->
-<!-- <br/> -->
+<br/>
+
 ## Introduction
 
 The Hardware ID feature in ElegantOTA is shown on the ElegantOTA Pro portal. This ID should be a unique string that helps you easily identify the specific hardware device among others in your network.

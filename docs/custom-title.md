@@ -13,6 +13,13 @@ sidebar_position: 12
     </i>
 </div>
 
+<br/>
+
+<img src="/v3/img/custom-title.png" alt="Custom Title" width="400px" />
+
+<br/>
+
+
 ## Overview 
 
 The `setTitle()` function is a method provided by the ElegantOTA Pro library. It is used to set the title of the OTA (Over-The-Air) update portal. This title is displayed at the top of the update portal web page, providing a user-friendly and customizable interface for managing firmware updates.

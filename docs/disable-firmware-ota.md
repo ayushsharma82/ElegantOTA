@@ -16,10 +16,10 @@ sidebar_position: 8
 <br/>
 <br/>
 
-<!-- <img src="/img/v4/tabs.png" alt="Concept Diagram" width="300px" /> -->
+<img src="/v3/img/ota-modes.png" alt="Modes" width="400px" />
 
-<!-- <br/> -->
-<!-- <br/> -->
+<br/>
+<br/>
 
 ElegantOTA allows you to selective enable or disable OTA modes of your choice for security reasons or when you have a important task running where you don't want it to get interrupted by an OTA update. This will be represented in the portal (ElegantOTA webpage) too.
 

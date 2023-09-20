@@ -13,13 +13,12 @@ sidebar_position: 11
     </i>
 </div>
 
-<!-- <br/> -->
-<!-- <br/> -->
+<br/>
+<br/>
 
-<!-- <img src="/img/v4/tabs.png" alt="Concept Diagram" width="300px" /> -->
+<img src="/v3/img/firmware-version.png" alt="Firmware Version" width="400px" />
 
-<!-- <br/> -->
-<!-- <br/> -->
+<br/>
 
 ## Introduction
 
@@ -36,7 +35,7 @@ void setup() {
   // Initialize your hardware and other configurations here
 
   // Set the Firmware Version
-  ElegantOTA.setFWVersion("v1.0.0");
+  ElegantOTA.setFWVersion("1.0.0");
 
   // Additional setup code
 }
@@ -46,7 +45,7 @@ void loop() {
 }
 ```
 
-In the above example, the `ElegantOTA.setFWVersion("v1.0.0");` function call assigns the firmware version "v1.0.0" to the device.
+In the above example, the `ElegantOTA.setFWVersion("1.0.0");` function call assigns the firmware version "1.0.0" to the device.
 
 ## Use Cases
 

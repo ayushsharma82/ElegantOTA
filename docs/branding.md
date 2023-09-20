@@ -16,10 +16,10 @@ sidebar_position: 13
 <br/>
 <br/>
 
-<!-- <img src="/img/v4/tabs.png" alt="Concept Diagram" width="300px" /> -->
+<img src="/v3/img/branding.png" alt="Branding" width="400px" />
 
-<!-- <br/> -->
-<!-- <br/> -->
+<br/>
+<br/>
 
 # Overview
 
