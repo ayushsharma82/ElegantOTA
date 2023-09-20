@@ -1,11 +1,12 @@
 /*
   -----------------------
-  ElegantOTA - Demo Example
+  ElegantOTA - Async Demo Example
   -----------------------
 
   Skill Level: Beginner
 
-  This example provides with a bare minimal app with ElegantOTA functionality.
+  This example provides with a bare minimal app with ElegantOTA functionality which works
+  with AsyncWebServer.
 
   Github: https://github.com/ayushsharma82/ElegantOTA
   WiKi: https://docs.elegantota.pro
@@ -18,27 +19,21 @@
 
 */
 
-
 #if defined(ESP8266)
   #include <ESP8266WiFi.h>
-  #include <WiFiClient.h>
-  #include <ESP8266WebServer.h>
+  #include <ESPAsyncTCP.h>
 #elif defined(ESP32)
   #include <WiFi.h>
-  #include <WiFiClient.h>
-  #include <WebServer.h>
+  #include <AsyncTCP.h>
 #endif
 
+#include <ESPAsyncWebServer.h>
 #include <ElegantOTA.h>
 
 const char* ssid = "........";
 const char* password = "........";
 
-#if defined(ESP8266)
-  ESP8266WebServer server(80);
-#elif defined(ESP32)
-  WebServer server(80);
-#endif
+AsyncWebServer server(80);
 
 unsigned long ota_progress_millis = 0;
 
@@ -83,8 +78,8 @@ void setup(void) {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-  server.on("/", []() {
-    server.send(200, "text/plain", "Hi! This is ElegantOTA Demo.");
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(200, "text/plain", "Hi! This is ElegantOTA AsyncDemo.");
   });
 
   ElegantOTA.begin(&server);    // Start ElegantOTA
@@ -98,6 +93,5 @@ void setup(void) {
 }
 
 void loop(void) {
-  server.handleClient();
   ElegantOTA.loop();
 }
