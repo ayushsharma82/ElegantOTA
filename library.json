@@ -1,7 +1,7 @@
 {
   "name": "ElegantOTA",
-  "keywords": "ElegantOTA, OTA, Update, ESP8266, ESP32, Over, the, air",
-  "description": "Perform OTAs for ESP8266 or ESP32 Elegantly!",
+  "keywords": "ElegantOTA, OTA, Update, ESP8266, ESP32, over, the, air, firmware, filesystem, littlefs, spiffs",
+  "description": "OTA updates made slick and simple for everyone!",
   "repository":
   {
     "type": "git",
@@ -15,7 +15,7 @@
       "maintainer": true
     }
   ],
-  "version": "2.2.9",
+  "version": "3.0.0",
   "frameworks": "arduino",
   "platforms": "espressif"
 }
