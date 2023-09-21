@@ -82,4 +82,4 @@ jobs:
           touch .esp8266.test.skip
 
       - name: Test Sync Demo
-        run: python3 ci/build_platform.py esp8266 esp32 pico_rp2040
+        run: python3 ci/build_platform.py esp8266 esp32 picow_rp2040
