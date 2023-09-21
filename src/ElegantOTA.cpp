@@ -318,7 +318,7 @@ void ElegantOTAClass::loop() {
   if (_reboot && millis() - _reboot_request_millis > 2000) {
     ELEGANTOTA_DEBUG_MSG("Rebooting...\n");
     #if defined(ESP8266) || defined(ESP32)
-      ESP.reset();
+      ESP.restart();
     #elif defined(TARGET_RP2040)
       rp2040.reboot();
     #endif
