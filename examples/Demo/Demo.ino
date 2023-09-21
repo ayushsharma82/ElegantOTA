@@ -10,7 +10,16 @@
   Github: https://github.com/ayushsharma82/ElegantOTA
   WiKi: https://docs.elegantota.pro
 
-  Works with both ESP8266 & ESP32
+  Works with following hardware:
+  - ESP8266
+  - ESP32
+  - RP2040 (with WiFi) (Example: Raspberry Pi Pico W)
+
+
+  Important note for RP2040 users:
+  - RP2040 requires LittleFS partition for the OTA updates to work. Without LittleFS partition, OTA updates will fail.
+    Make sure to select Tools > Flash Size > "2MB (Sketch 1MB, FS 1MB)" option.
+  - If using bare RP2040, it requires WiFi module like Pico W for ElegantOTA to work.
 
   -------------------------------
 
@@ -27,16 +36,21 @@
   #include <WiFi.h>
   #include <WiFiClient.h>
   #include <WebServer.h>
+#elif defined(TARGET_RP2040)
+  #include <WiFi.h>
+  #include <WebServer.h>
 #endif
 
 #include <ElegantOTA.h>
 
-const char* ssid = "........";
-const char* password = "........";
+const char* ssid = "201";
+const char* password = "frenzy8284";
 
 #if defined(ESP8266)
   ESP8266WebServer server(80);
 #elif defined(ESP32)
+  WebServer server(80);
+#elif defined(TARGET_RP2040)
   WebServer server(80);
 #endif
 
