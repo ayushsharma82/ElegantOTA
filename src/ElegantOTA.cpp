@@ -332,15 +332,15 @@ void ElegantOTAClass::loop() {
   }
 }
 
-void ElegantOTAClass::onStart(void callable(void)){
+void ElegantOTAClass::onStart(std::function<void()> callable){
     preUpdateCallback = callable;
 }
 
-void ElegantOTAClass::onProgress(void callable(size_t current, size_t final)){
+void ElegantOTAClass::onProgress(std::function<void(size_t current, size_t final)> callable){
     progressUpdateCallback= callable;
 }
 
-void ElegantOTAClass::onEnd(void callable(bool success)){
+void ElegantOTAClass::onEnd(std::function<void(bool success)> callable){
     postUpdateCallback = callable;
 }
 

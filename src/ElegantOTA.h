@@ -108,9 +108,9 @@ class ElegantOTAClass{
     void setAutoReboot(bool enable);
     void loop();
 
-    void onStart(void callable(void));
-    void onProgress(void callable(size_t current, size_t final));
-    void onEnd(void callable(bool success));
+    void onStart(std::function<void()> callable);
+    void onProgress(std::function<void(size_t current, size_t final)> callable);
+    void onEnd(std::function<void(bool success)> callable);
     
   private:
     ELEGANTOTA_WEBSERVER *_server;
@@ -126,9 +126,9 @@ class ElegantOTAClass{
     String _update_error_str = "";
     unsigned long _current_progress_size;
 
-    void (*preUpdateCallback)() = NULL;
-    void (*progressUpdateCallback)(size_t current, size_t final) = NULL;
-    void (*postUpdateCallback)(bool success) = NULL;
+    std::function<void()> preUpdateCallback = NULL;
+    std::function<void(size_t current, size_t final)> progressUpdateCallback = NULL;
+    std::function<void(bool success)> postUpdateCallback = NULL;
 };
 
 extern ElegantOTAClass ElegantOTA;
