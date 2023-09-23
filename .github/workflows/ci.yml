@@ -19,7 +19,7 @@ on:
       - '/docs'
 
 jobs:
-  async_build:
+  Async_CI:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-python@v1
@@ -57,7 +57,7 @@ jobs:
       - name: Test Async Demo
         run: python3 ci/build_platform.py esp8266 esp32
 
-  sync_build:
+  Sync_CI:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-python@v1
@@ -82,4 +82,4 @@ jobs:
           touch .esp8266.test.skip
 
       - name: Test Sync Demo
-        run: python3 ci/build_platform.py esp8266 esp32
+        run: python3 ci/build_platform.py esp8266 esp32 picow_rp2040
