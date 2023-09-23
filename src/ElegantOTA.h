@@ -42,6 +42,7 @@ _____ _                        _    ___ _____  _
 #endif
 
 #if defined(ESP8266)
+  #include <functional>
   #include "FS.h"
   #include "LittleFS.h"
   #include "Updater.h"
@@ -58,6 +59,7 @@ _____ _                        _    ___ _____  _
   #endif
   #define HARDWARE "ESP8266"
 #elif defined(ESP32)
+  #include <functional>
   #include "FS.h"
   #include "Update.h"
   #include "StreamString.h"
@@ -73,6 +75,7 @@ _____ _                        _    ___ _____  _
   #endif
   #define HARDWARE "ESP32"
 #elif defined(TARGET_RP2040)
+  #include <functional>
   #include "Arduino.h"
   #include "FS.h"
   #include "LittleFS.h"
