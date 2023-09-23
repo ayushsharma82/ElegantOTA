@@ -199,8 +199,8 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
           return request->requestAuthentication();
         }
         // Post-OTA update callback
-        if (postUpdateCallback != NULL) postUpdateCallback(Update.hasError());
-        AsyncWebServerResponse *response = request->beginResponse((Update.hasError()) ? 500 : 200, "text/plain", (Update.hasError()) ? _update_error_str.c_str() : "OK");
+        if (postUpdateCallback != NULL) postUpdateCallback(!Update.hasError());
+        AsyncWebServerResponse *response = request->beginResponse((Update.hasError()) ? 400 : 200, "text/plain", (Update.hasError()) ? _update_error_str.c_str() : "OK");
         response->addHeader("Connection", "close");
         response->addHeader("Access-Control-Allow-Origin", "*");
         request->send(response);
