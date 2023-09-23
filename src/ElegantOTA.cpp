@@ -5,11 +5,7 @@ ElegantOTAClass::ElegantOTAClass(){}
 void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username, const char * password){
   _server = server;
 
-  if (strlen(username) > 0 && strlen(password) > 0) {
-    strlcpy(_username, username, sizeof(_username));
-    strlcpy(_password, password, sizeof(_password));
-    _authenticate = true;
-  }
+  setAuth(username, password);
 
   #if defined(TARGET_RP2040)
     if (!__isPicoW) {
@@ -308,9 +304,11 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
 }
 
 void ElegantOTAClass::setAuth(const char * username, const char * password){
-  strlcpy(_username, username, sizeof(_username));
-  strlcpy(_password, password, sizeof(_password));
-  _authenticate = true;
+  if (strlen(username) > 0 && strlen(password) > 0) {
+    strlcpy(_username, username, sizeof(_username));
+    strlcpy(_password, password, sizeof(_password));
+    _authenticate = true;
+  }
 }
 
 void ElegantOTAClass::clearAuth(){
