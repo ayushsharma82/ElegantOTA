@@ -5,7 +5,7 @@ ElegantOTAClass::ElegantOTAClass(){}
 void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username, const char * password){
   _server = server;
 
-  if (strlen(username) > 0) {
+  if (strlen(username) > 0 && strlen(password) > 0) {
     strlcpy(_username, username, sizeof(_username));
     strlcpy(_password, password, sizeof(_password));
     _authenticate = true;
