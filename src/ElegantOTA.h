@@ -114,7 +114,7 @@ class ElegantOTAClass{
     char _username[64];
     char _password[64];
 
-    bool _auto_reboot = false;
+    bool _auto_reboot = true;
     bool _reboot = false;
     unsigned long _reboot_request_millis = 0;
 
