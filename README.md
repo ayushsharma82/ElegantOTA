@@ -32,8 +32,8 @@ ElegantOTA provides a beautiful user interface to upload over-the-air firmware/f
 ElegantOTA works on the following microcontrollers/boards:
 - ESP8266
 - ESP32
-- Pico W ( coming soon )
-- *( more coming soon  )*
+- RP2040 ( Pico W )
+- *( more coming soon )*
 
 <br/>
 <br/>
