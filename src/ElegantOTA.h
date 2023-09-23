@@ -27,8 +27,13 @@ _____ _                        _    ___ _____  _
   #define ELEGANTOTA_USE_ASYNC_WEBSERVER 0
 #endif
 
-#define ELEGANTOTA_DEBUG 1
-#define UPDATE_DEBUG 1
+#ifndef ELEGANTOTA_DEBUG
+  #define ELEGANTOTA_DEBUG 0
+#endif
+
+#ifndef UPDATE_DEBUG
+  #define UPDATE_DEBUG 0
+#endif
 
 #if ELEGANTOTA_DEBUG
   #define ELEGANTOTA_DEBUG_MSG(x) Serial.printf("%s %s", "[ElegantOTA] ", x)
