@@ -100,6 +100,7 @@ class ElegantOTAClass{
 
     void setAuth(const char * username, const char * password);
     void clearAuth();
+    void setAutoReboot(bool enable);
     void loop();
 
     void onStart(void callable(void));
@@ -113,6 +114,7 @@ class ElegantOTAClass{
     char _username[64];
     char _password[64];
 
+    bool _auto_reboot = false;
     bool _reboot = false;
     unsigned long _reboot_request_millis = 0;
 

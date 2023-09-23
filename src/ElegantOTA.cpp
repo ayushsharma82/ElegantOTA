@@ -206,8 +206,10 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
         request->send(response);
         // Set reboot flag
         if (!Update.hasError()) {
-          _reboot_request_millis = millis();
-          _reboot = true;
+          if (_auto_reboot) {
+            _reboot_request_millis = millis();
+            _reboot = true;
+          }
         }
     }, [&](AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final) {
         //Upload handler chunks in data
@@ -256,8 +258,10 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
       _server->send((Update.hasError()) ? 400 : 200, "text/plain", (Update.hasError()) ? _update_error_str.c_str() : "OK");
       // Set reboot flag
       if (!Update.hasError()) {
-        _reboot_request_millis = millis();
-        _reboot = true;
+        if (_auto_reboot) {
+          _reboot_request_millis = millis();
+          _reboot = true;
+        }
       }
     }, [&](){
       // Actual OTA Download
@@ -311,6 +315,10 @@ void ElegantOTAClass::setAuth(const char * username, const char * password){
 
 void ElegantOTAClass::clearAuth(){
   _authenticate = false;
+}
+
+void ElegantOTAClass::setAutoReboot(bool enable){
+  _auto_reboot = enable;
 }
 
 void ElegantOTAClass::loop() {
