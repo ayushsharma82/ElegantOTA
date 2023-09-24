@@ -3,6 +3,9 @@
   ElegantOTA - Async Demo Example
   -----------------------
 
+  NOTE: Make sure you have enabled Async Mode in ElegantOTA before compiling this example!
+  Guide: https://docs.elegantota.pro/async-mode/
+
   Skill Level: Beginner
 
   This example provides with a bare minimal app with ElegantOTA functionality which works
