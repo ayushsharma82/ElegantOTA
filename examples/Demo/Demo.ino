@@ -43,8 +43,8 @@
 
 #include <ElegantOTA.h>
 
-const char* ssid = "201";
-const char* password = "frenzy8284";
+const char* ssid = "";
+const char* password = "";
 
 #if defined(ESP8266)
   ESP8266WebServer server(80);
