@@ -55,7 +55,7 @@ jobs:
           sed -i 's/ELEGANTOTA_USE_ASYNC_WEBSERVER 0/ELEGANTOTA_USE_ASYNC_WEBSERVER 1/' ElegantOTA.h
       
       - name: Test Async Demo
-        run: python3 ci/build_platform.py esp8266 esp32@2.0.14
+        run: python3 ci/build_platform.py esp8266 esp32:2.0.14
 
   Sync_CI:
     runs-on: ubuntu-latest
@@ -82,4 +82,4 @@ jobs:
           touch .esp8266.test.skip
 
       - name: Test Sync Demo
-        run: python3 ci/build_platform.py esp8266 esp32@2.0.14 picow_rp2040
+        run: python3 ci/build_platform.py esp8266 esp32:2.0.14 picow_rp2040
