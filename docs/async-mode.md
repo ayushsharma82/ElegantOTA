@@ -15,15 +15,17 @@ One of the features of ElegantOTA is the async mode, which provides asynchronous
 
 ### For Arduino IDE:
 
-1. Locate the `ELEGANTOTA_USE_ASYNC_WEBSERVER` macro in the `ElegantOTA.h` file, and set it to `1`:
+1. Go to your Arduino libraries directory
+2. Open `ElegantOTA` folder and then open `src` folder
+3. Locate the `ELEGANTOTA_USE_ASYNC_WEBSERVER` macro in the `ElegantOTA.h` file, and set it to `1`:
 
    ```cpp
    #define ELEGANTOTA_USE_ASYNC_WEBSERVER 1
    ```
 
-2. Save the changes to the `ElegantOTA.h` file.
+4. Save the changes to the `ElegantOTA.h` file.
 
-3. You are now ready to use ElegantOTA in async mode for your OTA updates, utilizing the ESPAsyncWebServer library.
+5. You are now ready to use ElegantOTA in async mode for your OTA updates, utilizing the ESPAsyncWebServer library.
 
 
 ### For PlatformIO:
