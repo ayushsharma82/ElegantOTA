@@ -39,6 +39,7 @@ const config = {
           anonymizeIP: true,
         },
         docs: {
+          disableVersioning: true,
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
         },
@@ -78,11 +79,6 @@ const config = {
           //   label: 'Docs',
           // },
           // {to: '/blog', label: 'Blog', position: 'left'},
-          {
-            type: 'docsVersionDropdown',
-            position: 'right',
-            dropdownActiveClassDisabled: true,
-          },
           {
             href: "https://github.com/ayushsharma82/ElegantOTA/",
             position: "right",
