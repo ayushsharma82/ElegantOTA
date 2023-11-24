@@ -64,7 +64,7 @@ def on_upload(source, target, env):
                 username = None
                 password = None
                 print("No authentication values specified.")
-                print('Please, add some Options in your .ini file like: "custom_username=username custom_password=password"')
+                print('Please, add some Options in your .ini file like: \n\ncustom_username=username\ncustom_password=password\n')
             if username is None or password is None:
                 print("Authentication required, but no credentials provided.")
                 return
