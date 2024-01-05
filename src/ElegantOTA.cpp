@@ -23,6 +23,26 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
       response->addHeader("Content-Encoding", "gzip");
       request->send(response);
     });
+  #elif defined(ELEGANTOTA_USE_PSYCHIC)
+    PsychicEndpoint* endpoint = _server->on("/update", HTTP_GET, [this](PsychicRequest *request){
+
+       PsychicResponse response(request);
+        response.setCode(200);
+        response.setContentType("text/html");
+
+        response.addHeader("Content-Encoding", "gzip");
+
+        //add our actual content
+        response.setContent(ELEGANT_HTML, sizeof(ELEGANT_HTML));
+
+        return response.send();
+
+    });
+    if(endpoint && _authenticate )
+    {
+      endpoint->setAuthentication(_username, _password);
+    }
+
   #else
     _server->on("/update", HTTP_GET, [&](){
       if (_authenticate && !_server->authenticate(_username, _password)) {
@@ -101,6 +121,98 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
 
       return request->send((Update.hasError()) ? 400 : 200, "text/plain", (Update.hasError()) ? _update_error_str.c_str() : "OK");
     });
+  #elif defined(ELEGANTOTA_USE_PSYCHIC)
+    endpoint = _server->on("/ota/start", HTTP_GET, [this](PsychicRequest *request) {
+
+      // Get header x-ota-mode value, if present
+      OTA_Mode mode = OTA_MODE_FIRMWARE;
+      // Get mode from arg
+      PsychicWebParameter * p = request->getParam("mode");
+      if (request->hasParam("mode") && p) {
+                
+        String argValue = p->value();
+        if (argValue == "fs") {
+          ELEGANTOTA_DEBUG_MSG("OTA Mode: Filesystem\n");
+          mode = OTA_MODE_FILESYSTEM;
+        } else {
+          ELEGANTOTA_DEBUG_MSG("OTA Mode: Firmware\n");
+          mode = OTA_MODE_FIRMWARE;
+        }
+      }
+
+      // Get file MD5 hash from arg
+      p = request->getParam("hash");
+      if (request->hasParam("") && p) {
+        String hash = p->value();
+        ELEGANTOTA_DEBUG_MSG(String("MD5: "+hash+"\n").c_str());
+        if (!Update.setMD5(hash.c_str())) {
+          ELEGANTOTA_DEBUG_MSG("ERROR: MD5 hash not valid\n");          
+          return request->reply(400, "text/plain", "MD5 parameter invalid");
+        }
+      }
+
+     #if UPDATE_DEBUG == 1
+        // Serial output must be active to see the callback serial prints
+        Serial.setDebugOutput(true);
+      #endif
+
+      // Pre-OTA update callback
+      if (preUpdateCallback != NULL) preUpdateCallback();
+
+      // Start update process
+      #if defined(ESP8266)
+        uint32_t update_size = mode == OTA_MODE_FILESYSTEM ? ((size_t)FS_end - (size_t)FS_start) : ((ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000);
+        if (mode == OTA_MODE_FILESYSTEM) {
+          close_all_fs();
+        }
+        Update.runAsync(true);
+        if (!Update.begin(update_size, mode == OTA_MODE_FILESYSTEM ? U_FS : U_FLASH)) {
+          ELEGANTOTA_DEBUG_MSG("Failed to start update process\n");
+          // Save error to string
+          StreamString str;
+          Update.printError(str);
+          _update_error_str = str.c_str();
+          _update_error_str += "\n";
+          ELEGANTOTA_DEBUG_MSG(_update_error_str.c_str());
+        }
+      #elif defined(ESP32)  
+        if (!Update.begin(UPDATE_SIZE_UNKNOWN, mode == OTA_MODE_FILESYSTEM ? U_SPIFFS : U_FLASH)) {
+          ELEGANTOTA_DEBUG_MSG("Failed to start update process\n");
+          // Save error to string
+          StreamString str;
+          Update.printError(str);
+          _update_error_str = str.c_str();
+          _update_error_str += "\n";
+          ELEGANTOTA_DEBUG_MSG(_update_error_str.c_str());
+        }
+      #elif defined(TARGET_RP2040)
+        uint32_t update_size = 0;
+        // Gather FS Size
+        if (mode == OTA_MODE_FILESYSTEM) {
+          update_size = ((size_t)&_FS_end - (size_t)&_FS_start);
+          LittleFS.end();
+        } else {
+          FSInfo64 i;
+          LittleFS.begin();
+          LittleFS.info64(i);
+          update_size = i.totalBytes - i.usedBytes;
+        }
+        // Start update process
+        if (!Update.begin(update_size, mode == OTA_MODE_FILESYSTEM ? U_FS : U_FLASH)) {
+          ELEGANTOTA_DEBUG_MSG("Failed to start update process because there is not enough space\n");
+          _update_error_str = "Not enough space";
+          return _server->send(400, "text/plain", _update_error_str.c_str());
+        }
+      #endif
+
+      return request->reply((Update.hasError()) ? 400 : 200, "text/plain", (Update.hasError()) ? _update_error_str.c_str() : "OK");            
+    });
+
+    if(endpoint && _authenticate )
+    {
+      endpoint->setAuthentication(_username, _password);
+    }
+
   #else
     _server->on("/ota/start", HTTP_GET, [&]() {
       if (_authenticate && !_server->authenticate(_username, _password)) {
@@ -243,6 +355,76 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
             return;
         }
     });
+  #elif defined(ELEGANTOTA_USE_PSYCHIC)
+
+      PsychicUploadHandler *uploadHandler = new PsychicUploadHandler();
+      uploadHandler->onUpload([this](PsychicRequest *request, const String& filename, uint64_t index, uint8_t *data, size_t len, bool last) {
+
+        //Upload handler chunks in data
+        if (!index) {
+          // Reset progress size on first frame
+          _current_progress_size = 0;
+        }
+
+        // Write chunked data to the free sketch space
+        if(len){
+            if (Update.write(data, len) != len) {
+                return request->reply(400, "text/plain", "Failed to write chunked data to free space");
+            }
+            _current_progress_size += len;
+            // Progress update callback
+            if (progressUpdateCallback != NULL) progressUpdateCallback(_current_progress_size, request->contentLength());
+        }
+            
+        if (last) { // if the final flag is set then this is the last frame of data
+            if (!Update.end(true)) { //true to set the size to the current progress
+                // Save error to string
+                StreamString str;
+                Update.printError(str);
+                _update_error_str = str.c_str();
+                _update_error_str += "\n";
+                ELEGANTOTA_DEBUG_MSG(_update_error_str.c_str());
+            }
+        }else{
+            return ESP_OK; // TODO is this the right return code here?
+        }
+
+
+        return ESP_OK;
+      });
+
+      //gets called after upload has been handled
+      uploadHandler->onRequest([this](PsychicRequest *request)
+      {
+        // Post-OTA update callback
+        if (postUpdateCallback != NULL) postUpdateCallback(!Update.hasError());
+
+        PsychicResponse response(request);
+        
+        response.setContentType("text/plain");
+        response.addHeader("Connection", "close");        
+        response.addHeader("Access-Control-Allow-Origin", "*");
+
+        bool hasError = (Update.hasError());
+        response.setCode(hasError ? 400 : 200);        
+        response.setContent(hasError ? _update_error_str.c_str() : "OK");
+
+        esp_err_t err =  response.send();
+
+        // Set reboot flag
+        if (!Update.hasError()) {
+          if (_auto_reboot) {
+            _reboot_request_millis = millis();
+            _reboot = true;
+          }
+        }
+        return err;
+      });
+
+      uploadHandler->setAuthentication(_username, _password);
+      
+      _server->on("/ota/upload", HTTP_POST, uploadHandler);      
+    
   #else
     _server->on("/ota/upload", HTTP_POST, [&](){
       if (_authenticate && !_server->authenticate(_username, _password)) {

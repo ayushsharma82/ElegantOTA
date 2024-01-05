@@ -67,6 +67,9 @@ _____ _                        _    ___ _____  _
     #include "AsyncTCP.h"
     #include "ESPAsyncWebServer.h"
     #define ELEGANTOTA_WEBSERVER AsyncWebServer
+  #elif ELEGANTOTA_USE_PSYCHIC == 1
+    #include <PsychicHttp.h>
+    #define ELEGANTOTA_WEBSERVER PsychicHttpServer
   #else
     #include "WiFi.h"
     #include "WiFiClient.h"
