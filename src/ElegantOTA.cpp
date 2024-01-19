@@ -279,10 +279,10 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
 
           _current_progress_size += upload.currentSize;
           // Progress update callback
-          if (progressUpdateCallback != NULL) progressUpdateCallback(_current_progress_size, upload.totalSize);
+          if (progressUpdateCallback != NULL) progressUpdateCallback(_current_progress_size, upload.contentLength);
       } else if (upload.status == UPLOAD_FILE_END) {
           if (Update.end(true)) {
-              ELEGANTOTA_DEBUG_MSG(String("Update Success: "+String(upload.totalSize)+"\n").c_str());
+              ELEGANTOTA_DEBUG_MSG(String("Update Success: "+String(upload.contentLength)+"\n").c_str());
           } else {
               ELEGANTOTA_DEBUG_MSG("[!] Update Failed\n");
               // Store error to string
