@@ -79,18 +79,20 @@ _____ _                        _    ___ _____  _
   #include "Arduino.h"
   #include "FS.h"
   #include "LittleFS.h"
-  #include "WiFiClient.h"
-  #include "WiFiServer.h"
-  #include "WebServer.h"
-  #include "WiFiUdp.h"
   #include "StreamString.h"
   #include "Updater.h"
-  #define HARDWARE              "RP2040"
-  #define ELEGANTOTA_WEBSERVER  WebServer
-  // Throw an error if async mode is enabled
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
-    #error "Async mode is not supported on RP2040. Please set ELEGANTOTA_USE_ASYNC_WEBSERVER to 0."
+    #include "AsyncTCP_RP2040W.h"
+    #include "ESPAsyncWebServer.h"
+    #define ELEGANTOTA_WEBSERVER AsyncWebServer
+  #else
+    #include "WiFiClient.h"
+    #include "WiFiServer.h"
+    #include "WebServer.h"
+    #include "WiFiUdp.h"
+    #define ELEGANTOTA_WEBSERVER WebServer
   #endif
+  #define HARDWARE "RP2040"
   extern uint8_t _FS_start;
   extern uint8_t _FS_end;
 #endif
