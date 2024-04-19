@@ -33,7 +33,7 @@ ElegantOTA.loop();
 <br/>
 
 ### Final Code
-That's it! This is how a ready to use example will look like:
+That's it! This is how a ready to use example will look like. After uploading the code to your platform, you can access ElegantOTA portal on `http://<YOUR_DEVICE_IP>/update`.
 
 ```cpp
 /*
