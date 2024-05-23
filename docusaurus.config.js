@@ -118,10 +118,6 @@ const config = {
                 label: 'Twitter',
                 href: 'https://twitter.com/asrocks5',
               },
-              {
-                label: 'Buy me a Coffee (BMC)',
-                href: 'https://www.buymeacoffee.com/6QGVpSj',
-              },
             ],
           },
           {
