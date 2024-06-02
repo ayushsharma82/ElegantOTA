@@ -15,6 +15,14 @@
       "maintainer": true
     }
   ],
+  "dependencies": [
+    {
+      "owner": "mathieucarbou",
+      "name": "ESP Async WebServer",
+      "version": "^2.10.1",
+      "platforms": ["espressif8266", "espressif32"]
+    }
+  ],
   "version": "3.1.1",
   "frameworks": "arduino",
   "platforms": ["espressif8266", "espressif32", "raspberrypi"]
