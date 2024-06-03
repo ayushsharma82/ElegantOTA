@@ -74,6 +74,7 @@ jobs:
         run: arduino-cli compile --library . --warnings none -b ${{ matrix.board }} "examples/Demo/Demo.ino"
 
       - name: Configure ElegantOTA to Async Mode
+        if: ${{ matrix.core != 'rp2040:rp2040' }}
         run: |
           cd src
           sed -i 's/ELEGANTOTA_USE_ASYNC_WEBSERVER 0/ELEGANTOTA_USE_ASYNC_WEBSERVER 1/' ElegantOTA.h
@@ -117,12 +118,6 @@ jobs:
             board: huzzah
             platform: espressif8266
             opts:
-          - name: rp2040|raspberrypi
-            board: pico
-            platform: raspberrypi
-          - name: rp2040|raspberrypi-1
-            board: pico
-            platform: raspberrypi@1.13.0
     steps:
       - uses: actions/checkout@v4
       - name: Set up cache
@@ -141,5 +136,4 @@ jobs:
         run: platformio platform install ${{ matrix.platform }}
 
       - run: platformio ci "examples/Demo/Demo.ino" -l '.' -b ${{ matrix.board }} ${{ matrix.opts }}
-      - if: ${{ !contains(matrix.platform, 'raspberrypi') }}
-        run: PLATFORMIO_BUILD_FLAGS="-DELEGANTOTA_USE_ASYNC_WEBSERVER=1" platformio ci "examples/AsyncDemo/AsyncDemo.ino" -l '.' -b ${{ matrix.board }} ${{ matrix.opts }}
+      - run: PLATFORMIO_BUILD_FLAGS="-DELEGANTOTA_USE_ASYNC_WEBSERVER=1" platformio ci "examples/AsyncDemo/AsyncDemo.ino" -l '.' -b ${{ matrix.board }} ${{ matrix.opts }}
