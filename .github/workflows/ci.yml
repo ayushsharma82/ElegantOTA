@@ -38,6 +38,10 @@ jobs:
             core: esp8266:esp8266
             board: esp8266:esp8266:huzzah
             index_url: https://arduino.esp8266.com/stable/package_esp8266com_index.json
+          - name: package_rp2040_index.json
+            core: rp2040:rp2040
+            board: rp2040:rp2040:rpipicow
+            index_url: https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
 
     steps:
       - name: Checkout
@@ -64,7 +68,7 @@ jobs:
         run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/esphome-ESPAsyncTCP#v2.0.0
 
       - name: Install ESPAsyncWebServer
-        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/ESPAsyncWebServer#v2.10.1
+        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/ESPAsyncWebServer#v2.10.4
 
       - name: Build Demo
         run: arduino-cli compile --library . --warnings none -b ${{ matrix.board }} "examples/Demo/Demo.ino"
@@ -75,6 +79,7 @@ jobs:
           sed -i 's/ELEGANTOTA_USE_ASYNC_WEBSERVER 0/ELEGANTOTA_USE_ASYNC_WEBSERVER 1/' ElegantOTA.h
 
       - name: Build AsyncDemo
+        if: ${{ matrix.core != 'rp2040:rp2040' }}
         run: arduino-cli compile --library . --warnings none -b ${{ matrix.board }} "examples/AsyncDemo/AsyncDemo.ino"
 
   platformio:
@@ -112,6 +117,12 @@ jobs:
             board: huzzah
             platform: espressif8266
             opts:
+          - name: rp2040|raspberrypi
+            board: pico
+            platform: raspberrypi
+          - name: rp2040|raspberrypi-1
+            board: pico
+            platform: raspberrypi@1.13.0
     steps:
       - uses: actions/checkout@v4
       - name: Set up cache
@@ -124,8 +135,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-      - run: pip install platformio
-      - run: platformio platform install ${{ matrix.platform }}
+      - name: Install PlatformIO
+        run: pip install platformio
+      - name: Install Platform
+        run: platformio platform install ${{ matrix.platform }}
 
       - run: platformio ci "examples/Demo/Demo.ino" -l '.' -b ${{ matrix.board }} ${{ matrix.opts }}
-      - run: PLATFORMIO_BUILD_FLAGS="-DELEGANTOTA_USE_ASYNC_WEBSERVER=1" platformio ci "examples/AsyncDemo/AsyncDemo.ino" -l '.' -b ${{ matrix.board }} ${{ matrix.opts }}
+      - if: ${{ !contains(matrix.platform, 'raspberrypi') }}
+        run: PLATFORMIO_BUILD_FLAGS="-DELEGANTOTA_USE_ASYNC_WEBSERVER=1" platformio ci "examples/AsyncDemo/AsyncDemo.ino" -l '.' -b ${{ matrix.board }} ${{ matrix.opts }}
