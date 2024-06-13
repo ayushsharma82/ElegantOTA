@@ -15,21 +15,15 @@
       "maintainer": true
     }
   ],
-  "dependencies":
-  [
+  "dependencies": [
     {
-      "owner": "esphome",
-      "name": "ESPAsyncWebServer-esphome",
-      "version": "^3.0.0",
-      "platforms": ["espressif8266", "espressif32"]
-    },
-    {
-      "name": "ESPAsyncWebServer",
-      "version": "https://github.com/doomhammer/ESPAsyncWebServer#more-rp2040-fixes",
-      "platforms": ["raspberrypi"]
+      "owner": "mathieucarbou",
+      "name": "ESP Async WebServer",
+      "version": "^2.10.4",
+      "platforms": ["espressif8266", "espressif32", "raspberrypi"]
     }
   ],
-  "version": "3.1.1",
+  "version": "3.1.2",
   "frameworks": "arduino",
   "platforms": ["espressif8266", "espressif32", "raspberrypi"]
 }
