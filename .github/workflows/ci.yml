@@ -61,26 +61,31 @@ jobs:
       - name: Install core
         run: arduino-cli core install --additional-urls "${{ matrix.index_url }}" ${{ matrix.core }}
 
-      - name: Install AsyncTCP
+      - name: Install AsyncTCP (ESP32)
+        if: ${{ matrix.core == 'esp32:esp32' }}
         run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/AsyncTCP#v3.1.4
 
-      - name: Install ESPAsyncTCP
+      - name: Install AsyncTCP (RP2040)
+        if: ${{ matrix.core == 'rp2040:rp2040' }}
+        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/khoih-prog/AsyncTCP_RP2040W#v1.2.0
+
+      - name: Install ESPAsyncTCP (ESP8266)
+        if: ${{ matrix.core == 'esp8266:esp8266' }}
         run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/esphome-ESPAsyncTCP#v2.0.0
 
-      - name: Install ESPAsyncWebServer
-        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/ESPAsyncWebServer#v2.10.4
+      - name: Install ESPAsyncWebServer (ESP32/ESP8266)
+        if: ${{ matrix.core == 'esp32:esp32' || matrix.core == 'esp8266:esp8266' || matrix.core == 'rp2040:rp2040' }}
+        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/ESPAsyncWebServer#v2.10.8
 
       - name: Build Demo
         run: arduino-cli compile --library . --warnings none -b ${{ matrix.board }} "examples/Demo/Demo.ino"
 
-      - name: Configure ElegantOTA to Async Mode
-        if: ${{ matrix.core != 'rp2040:rp2040' }}
+      - name: Configure Async Mode
         run: |
           cd src
           sed -i 's/ELEGANTOTA_USE_ASYNC_WEBSERVER 0/ELEGANTOTA_USE_ASYNC_WEBSERVER 1/' ElegantOTA.h
 
-      - name: Build AsyncDemo
-        if: ${{ matrix.core != 'rp2040:rp2040' }}
+      - name: Build Async Demo
         run: arduino-cli compile --library . --warnings none -b ${{ matrix.board }} "examples/AsyncDemo/AsyncDemo.ino"
 
   platformio:
@@ -134,6 +139,6 @@ jobs:
         run: pip install platformio
       - name: Install Platform
         run: platformio platform install ${{ matrix.platform }}
-
+        
       - run: platformio ci "examples/Demo/Demo.ino" -l '.' -b ${{ matrix.board }} ${{ matrix.opts }}
       - run: PLATFORMIO_BUILD_FLAGS="-DELEGANTOTA_USE_ASYNC_WEBSERVER=1" platformio ci "examples/AsyncDemo/AsyncDemo.ino" -l '.' -b ${{ matrix.board }} ${{ matrix.opts }}
