@@ -6,7 +6,7 @@
 #
 # extra_scripts = platformio_upload.py
 # upload_protocol = custom
-# upload_url = <your upload URL>
+# custom_upload_url = <your upload URL>
 # 
 # An example of an upload URL:
 #                upload_url = http://192.168.1.123/update 
