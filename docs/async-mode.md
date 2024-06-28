@@ -4,16 +4,31 @@ sidebar_label: Async Mode
 sidebar_position: 7
 ---
 
-> NOTE: Async Mode is supported for ESP8266 & ESP32 microcontrollers only
-
 ## Introduction
 
 One of the features of ElegantOTA is the async mode, which provides asynchronous web server functionality for handling OTA updates. This mode should only be enabled if you are using ESPAsyncWebServer library in your project/firmware.
 
 
-## Enabling Async Mode
+### Dependencies
 
-### For Arduino IDE:
+#### For ESP8266
+
+- (mathieucarbou) [esphome-ESPAsyncTCP](https://github.com/mathieucarbou/esphome-ESPAsyncTCP#v2.0.0) - **v2.0.0**
+- (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.0.3) - **v3.0.3**
+
+#### For ESP32
+
+- (mathieucarbou) [AsyncTCP](https://github.com/mathieucarbou/AsyncTCP#v3.1.4) @ **v3.1.4**
+- (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.0.3) - **v3.0.3**
+
+#### For RP2040+W
+
+- (khoih-prog) [AsyncTCP_RP2040W](https://github.com/khoih-prog/AsyncTCP_RP2040W#v1.2.0) @ **v1.2.0**
+- (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.0.3) - **v3.0.3**
+
+### Enabling Async Mode
+
+#### For Arduino IDE
 
 1. Go to your Arduino libraries directory
 2. Open `ElegantOTA` folder and then open `src` folder
@@ -27,8 +42,7 @@ One of the features of ElegantOTA is the async mode, which provides asynchronous
 
 5. You are now ready to use ElegantOTA in async mode for your OTA updates, utilizing the ESPAsyncWebServer library.
 
-
-### For PlatformIO:
+#### For PlatformIO
 
 If you use PlatformIO then we can use a neat trick! You can set `build_flags` in your `platformio.ini` file that enables Async Mode of ElegantOTA.
 
@@ -38,8 +52,7 @@ If you use PlatformIO then we can use a neat trick! You can set `build_flags` in
 
 PlatformIO will now compile ElegantOTA in Async Mode!
 
-
-## Benefits of Async Mode
+### Benefits of Async Mode
 
 Enabling async mode for ElegantOTA offers several advantages:
 

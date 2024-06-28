@@ -4,19 +4,7 @@ sidebar_label: Installation
 sidebar_position: 2
 ---
 
-ElegantOTA requires no dependencies and runs out of the box with existing libraries provided in Arduino core. You can install ElegantOTA through one of the following methods: 
-<!-- 
-##### For ESP8266:
-- [ESP8266 Arduino Core](https://github.com/esp8266/Arduino) - **(latest)**
-- [ESPAsyncTCP](https://github.com/me-no-dev/ESPAsyncTCP) - **v1.2.0**
-- [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer) - **v1.2.3**
-- [ArduinoJson](https://github.com/bblanchon/ArduinoJson) - **v6.17.0**
-
-##### For ESP32:
-- [ESP32 Arduino Core](https://github.com/espressif/arduino-esp32) - **(latest)**
-- [AsyncTCP](https://github.com/me-no-dev/AsyncTCP) - **v1.0.3**
-- [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer) - **v1.2.3**
-- [ArduinoJson](https://github.com/bblanchon/ArduinoJson) - **v6.17.0** -->
+ElegantOTA requires no dependencies and runs out of the box with existing libraries provided in Arduino core. You can install ElegantOTA through one of the following methods:
 
 ---
 
