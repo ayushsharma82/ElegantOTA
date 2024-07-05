@@ -6,7 +6,16 @@
 #
 # extra_scripts = platformio_upload.py
 # upload_protocol = custom
-# custom_upload_url = <your upload URL>
+# custom_upload_url = <your upload URL> (optional)
+# custom_username = <ElegantOTA username> (optional)
+# custom_password = <ElgantOTA password> (optional)
+#
+# If custom_upload_url is not specified in platformio.ini, you must define a
+# hostname in src/config.h using:
+# #define HOSTNAME "<your hostname>"
+# Username and password can similarly be specified using:
+# #define OTA_USER "<ElegantOTA username>"
+# #define OTA_PASS "<ElegantOTA password>"
 # 
 # An example of an upload URL:
 #                custom_upload_url = http://192.168.1.123/update 
@@ -33,7 +42,32 @@ def on_upload(source, target, env):
     firmware_path = str(source[0])
 
     auth = None
-    upload_url_compatibility = env.GetProjectOption('custom_upload_url')
+    upload_url_compatibility = None
+    username = None
+    password = None
+
+    # Attempt to get credentials and hostname from config header
+    try:
+        with open(env['PROJECT_SRC_DIR'] + '/config.h', 'r') as f:
+            for line in f.readlines():
+                if 'HOSTNAME' in line:
+                    upload_url_compatibility = 'http://' + line.split('"')[1] + '/update'
+                if 'OTA_USER' in line:
+                    username = line.split('"')[1]
+                if 'OTA_PASS' in line:
+                    password = line.split('"')[1]
+    except:
+        pass
+
+    try:
+        upload_url_compatibility = env.GetProjectOption('custom_upload_url')
+        username = env.GetProjectOption('custom_username')
+        password = env.GetProjectOption('custom_password')
+    except:
+        pass
+
+    if upload_url_compatibility is None:
+        return "No upload URL or hostname specified."
     upload_url = upload_url_compatibility.replace("/update", "")
 
     with open(firmware_path, 'rb') as firmware:
@@ -61,14 +95,6 @@ def on_upload(source, target, env):
             return 'Error checking auth: ' + repr(e)
         
         if checkAuthResponse.status_code == 401:
-            try:
-                username = env.GetProjectOption('custom_username')
-                password = env.GetProjectOption('custom_password')
-            except:
-                username = None
-                password = None
-                print("No authentication values specified.")
-                print('Please, add some Options in your .ini file like: \n\ncustom_username=username\ncustom_password=password\n')
             if username is None or password is None:
                 return "Authentication required, but no credentials provided."
             print("Serverconfiguration: authentication needed.")
