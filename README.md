@@ -56,7 +56,7 @@ ElegantOTA works on the following microcontrollers/boards:
 <br>
 <br>
 
-## Want More? Upgrade to Pro
+## Looking for more? Upgrade to Pro.
 
 ElegantOTA Pro comes with the following extended functionality:
 - New Drag & Drop Zone
