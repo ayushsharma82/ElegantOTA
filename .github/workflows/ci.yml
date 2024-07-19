@@ -7,7 +7,6 @@ on:
       - "/keywords.txt"
       - "/library.json"
       - "/library.properties"
-      - "/vue-frontend"
       - "/docs"
   pull_request:
     paths-ignore:
@@ -15,7 +14,6 @@ on:
       - "/keywords.txt"
       - "/library.json"
       - "/library.properties"
-      - "/vue-frontend"
       - "/docs"
 
 jobs:
