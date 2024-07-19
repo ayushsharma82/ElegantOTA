@@ -14,17 +14,17 @@ One of the features of ElegantOTA is the async mode, which provides asynchronous
 #### For ESP8266
 
 - (mathieucarbou) [esphome-ESPAsyncTCP](https://github.com/mathieucarbou/esphome-ESPAsyncTCP#v2.0.0) - **v2.0.0**
-- (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.0.5) - **v3.0.5**
+- (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.1.1) - **v3.1.1**
 
 #### For ESP32
 
-- (mathieucarbou) [AsyncTCP](https://github.com/mathieucarbou/AsyncTCP#v3.1.4) @ **v3.1.4**
-- (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.0.5) - **v3.0.5**
+- (mathieucarbou) [AsyncTCP](https://github.com/mathieucarbou/AsyncTCP#v3.2.3) @ **v3.2.3**
+- (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.1.1) - **v3.1.1**
 
 #### For RP2040+W
 
 - (khoih-prog) [AsyncTCP_RP2040W](https://github.com/khoih-prog/AsyncTCP_RP2040W#v1.2.0) @ **v1.2.0**
-- (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.0.5) - **v3.0.5**
+- (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.1.1) - **v3.1.1**
 
 ### Enabling Async Mode
 
