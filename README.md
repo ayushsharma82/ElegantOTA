@@ -1,5 +1,5 @@
 <p><br/></p>
-<p align="center"><img src="/docs/feature.png?sanitize=true&raw=true" width="700"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/main/docs/feature.png" width="700"></p>
 
 <br/>
 <p align="center">
@@ -51,7 +51,7 @@ ElegantOTA works on the following microcontrollers/boards:
 *Preview might appear as blurry due to image optimization.*
 <br>
 
-<img src="/docs/demo.gif?raw=true" width="600">
+<img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/main/docs/demo.gif" width="600">
 
 <br>
 <br>
@@ -74,7 +74,7 @@ ElegantOTA Pro comes with the following extended functionality:
 <br/>
 
 <a href="https://elegantota.pro" target="_blank">
-  <img src="/docs/pro-preview.jpg" alt="ElegantOTA Pro" width="600">
+  <img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/main/docs/pro-preview.jpg" alt="ElegantOTA Pro" width="600">
 </a>
 
 <br>
