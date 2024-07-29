@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://elegantota.pro?ref=ghfeature" target="_blank">
-    <img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/feature2.png" width="1200"></p>
+    <img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/feature.png" width="1200"></p>
   </a>
 </p>
 
