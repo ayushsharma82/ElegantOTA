@@ -9,7 +9,7 @@ sidebar_position: 7
 One of the features of ElegantOTA is the async mode, which provides asynchronous web server functionality for handling OTA updates. This mode should only be enabled if you are using ESPAsyncWebServer library in your project/firmware.
 
 
-### Dependencies
+### Recommended Dependencies
 
 #### For ESP8266
 
@@ -25,6 +25,14 @@ One of the features of ElegantOTA is the async mode, which provides asynchronous
 
 - (khoih-prog) [AsyncTCP_RP2040W](https://github.com/khoih-prog/AsyncTCP_RP2040W#v1.2.0) @ **v1.2.0**
 - (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.1.1) - **v3.1.1**
+
+### Use of Unrecommended Dependencies (Experimental)
+
+Incase your project is strictly dependent on a fork of dependency which is not listed above:
+
+1. Please make sure to install ElegantOTA 'manually' using the steps provided in [installation guide](/docs/installation)
+
+2. If you are using PlatformIO, open `library.json` file in ElegantOTA library folder and delete the `dependencies` parameter. This will disable auto installation of recommended dependencies.
 
 ### Enabling Async Mode
 
