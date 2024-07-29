@@ -30,7 +30,7 @@ One of the features of ElegantOTA is the async mode, which provides asynchronous
 
 Incase your project is strictly dependent on a fork of dependency which is not listed above:
 
-1. Please make sure to install ElegantOTA 'manually' using the steps provided in [installation guide](/docs/installation)
+1. Please make sure to install ElegantOTA 'manually' using the steps provided in [installation guide](/installation)
 
 2. If you are using PlatformIO, open `library.json` file in ElegantOTA library folder and delete the `dependencies` parameter. This will disable auto installation of recommended dependencies.
 
