@@ -16,7 +16,7 @@
 
 <br/>
 
-<p>Over-the-Air update library for wireless microcontrollers</p>
+<p>Over-the-air update library for wireless microcontrollers</p>
 
 <p>
 ElegantOTA provides a beautiful user interface to upload over-the-air firmware/filesystem updates to your hardware with precise status and progress. ElegantOTA is designed to make the process of OTA updates slick and simple!
@@ -27,7 +27,7 @@ ElegantOTA provides a beautiful user interface to upload over-the-air firmware/f
 
 ## Features
 
-- 🔥 Quick & Simple OTA procedure
+- 🔥 Quick & simple OTA procedure
 - 🏀 Get useful insight on progress and status of your OTA update
 - 🎷 No need to learn HTML/CSS/JS
 - 🛫 Ready to use within 3 lines of code
@@ -40,7 +40,7 @@ ElegantOTA works on the following microcontrollers/boards:
 
 - ESP8266
 - ESP32
-- RP2040 ( Pico W )
+- RP2040 (+WiFi / Pico W)
 - *( more coming soon )*
 
 <br/>
@@ -67,17 +67,17 @@ ElegantOTA works on the following microcontrollers/boards:
 ## Looking for more? Upgrade to Pro.
 
 ElegantOTA Pro comes with the following extended functionality:
-- New Drag & Drop Zone
-- Disable certain OTA modes
-- Hardware ID & Firmware Version on portal
-- Custom title
-- Branding (Custom Logo)
+- Exclusive Drag & Drop Zone
+- Toggle OTA modes
+- Hardware ID & Firmware Version on UI
+- Whitelabel / Branding
 - Commercial License
-- Atlast, It is a fantastic way to support the developer for the time went into the making & maintaining the library.
+
+Atlast, It is a fantastic way to support the developer for the time went into the making & maintaining the library.
 
 <br> <b>Available here: </b>
 
-- [Official Website ( elegantota.pro )](https://elegantota.pro)
+- [Official Webstore (elegantota.pro)](https://elegantota.pro)
 
 <br/>
 
@@ -99,4 +99,4 @@ ElegantOTA Pro comes with the following extended functionality:
 
 ElegantOTA open-source edition is licensed under Affero General Public License v3.0 ( AGPL-3.0 ).
 
-If you are intending to use ElegantOTA in a commercial project, please consider purchasing [ElegantOTA Pro](https://elegantota.pro) which comes with a less restrictive SOFTT Commercial License 1.0 ( SCL-1.0 ).
+If you are planning to use ElegantOTA in a commercial project, please consider purchasing [ElegantOTA Pro](https://elegantota.pro) which comes with a less restrictive SOFTT Commercial License 1.2 ( SCL-1.2 ).
