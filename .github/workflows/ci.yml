@@ -4,17 +4,17 @@ on:
   push:
     paths-ignore:
       - "**/**.md"
-      - "/keywords.txt"
-      - "/library.json"
-      - "/library.properties"
-      - "/docs"
+      - "keywords.txt"
+      - "library.json"
+      - "library.properties"
+      - "docs/**"
   pull_request:
     paths-ignore:
       - "**/**.md"
-      - "/keywords.txt"
-      - "/library.json"
-      - "/library.properties"
-      - "/docs"
+      - "keywords.txt"
+      - "library.json"
+      - "library.properties"
+      - "docs/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -64,13 +64,13 @@ jobs:
         run: arduino-cli core install --additional-urls "${{ matrix.index_url }}" ${{ matrix.core }}
 
       - name: Install AsyncTCP
-        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/AsyncTCP#v3.2.6
+        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/AsyncTCP#v3.2.10
 
       - name: Install ESPAsyncTCP
         run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/esphome-ESPAsyncTCP#v2.0.0
 
       - name: Install ESPAsyncWebServer
-        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/ESPAsyncWebServer#v3.3.11
+        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/ESPAsyncWebServer#v3.3.17
 
       - name: Build Demo
         run: arduino-cli compile --library . --warnings none -b ${{ matrix.board }} "examples/Demo/Demo.ino"
