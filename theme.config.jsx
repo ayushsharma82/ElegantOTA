@@ -3,11 +3,18 @@ import { useRouter } from 'next/router'
 
 const Logo = () => {
   const { resolvedTheme } = useTheme();
-  if (resolvedTheme === 'dark') {
-    return <img width={160} src="/logo-dark.svg" />
-  } else {
-    return <img width={160} src="/logo-light.svg" />
-  }
+
+  return (
+    <>
+      {
+        resolvedTheme === 'dark' ? (
+          <img width={160} src="/logo-dark.svg" alt="ElegantOTA" />
+        ) : (
+          <img width={160} src="/logo-light.svg" alt="ElegantOTA" />
+        )
+      }
+    </>
+  );
 }
 
 const config = {
