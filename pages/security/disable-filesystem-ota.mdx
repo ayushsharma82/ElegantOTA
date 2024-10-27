@@ -1,0 +1,45 @@
+---
+title: "Disable Filesystem OTA"
+description: "Learn how to selectively enable or disable filesystem OTA updates in ElegantOTA for enhanced security and control. This guide covers enabling, disabling, and checking the status of filesystem OTA mode."
+---
+
+import ProCallout from '@/components/ProCallout';
+import { Callout } from 'nextra/components'
+
+# Disable Filesystem OTA
+
+<ProCallout />
+
+<br/>
+
+<img src="/ota-modes.png" alt="Modes" width="400px" />
+
+ElegantOTA allows you to selectively enable or disable OTA modes of your choice for security reasons or when you have a important task running where you don't want it to get interrupted by an OTA update. UI automatically hides the modes which have been disabled.
+
+Using these functions you can enable or disable filesystem updates ( SPIFFS or LittleFS ).
+
+#### Enable Filesystem OTA
+```cpp
+// Pass 'true' to enable Filesystem mode
+ElegantOTA.setFilesystemMode(false);
+```
+<Callout>
+  All OTA modes are enabled by default on startup (cold boot).
+</Callout>
+
+
+#### Disable Filesystem OTA
+```cpp
+// Pass 'false' to disable Filesystem mode
+ElegantOTA.setFilesystemMode(true);
+```
+
+#### Get Filesystem OTA mode status
+```cpp
+// You can use this logic inside a function if neccessary
+if(ElegantOTA.checkFilesystemMode() == true) {
+    Serial.println("Filesystem mode is enabled");
+} else {
+    Serial.println("Filesystem mode is disabled");
+}
+```

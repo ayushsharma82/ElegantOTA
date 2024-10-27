@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('./font.css');
+
+body {
+  font-family: 'Geist', Arial, Helvetica, sans-serif;
+}

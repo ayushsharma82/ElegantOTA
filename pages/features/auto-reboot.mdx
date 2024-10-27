@@ -1,0 +1,33 @@
+---
+title: "Auto Reboot"
+description: "Learn how to control the automatic reboot feature in ElegantOTA after successful OTA updates. This guide explains how to enable or disable auto-reboot functionality using the setAutoReboot function."
+---
+
+# Auto Reboot
+
+Often there comes a situation where you don't want to reboot automatically. In these cases, you can use the `setAutoReboot` function which will enable/disable automatic reboot of your microcontroller after a successful OTA update.
+
+## Set Auto Reboot
+
+You can set up auto reboot for your device using the `ElegantOTA.setAutoReboot(false);` function. This functions takes `true` or `false` to enable / disable automatic reboot. You can use this function anywhere in your code.
+
+## Reference
+
+```cpp
+#include <ElegantOTA.h>
+
+void setup() {
+  // Initialize your hardware and other configurations here
+
+  // Disable Auto Reboot
+  ElegantOTA.setAutoReboot(false);
+
+  // Additional setup code
+}
+
+void loop() {
+  // Your main loop code here
+}
+```
+
+In the above example, the `ElegantOTA.setAutoReboot(false);` function call disables automatic reboot.

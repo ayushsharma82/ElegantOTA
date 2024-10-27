@@ -1,0 +1,66 @@
+---
+title: "Installation"
+description: "Learn how to install ElegantOTA for various platforms including Arduino IDE and PlatformIO. This guide covers both Library Manager and manual installation methods, with special instructions for PlatformIO users."
+---
+
+import { Callout } from 'nextra/components'
+
+# Installation
+
+Learn how to effortlessly set up ElegantOTA, a sleek, web-based tool for seamless over-the-air firmware updates. This guide walks you through the installation process, from initial setup to first use, helping you upgrade your projects with ease and style.
+
+
+## Platforms
+
+
+### For Arduino IDE
+
+#### Library Manager
+
+Go to Sketch > Include Library > Library Manager > Search for "ElegantOTA" > Install
+
+#### Manual Installation
+
+##### For Windows
+
+1. Download the [Repository](https://github.com/ayushsharma82/ElegantOTA/archive/master.zip)
+2. Extract the .zip in `Documents > Arduino > Libraries > {Place "ElegantOTA" folder Here}`
+
+##### For Linux
+
+1. Download the [Repository](https://github.com/ayushsharma82/ElegantOTA/archive/master.zip)
+2. Extract the .zip in `Sketchbook > Libraries > {Place "ElegantOTA" folder Here}`
+
+##### Import through Arduino IDE
+
+1. Download the [Repository](https://github.com/ayushsharma82/ElegantOTA/archive/master.zip)
+2. Go to `Sketch > Include Library > Add .zip Library > Select the Downloaded .zip File.`
+
+<br/>
+
+### For PlatformIO
+
+<Callout type="info">
+Required changes in platformio.ini
+
+As ElegantOTA supports multiple architectures, PlatformIO will try to include all the dependencies automatically which will often result in compilation errors. To mitigate this issue, please follow these steps:
+
+1. Delete `.pio/libdeps` folder (if it exists) in your project before proceeding.
+2. Open `platformio.ini` file of your project.
+3. Add the following line inside your `platformio.ini` file:
+
+    ```ini
+    lib_compat_mode = strict
+    ```
+
+4. Save the changes to the `platformio.ini` file.
+</Callout>
+
+#### Library Manager
+
+Go to PlatformIO Menu > Libraries > Search for "ElegantOTA" > Install in your project.
+
+#### Manual Installation
+
+1. Download the [Repository](https://github.com/ayushsharma82/ElegantOTA/archive/master.zip)
+2. Extract the .zip in `lib` folder of your project

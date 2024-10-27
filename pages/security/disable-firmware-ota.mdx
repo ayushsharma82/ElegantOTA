@@ -1,0 +1,47 @@
+---
+title: "Disable Firmware OTA"
+description: "Learn how to selectively enable or disable firmware OTA updates in ElegantOTA for enhanced security and control. This guide covers enabling, disabling, and checking the status of firmware OTA mode."
+---
+
+import ProCallout from '@/components/ProCallout';
+import { Callout } from 'nextra/components'
+
+# Disable Firmware OTA
+
+<ProCallout />
+
+<br/>
+
+<img src="/ota-modes.png" alt="Modes" width="400px" />
+
+ElegantOTA allows you to selectively enable or disable OTA modes of your choice for security reasons or when you have a important task running where you don't want it to get interrupted by an OTA update. UI automatically hides the modes which have been disabled.
+
+<Callout type="warning" emoji="⚠️">
+This function should be used very carefully as it blocks firmware update! If by mistake this is left disabled, your device will not be recoverable by an OTA update.
+</Callout>
+
+
+#### Enable Firmware OTA
+```cpp
+// Pass 'true' to enable Firmware mode
+ElegantOTA.setFirmwareMode(true);
+```
+<Callout>
+  All OTA modes are enabled by default on startup (cold boot).
+</Callout>
+
+#### Disable Firmware OTA
+```cpp
+// Pass 'false' to disable Firmware mode
+ElegantOTA.setFirmwareMode(false);
+```
+
+#### Get Firmware OTA mode status
+```cpp
+// You can use this logic inside a function if neccessary
+if(ElegantOTA.checkFirmwareMode() == true) {
+    Serial.println("Firmware mode is enabled");
+} else {
+    Serial.println("Firmware mode is disabled");
+}
+```
