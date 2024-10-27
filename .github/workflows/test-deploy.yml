@@ -1,24 +1,22 @@
-name: Test Docusaurus Build
+name: Test Docs Build
 
 on:
-  pull_request:
+  push:
     branches:
       - docs
-    # Review gh actions docs if you want to further define triggers, paths, etc
-    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
 
 jobs:
   test-deploy:
-    name: Test deployment
+    name: Test Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 21
           cache: npm
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
-      - name: Test build website
-        run: yarn build
+        run: npm install --frozen-lockfile
+      - name: Build website
+        run: npm run build
