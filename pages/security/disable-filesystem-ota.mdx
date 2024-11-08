@@ -21,7 +21,7 @@ Using these functions you can enable or disable filesystem updates ( SPIFFS or L
 #### Enable Filesystem OTA
 ```cpp
 // Pass 'true' to enable Filesystem mode
-ElegantOTA.setFilesystemMode(false);
+ElegantOTA.setFilesystemMode(true);
 ```
 <Callout>
   All OTA modes are enabled by default on startup (cold boot).
@@ -31,7 +31,7 @@ ElegantOTA.setFilesystemMode(false);
 #### Disable Filesystem OTA
 ```cpp
 // Pass 'false' to disable Filesystem mode
-ElegantOTA.setFilesystemMode(true);
+ElegantOTA.setFilesystemMode(false);
 ```
 
 #### Get Filesystem OTA mode status
