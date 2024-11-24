@@ -3,7 +3,7 @@ import { Head, Html, Main, NextScript } from "next/document";
 const promo_banner = [
   "Black Friday 2024 Sale is Live!",
   "Flat 33% off on Advantage Bundle",
-  "Lowest Price Ever, Grab Now!"
+  "Upgrade Now at Lowest Price Ever!"
 ];
 
 export default function Document() {
