@@ -76,8 +76,11 @@ def on_upload(source, target, env):
         parsed_url = urlparse(upload_url)
         host_ip = parsed_url.netloc
 
-        # Führe die GET-Anfrage aus
-        start_url = f"{upload_url}/ota/start?mode=fr&hash={md5}"
+        is_spiffs = source[0].name == "spiffs.bin"
+        file_type = "fs" if is_spiffs else "fr"
+
+        # execute GET request
+        start_url = f"{upload_url}/ota/start?mode={file_type}&hash={md5}"
 
         start_headers = {
             'Host': host_ip,

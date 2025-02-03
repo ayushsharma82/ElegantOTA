@@ -1,19 +1,24 @@
-<p><br/></p>
-<p align="center"><img src="/docs/feature.png?sanitize=true&raw=true" width="700"></p>
+<p align="center">
+  <a href="https://elegantota.pro?ref=ghfeature" target="_blank">
+    <img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/feature.png" width="1200"></p>
+  </a>
+</p>
 
 <br/>
-<p align="center">
+
+<p>
 <img src="https://img.shields.io/github/last-commit/ayushsharma82/ElegantOTA.svg?style=for-the-badge" />
 &nbsp;
 <img src="https://img.shields.io/github/actions/workflow/status/ayushsharma82/ElegantOTA/ci.yml?branch=master&style=for-the-badge" />
 &nbsp;
 <img src="https://img.shields.io/github/license/ayushsharma82/ElegantOTA.svg?style=for-the-badge" />
 </p>
+
 <br/>
 
+<p>Over-the-air update library for wireless microcontrollers</p>
 
-<p align="center">OTA update library for wireless microcontrollers</p>
-<p align="center">
+<p>
 ElegantOTA provides a beautiful user interface to upload over-the-air firmware/filesystem updates to your hardware with precise status and progress. ElegantOTA is designed to make the process of OTA updates slick and simple!
 </p>
 
@@ -21,7 +26,8 @@ ElegantOTA provides a beautiful user interface to upload over-the-air firmware/f
 <br/>
 
 ## Features
-- 🔥 Quick & Simple OTA procedure
+
+- 🔥 Quick & simple OTA procedure
 - 🏀 Get useful insight on progress and status of your OTA update
 - 🎷 No need to learn HTML/CSS/JS
 - 🛫 Ready to use within 3 lines of code
@@ -29,10 +35,12 @@ ElegantOTA provides a beautiful user interface to upload over-the-air firmware/f
 <br/>
 
 ## Supported MCUs
+
 ElegantOTA works on the following microcontrollers/boards:
+
 - ESP8266
 - ESP32
-- RP2040 ( Pico W )
+- RP2040 (+WiFi / Pico W)
 - *( more coming soon )*
 
 <br/>
@@ -51,30 +59,30 @@ ElegantOTA works on the following microcontrollers/boards:
 *Preview might appear as blurry due to image optimization.*
 <br>
 
-<img src="/docs/demo.gif?raw=true" width="600">
+<img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/demo.gif" width="600">
 
 <br>
 <br>
 
-## Want More? Upgrade to Pro
+## Looking for more? Upgrade to Pro.
 
 ElegantOTA Pro comes with the following extended functionality:
-- New Drag & Drop Zone
-- Disable certain OTA modes
-- Hardware ID & Firmware Version on portal
-- Custom title
-- Branding (Custom Logo)
+- Exclusive Drag & Drop Zone
+- Toggle OTA modes
+- Hardware ID & Firmware Version on UI
+- Whitelabel / Branding
 - Commercial License
-- Atlast, It is a fantastic way to support the developer for the time went into the making & maintaining the library.
+
+Atlast, It is a fantastic way to support the developer for the time went into the making & maintaining the library.
 
 <br> <b>Available here: </b>
 
-- [Official Website ( elegantota.pro )](https://elegantota.pro)
+- [Official Webstore (elegantota.pro)](https://elegantota.pro)
 
 <br/>
 
 <a href="https://elegantota.pro" target="_blank">
-  <img src="/docs/pro-preview.jpg" alt="ElegantOTA Pro" width="600">
+  <img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/pro-preview.jpg" alt="ElegantOTA Pro" width="600">
 </a>
 
 <br>
@@ -91,4 +99,4 @@ ElegantOTA Pro comes with the following extended functionality:
 
 ElegantOTA open-source edition is licensed under Affero General Public License v3.0 ( AGPL-3.0 ).
 
-If you are intending to use ElegantOTA in a commercial project, please consider purchasing [ElegantOTA Pro](https://elegantota.pro) which comes with a less restrictive SOFTT Commercial License 1.0 ( SCL-1.0 ).
+If you are planning to use ElegantOTA in a commercial project, please consider purchasing [ElegantOTA Pro](https://elegantota.pro) which comes with a less restrictive SOFTT Commercial License 1.2 ( SCL-1.2 ).

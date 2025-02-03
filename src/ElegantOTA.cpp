@@ -19,7 +19,11 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
       if(_authenticate && !request->authenticate(_username.c_str(), _password.c_str())){
         return request->requestAuthentication();
       }
-      AsyncWebServerResponse *response = request->beginResponse(200, "text/html", ELEGANT_HTML, sizeof(ELEGANT_HTML));
+      #if defined(ASYNCWEBSERVER_VERSION) && ASYNCWEBSERVER_VERSION_MAJOR > 2  // This means we are using recommended fork of AsyncWebServer
+        AsyncWebServerResponse *response = request->beginResponse(200, "text/html", ELEGANT_HTML, sizeof(ELEGANT_HTML));
+      #else
+        AsyncWebServerResponse *response = request->beginResponse_P(200, "text/html", ELEGANT_HTML, sizeof(ELEGANT_HTML));
+      #endif
       response->addHeader("Content-Encoding", "gzip");
       request->send(response);
     });
@@ -172,9 +176,9 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
           update_size = ((size_t)&_FS_end - (size_t)&_FS_start);
           LittleFS.end();
         } else {
-          FSInfo64 i;
+          FSInfo i;
           LittleFS.begin();
-          LittleFS.info64(i);
+          LittleFS.info(i);
           update_size = i.totalBytes - i.usedBytes;
         }
         // Start update process
