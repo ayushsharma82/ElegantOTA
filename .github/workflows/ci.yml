@@ -64,13 +64,13 @@ jobs:
         run: arduino-cli core install --additional-urls "${{ matrix.index_url }}" ${{ matrix.core }}
 
       - name: Install AsyncTCP
-        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/AsyncTCP#v3.2.10
+        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/ESP32Async/AsyncTCP#v3.3.2
 
       - name: Install ESPAsyncTCP
-        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/esphome-ESPAsyncTCP#v2.0.0
+        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/ESP32Async/ESPAsyncTCP#v2.0.0
 
       - name: Install ESPAsyncWebServer
-        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/mathieucarbou/ESPAsyncWebServer#v3.3.17
+        run: ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL=true arduino-cli lib install --git-url https://github.com/ESP32Async/ESPAsyncWebServer#v3.6.0
 
       - name: Build Demo
         run: arduino-cli compile --library . --warnings none -b ${{ matrix.board }} "examples/Demo/Demo.ino"
@@ -110,17 +110,6 @@ jobs:
           - env: ci-arduino-3
             board: esp32-c3-devkitc-02
           - env: ci-arduino-3
-            board: esp32-c6-devkitc-1
-
-          - env: ci-arduino-310rc1
-            board: esp32dev
-          - env: ci-arduino-310rc1
-            board: esp32-s2-saola-1
-          - env: ci-arduino-310rc1
-            board: esp32-s3-devkitc-1
-          - env: ci-arduino-310rc1
-            board: esp32-c3-devkitc-02
-          - env: ci-arduino-310rc1
             board: esp32-c6-devkitc-1
 
           - env: ci-esp8266
