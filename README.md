@@ -41,6 +41,7 @@ ElegantOTA works on the following microcontrollers/boards:
 - ESP8266
 - ESP32
 - RP2040 (+WiFi / Pico W)
+- RP2350 (+WiFi / Pico 2 W)
 - *( more coming soon )*
 
 <br/>
