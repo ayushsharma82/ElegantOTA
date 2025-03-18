@@ -36,7 +36,7 @@
   #include <WiFi.h>
   #include <WiFiClient.h>
   #include <WebServer.h>
-#elif defined(TARGET_RP2040)
+#elif defined(TARGET_RP2040) || defined(TARGET_RP2350) || defined(PICO_RP2040) || defined(PICO_RP2350)
   #include <WiFi.h>
   #include <WebServer.h>
 #endif
