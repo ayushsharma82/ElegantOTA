@@ -82,7 +82,7 @@ _____ _                        _    ___ _____  _
   #include "LittleFS.h"
   #include "Updater.h"
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
-    #include "AsyncTCP.h"
+    #include "RPAsyncTCP.h"
     #include "ESPAsyncWebServer.h"
     #define ELEGANTOTA_WEBSERVER AsyncWebServer
   #else
