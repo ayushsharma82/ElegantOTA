@@ -115,9 +115,13 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
         }
         // Start update process
         if (!Update.begin(update_size, mode == OTA_MODE_FILESYSTEM ? U_FS : U_FLASH)) {
-          ELEGANTOTA_DEBUG_MSG("Failed to start update process because there is not enough space\n");
-          _update_error_str = "Not enough space";
-          return _server->send(400, "text/plain", _update_error_str.c_str());
+          ELEGANTOTA_DEBUG_MSG("Failed to start update process\n");
+          // Save error to string
+          StreamString str;
+          Update.printError(str);
+          _update_error_str = str.c_str();
+          _update_error_str.concat("\n");
+          ELEGANTOTA_DEBUG_MSG(_update_error_str.c_str());
         }
       #endif
 
