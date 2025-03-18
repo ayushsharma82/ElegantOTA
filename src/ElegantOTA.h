@@ -86,10 +86,11 @@ _____ _                        _    ___ _____  _
     #include "ESPAsyncWebServer.h"
     #define ELEGANTOTA_WEBSERVER AsyncWebServer
   #else
-    #include "WiFi.h"
     #include "WiFiClient.h"
+    #include "WiFiServer.h"
     #include "WebServer.h"
-    #define ELEGANTOTA_WEBSERVER  WebServer
+    #include "WiFiUdp.h"
+    #define ELEGANTOTA_WEBSERVER WebServer
   #endif
 
   #if defined(TARGET_RP2040) || defined(PICO_RP2040)
