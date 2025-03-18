@@ -90,7 +90,6 @@ jobs:
         run: arduino-cli compile --library . --warnings none -b ${{ matrix.board }} "examples/Demo/Demo.ino"
 
       - name: Configure ElegantOTA to Async Mode
-        if: ${{ matrix.core != 'rp2040:rp2040' }}
         run: |
           cd src
           sed -i 's/ELEGANTOTA_USE_ASYNC_WEBSERVER 0/ELEGANTOTA_USE_ASYNC_WEBSERVER 1/' ElegantOTA.h
