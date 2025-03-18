@@ -17,9 +17,9 @@
   ],
   "dependencies": [
     {
-      "owner": "ESP32Async",
+      "owner": "esp32async",
       "name": "ESPAsyncWebServer",
-      "version": "^3.6.0",
+      "version": "^3.7.3",
       "platforms": ["espressif8266", "espressif32"]
     }
   ],
