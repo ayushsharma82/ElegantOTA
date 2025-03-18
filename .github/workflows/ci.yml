@@ -166,4 +166,4 @@ jobs:
           pip install --upgrade platformio
       
       - run: PLATFORMIO_SRC_DIR=examples/Demo PIO_BOARD=${{ matrix.board }} pio run -e ${{ matrix.env }}
-      - run: PLATFORMIO_BUILD_FLAGS="-DNETWIZARD_USE_ASYNC_WEBSERVER=1" PLATFORMIO_SRC_DIR=examples/AsyncDemo PIO_BOARD=${{ matrix.board }} pio run -e ${{ matrix.env }}
+      - run: PLATFORMIO_BUILD_FLAGS="-DELEGANTOTA_USE_ASYNC_WEBSERVER=1" PLATFORMIO_SRC_DIR=examples/AsyncDemo PIO_BOARD=${{ matrix.board }} pio run -e ${{ matrix.env }}
