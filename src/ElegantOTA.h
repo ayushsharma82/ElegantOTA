@@ -89,7 +89,6 @@ _____ _                        _    ___ _____  _
     #include "WiFiClient.h"
     #include "WiFiServer.h"
     #include "WebServer.h"
-    #include "WiFiUdp.h"
     #define ELEGANTOTA_WEBSERVER WebServer
   #endif
 
