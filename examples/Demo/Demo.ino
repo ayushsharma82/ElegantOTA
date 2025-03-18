@@ -52,7 +52,7 @@ const char* password = "";
   ESP8266WebServer server(80);
 #elif defined(ESP32)
   WebServer server(80);
-#elif defined(TARGET_RP2040)
+#elif defined(TARGET_RP2040) || defined(TARGET_RP2350) || defined(PICO_RP2040) || defined(PICO_RP2350)
   WebServer server(80);
 #endif
 
