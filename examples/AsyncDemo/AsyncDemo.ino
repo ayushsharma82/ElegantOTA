@@ -26,6 +26,8 @@
   #include <ESP8266WiFi.h>
 #elif defined(ESP32)
   #include <WiFi.h>
+#elif defined(TARGET_RP2040) || defined(TARGET_RP2350) || defined(PICO_RP2040) || defined(PICO_RP2350)
+  #include <WiFi.h>
 #endif
 
 #include <ESPAsyncWebServer.h>

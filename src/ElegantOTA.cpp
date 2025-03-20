@@ -7,7 +7,7 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
 
   setAuth(username, password);
 
-  #if defined(TARGET_RP2040)
+  #if defined(TARGET_RP2040) || defined(TARGET_RP2350) || defined(PICO_RP2040) || defined(PICO_RP2350)
     if (!__isPicoW) {
       ELEGANTOTA_DEBUG_MSG("RP2040: Not a Pico W, skipping OTA setup\n");
       return;
@@ -101,6 +101,28 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
           _update_error_str.concat("\n");
           ELEGANTOTA_DEBUG_MSG(_update_error_str.c_str());
         }        
+      #elif defined(TARGET_RP2040) || defined(TARGET_RP2350) || defined(PICO_RP2040) || defined(PICO_RP2350)
+        uint32_t update_size = 0;
+        // Gather FS Size
+        if (mode == OTA_MODE_FILESYSTEM) {
+          update_size = ((size_t)&_FS_end - (size_t)&_FS_start);
+          LittleFS.end();
+        } else {
+          FSInfo i;
+          LittleFS.begin();
+          LittleFS.info(i);
+          update_size = i.totalBytes - i.usedBytes;
+        }
+        // Start update process
+        if (!Update.begin(update_size, mode == OTA_MODE_FILESYSTEM ? U_FS : U_FLASH)) {
+          ELEGANTOTA_DEBUG_MSG("Failed to start update process\n");
+          // Save error to string
+          StreamString str;
+          Update.printError(str);
+          _update_error_str = str.c_str();
+          _update_error_str.concat("\n");
+          ELEGANTOTA_DEBUG_MSG(_update_error_str.c_str());
+        }
       #endif
 
       return request->send((Update.hasError()) ? 400 : 200, "text/plain", (Update.hasError()) ? _update_error_str.c_str() : "OK");
@@ -169,7 +191,7 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
           _update_error_str.concat("\n");
           ELEGANTOTA_DEBUG_MSG(_update_error_str.c_str());
         }
-      #elif defined(TARGET_RP2040)
+      #elif defined(TARGET_RP2040) || defined(TARGET_RP2350) || defined(PICO_RP2040) || defined(PICO_RP2350)
         uint32_t update_size = 0;
         // Gather FS Size
         if (mode == OTA_MODE_FILESYSTEM) {
@@ -183,9 +205,13 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
         }
         // Start update process
         if (!Update.begin(update_size, mode == OTA_MODE_FILESYSTEM ? U_FS : U_FLASH)) {
-          ELEGANTOTA_DEBUG_MSG("Failed to start update process because there is not enough space\n");
-          _update_error_str = "Not enough space";
-          return _server->send(400, "text/plain", _update_error_str.c_str());
+          ELEGANTOTA_DEBUG_MSG("Failed to start update process\n");
+          // Save error to string
+          StreamString str;
+          Update.printError(str);
+          _update_error_str = str.c_str();
+          _update_error_str.concat("\n");
+          ELEGANTOTA_DEBUG_MSG(_update_error_str.c_str());
         }
       #endif
 
@@ -327,7 +353,7 @@ void ElegantOTAClass::loop() {
     ELEGANTOTA_DEBUG_MSG("Rebooting...\n");
     #if defined(ESP8266) || defined(ESP32)
       ESP.restart();
-    #elif defined(TARGET_RP2040)
+    #elif defined(TARGET_RP2040) || defined(TARGET_RP2350) || defined(PICO_RP2040) || defined(PICO_RP2350)
       rp2040.reboot();
     #endif
     _reboot = false;

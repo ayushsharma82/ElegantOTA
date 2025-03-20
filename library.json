@@ -1,7 +1,7 @@
 {
   "name": "ElegantOTA",
-  "keywords": "ElegantOTA, OTA, Update, ESP8266, ESP32, over, the, air, firmware, filesystem, littlefs, spiffs",
-  "description": "OTA updates made slick and simple for everyone!",
+  "keywords": "ElegantOTA, OTA, Update, ESP8266, ESP32, RP2040, RP2350, over, the, air, firmware, filesystem, littlefs, spiffs",
+  "description": "OTA updates made slick and simple for everyone! ElegantOTA is a library which provides an interactive portal for your over-the-air updates for wireless microcontrollers like ESP8266, ESP32, RP2040+W and RP2350+W.",
   "repository":
   {
     "type": "git",
@@ -17,16 +17,13 @@
   ],
   "dependencies": [
     {
-      "owner": "mathieucarbou",
+      "owner": "esp32async",
       "name": "ESPAsyncWebServer",
-      "version": "^3.3.11",
-      "platforms": ["espressif8266", "espressif32"]
+      "version": "^3.7.3",
+      "platforms": ["espressif8266", "espressif32", "raspberrypi"]
     }
   ],
-  "version": "3.1.6",
+  "version": "3.1.7",
   "frameworks": "arduino",
-  "platforms": ["espressif8266", "espressif32", "raspberrypi"],
-  "build": {
-    "libCompatMode": "strict"
-  }
+  "platforms": ["espressif8266", "espressif32", "raspberrypi"]
 }

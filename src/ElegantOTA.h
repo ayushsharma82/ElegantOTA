@@ -74,22 +74,28 @@ _____ _                        _    ___ _____  _
     #define ELEGANTOTA_WEBSERVER WebServer
   #endif
   #define HARDWARE "ESP32"
-#elif defined(TARGET_RP2040)
+#elif defined(TARGET_RP2040) || defined(TARGET_RP2350) || defined(PICO_RP2040) || defined(PICO_RP2350)
   #include <functional>
   #include "Arduino.h"
+  #include "StreamString.h"
   #include "FS.h"
   #include "LittleFS.h"
-  #include "WiFiClient.h"
-  #include "WiFiServer.h"
-  #include "WebServer.h"
-  #include "WiFiUdp.h"
-  #include "StreamString.h"
   #include "Updater.h"
-  #define HARDWARE              "RP2040"
-  #define ELEGANTOTA_WEBSERVER  WebServer
-  // Throw an error if async mode is enabled
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
-    #error "Async mode is not supported on RP2040. Please set ELEGANTOTA_USE_ASYNC_WEBSERVER to 0."
+    #include "RPAsyncTCP.h"
+    #include "ESPAsyncWebServer.h"
+    #define ELEGANTOTA_WEBSERVER AsyncWebServer
+  #else
+    #include "WiFiClient.h"
+    #include "WiFiServer.h"
+    #include "WebServer.h"
+    #define ELEGANTOTA_WEBSERVER WebServer
+  #endif
+
+  #if defined(TARGET_RP2040) || defined(PICO_RP2040)
+    #define HARDWARE              "RP2040"
+  #elif defined(TARGET_RP2350) || defined(PICO_RP2350)
+    #define HARDWARE              "RP2350"
   #endif
   extern uint8_t _FS_start;
   extern uint8_t _FS_end;
