@@ -10,25 +10,30 @@ import { Callout } from 'nextra/components'
 ElegantOTA includes an async mode feature, enabling asynchronous web server functionality for managing OTA updates. When async mode is enabled, ElegantOTA utilizes ESPAsyncWebServer to handle all HTTP routes.
 
 <Callout>
-This mode should only be enabled if you are using ESPAsyncWebServer library in your project/firmware.
+This mode should only be enabled if you are using ESPAsyncWebServer library in your project/firmware. You **cannot** run synchronous `WebServer` and `ESPAsyncWebServer` libraries together in the same firmware.
 </Callout>
 
 ## Recommended Dependencies
 
 ### For ESP8266
 
-- (mathieucarbou) [esphome-ESPAsyncTCP](https://github.com/mathieucarbou/esphome-ESPAsyncTCP#v2.0.0) - **v2.0.0**
-- (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.3.11) - **v3.3.20**
+- (ESP32Async) [ESPAsyncTCP](https://github.com/ESP32Async/ESPAsyncTCP#v2.0.0) - **v2.0.0**
+- (ESP32Async) [ESPAsyncWebServer](https://github.com/ESP32Async/ESPAsyncWebServer#v3.7.3) - **v3.7.3**
 
 ### For ESP32
 
-- (mathieucarbou) [AsyncTCP](https://github.com/mathieucarbou/AsyncTCP#v3.2.6) @ **v3.2.10**
-- (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.3.11) - **v3.3.20**
+- (ESP32Async) [AsyncTCP](https://github.com/ESP32Async/AsyncTCP#v3.3.7) @ **v3.3.7**
+- (ESP32Async) [ESPAsyncWebServer](https://github.com/ESP32Async/ESPAsyncWebServer#v3.7.3) - **v3.7.3**
 
-### For RP2040 (+ WiFi)
+### For RP2040+W (Example: Pico W)
 
-- (khoih-prog) [AsyncTCP_RP2040W](https://github.com/khoih-prog/AsyncTCP_RP2040W#v1.2.0) @ **v1.2.0**
-- (mathieucarbou) [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer#v3.3.11) - **v3.3.20**
+- (ayushsharma82) [RPAsyncTCP](https://github.com/ayushsharma82/RPAsyncTCP#v1.3.2) @ **v1.3.2**
+- (ESP32Async) [ESPAsyncWebServer](https://github.com/ESP32Async/ESPAsyncWebServer#v3.7.3) - **v3.7.3**
+
+### For RP2350+W (Example: Pico 2W)
+
+- (ayushsharma82) [RPAsyncTCP](https://github.com/ayushsharma82/RPAsyncTCP#v1.3.2) @ **v1.3.2**
+- (ESP32Async) [ESPAsyncWebServer](https://github.com/ESP32Async/ESPAsyncWebServer#v3.7.3) - **v3.7.3**
 
 <br/>
 
