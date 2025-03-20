@@ -14,17 +14,16 @@
   - ESP8266
   - ESP32
   - RP2040 (with WiFi) (Example: Raspberry Pi Pico W)
+  - RP2350 (with WiFi) (Example: Raspberry Pi Pico 2W)
 
-
-  Important note for RP2040 users:
-  - RP2040 requires LittleFS partition for the OTA updates to work. Without LittleFS partition, OTA updates will fail.
+  Important note for RP2040/RP2350 users:
+  - RP2040/RP2350 requires LittleFS partition for the OTA updates to work. Without LittleFS partition, OTA updates will fail.
     Make sure to select Tools > Flash Size > "2MB (Sketch 1MB, FS 1MB)" option.
-  - If using bare RP2040, it requires WiFi module like Pico W for ElegantOTA to work.
+  - If using bare RP2040/RP2350, it requires a WiFi chip like Pico W/Pico 2W for ElegantOTA to work.
 
   -------------------------------
 
   Upgrade to ElegantOTA Pro: https://elegantota.pro
-
 */
 
 
