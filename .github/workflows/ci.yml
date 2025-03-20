@@ -28,27 +28,27 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: CI ESP8266
+          - name: ESP8266
             core: esp8266:esp8266
             board: esp8266:esp8266:huzzah
             index_url: https://arduino.esp8266.com/stable/package_esp8266com_index.json
           
-          - name: CI ESP32
+          - name: ESP32
             core: esp32:esp32
             board: esp32:esp32:esp32
             index_url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
           
-          - name: CI ESP32 (Dev Branch)
+          - name: ESP32 (Dev Branch)
             core: esp32:esp32
             board: esp32:esp32:esp32
             index_url: https://espressif.github.io/arduino-esp32/package_esp32_dev_index.json
           
-          - name: CI Pico W | RP2040+W
+          - name: Pico W | RP2040+W
             core: rp2040:rp2040
             board: rp2040:rp2040:rpipicow
             index_url: https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
           
-          - name: CI Pico 2W | RP2350+W
+          - name: Pico 2W | RP2350+W
             core: rp2040:rp2040
             board: rp2040:rp2040:rpipico2w
             index_url: https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
@@ -104,41 +104,45 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: CI ESP8266 (Huzzah)
+          - name: ESP8266 (Huzzah)
             env: ci-esp8266
             board: huzzah
           
-          - name: CI ESP8266 (D1 Mini)
+          - name: ESP8266 (D1 Mini)
             env: ci-esp8266
             board: d1_mini
 
-          - name: CI ESP32
+          - name: ESP32 (Arduino Core v2)
+            env: ci-esp32-arduino-2
+            board: esp32dev
+
+          - name: ESP32
             env: ci-esp32
             board: esp32dev
           
-          - name: CI ESP32-S2
+          - name: ESP32-S2
             env: ci-esp32
             board: esp32-s2-saola-1
           
-          - name: CI ESP32-S3
+          - name: ESP32-S3
             env: ci-esp32
             board: esp32-s3-devkitc-1
           
-          - name: CI ESP32-C3
+          - name: ESP32-C3
             env: ci-esp32
             board: esp32-c3-devkitc-02
           
-          - name: CI ESP32-C6
+          - name: ESP32-C6
             env: ci-esp32
             board: esp32-c6-devkitc-1
           
-          - name: CI Pico W | RP2040+W
+          - name: Pico W | RP2040+W
             env: ci-rp2040
             board: rpipicow
             platform: https://github.com/maxgerhardt/platform-raspberrypi.git
             opts: "--project-option 'board_build.core=earlephilhower'"
 
-          - name: CI Pico 2W | RP2350+W
+          - name: Pico 2W | RP2350+W
             env: ci-rp2350
             board: rpipico2w
             platform: https://github.com/maxgerhardt/platform-raspberrypi.git
