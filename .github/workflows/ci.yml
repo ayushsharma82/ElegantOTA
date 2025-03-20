@@ -21,6 +21,30 @@ on:
       - "docs/*"
 
 jobs:
+  check-directives:
+    name: Check Preprocessor Directives
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directive: 
+          - { HEADER_FILE: "src/ElegantOTA.h", DIRECTIVE: "ELEGANTOTA_USE_ASYNC_WEBSERVER", EXPECTED_VALUE: 0 }
+    env:
+      HEADER_FILE: ${{ matrix.directive.HEADER_FILE }}
+      DIRECTIVE: ${{ matrix.directive.DIRECTIVE }}
+      EXPECTED_VALUE: ${{ matrix.directive.EXPECTED_VALUE }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Check ${{ matrix.directive.DIRECTIVE }}
+        run: |
+          if [ ! -f "$HEADER_FILE" ]; then
+            echo "$HEADER_FILE not found!" && exit 1
+          fi
+          if ! grep -Eq "#define[[:space:]]+$DIRECTIVE[[:space:]]+$EXPECTED_VALUE([[:space:]]+|$)" "$HEADER_FILE"; then
+            echo "$DIRECTIVE is not set to $EXPECTED_VALUE!" && exit 1
+          fi
+          echo "Preprocessor directive is correctly set to $EXPECTED_VALUE."
+
   arduino:
     name: Arduino - ${{ matrix.name }}
     runs-on: ubuntu-latest
