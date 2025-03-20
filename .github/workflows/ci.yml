@@ -24,18 +24,15 @@ jobs:
   check-directives:
     name: Check Preprocessor Directives
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        directive: 
-          - { HEADER_FILE: "src/ElegantOTA.h", DIRECTIVE: "ELEGANTOTA_USE_ASYNC_WEBSERVER", EXPECTED_VALUE: 0 }
     env:
-      HEADER_FILE: ${{ matrix.directive.HEADER_FILE }}
-      DIRECTIVE: ${{ matrix.directive.DIRECTIVE }}
-      EXPECTED_VALUE: ${{ matrix.directive.EXPECTED_VALUE }}
+      HEADER_FILE: src/ElegantOTA.h
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Check ${{ matrix.directive.DIRECTIVE }}
+      - name: Check ELEGANTOTA_USE_ASYNC_WEBSERVER
+        env:
+          DIRECTIVE: ELEGANTOTA_USE_ASYNC_WEBSERVER
+          EXPECTED_VALUE: 0
         run: |
           if [ ! -f "$HEADER_FILE" ]; then
             echo "$HEADER_FILE not found!" && exit 1
