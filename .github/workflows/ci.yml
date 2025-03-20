@@ -47,6 +47,7 @@ jobs:
 
   arduino:
     name: Arduino - ${{ matrix.name }}
+    needs: check-directives
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -124,6 +125,7 @@ jobs:
   platformio:
     name: PlatformIO - ${{ matrix.name }}
     runs-on: ubuntu-latest
+    needs: check-directives
     strategy:
       fail-fast: false
       matrix:
