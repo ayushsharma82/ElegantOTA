@@ -4,7 +4,7 @@
   -----------------------
 
   NOTE: Make sure you have enabled Async Mode in ElegantOTA before compiling this example!
-  Guide: https://docs.elegantota.pro/async-mode/
+  Guide: https://docs.elegantota.pro/getting-started/async-mode
 
   Skill Level: Beginner
 
