@@ -16,7 +16,7 @@
 
 <br/>
 
-<p>Over-the-air update library for wireless microcontrollers</p>
+<p>The original over-the-air update library for wireless microcontrollers (since 2019).</p>
 
 <p>
 ElegantOTA provides a beautiful user interface to upload over-the-air firmware/filesystem updates to your hardware with precise status and progress. ElegantOTA is designed to make the process of OTA updates slick and simple!
@@ -31,6 +31,13 @@ ElegantOTA provides a beautiful user interface to upload over-the-air firmware/f
 - 🏀 Get useful insight on progress and status of your OTA update
 - 🎷 No need to learn HTML/CSS/JS
 - 🛫 Ready to use within 3 lines of code
+
+<br/>
+
+## ⚠️ Notice: Unauthorized Derivatives
+I value open-source collaboration and community-driven innovation but it has come to my attention that certain similar-looking libraries are circulating in the community that have been developed by copying/masking the licensed source code from **ElegantOTA Pro** (our paid offering). In some cases, the original code has been partially reproduced in an attempt to circumvent DMCA violations.
+
+I strongly condemn such practices, as they violate intellectual property rights and undermine the trust and integrity that open-source and licensed software communities rely on.
 
 <br/>
 
@@ -67,7 +74,7 @@ ElegantOTA works on the following microcontrollers/boards:
 
 ## Looking for more? Upgrade to Pro.
 
-ElegantOTA Pro comes with the following extended functionality:
+While ElegantOTA OSS (Lite) offers sufficient functionality for building a solid project, you may want to explore ElegantOTA Pro for additional advanced features which can be essential for your device:
 - Exclusive Drag & Drop Zone
 - Toggle OTA modes
 - Hardware ID & Firmware Version on UI
