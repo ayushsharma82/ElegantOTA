@@ -42,8 +42,8 @@ def on_upload(source, target, env):
         parsed_url = urlparse(upload_url)
         host_ip = parsed_url.netloc
 
-        is_spiffs = source[0].name == "spiffs.bin"
-        file_type = "fs" if is_spiffs else "fr"
+        is_fs = source[0].name == "spiffs.bin" or source[0].name == "littlefs.bin"
+        file_type = "fs" if is_fs else "fr"
 
         # execute GET request
         start_url = f"{upload_url}/ota/start?mode={file_type}&hash={md5}"
