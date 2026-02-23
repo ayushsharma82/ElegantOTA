@@ -48,6 +48,8 @@ void onOTAProgress(size_t current, size_t final) {
 }
 
 void onOTAEnd(bool success) {
+  // decide if you want to restart loop actions before rebooting...
+  OTAinProgress = false;
   // Log when OTA has finished
   if (success) {
     Serial.println("OTA update finished successfully!");
