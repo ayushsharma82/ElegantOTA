@@ -147,7 +147,6 @@ Installation, integration, security and feature guides: **[docs.elegantota.pro](
 ElegantOTA Lite covers a solid project end to end. ElegantOTA Pro adds the pieces a shipped product tends to need:
 
 - Two extra OTA modes - **Direct Download** (the device fetches firmware from a URL itself) and **Auto Update** (update channels)
-- Exclusive drag & drop zone
 - Toggle OTA modes at runtime
 - Hardware ID & firmware version on the UI
 - Whitelabel / branding
