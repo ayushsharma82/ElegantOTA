@@ -1,6 +1,10 @@
 <p align="center">
   <a href="https://elegantota.pro?ref=ghfeature" target="_blank">
-    <img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/feature.png" width="1200"></p>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="/docs/banner-dark.png">
+      <source media="(prefers-color-scheme: light)" srcset="/docs/banner-light.png">
+      <img alt="ElegantOTA Banner" src="/docs/banner-dark.png">
+    </picture>
   </a>
 </p>
 

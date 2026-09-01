@@ -63,6 +63,7 @@ _____ _                        _    ___ _____  _
   #include "FS.h"
   #include "Update.h"
   #include "StreamString.h"
+  #include "esp_partition.h"
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
     #include "AsyncTCP.h"
     #include "ESPAsyncWebServer.h"
@@ -138,6 +139,15 @@ class ElegantOTAClass{
     std::function<void()> preUpdateCallback = NULL;
     std::function<void(size_t current, size_t final)> progressUpdateCallback = NULL;
     std::function<void(bool success)> postUpdateCallback = NULL;
+
+    // Shared helpers
+    void _registerRoutes();
+    size_t _partitionSize(OTA_Mode mode);
+    bool _beginUpdate(OTA_Mode mode);
+    void _abortUpdate();
+    static bool _validMD5(const char * hash);
+    void _captureUpdateError();
+    void _buildMetadata(char * out, size_t len);
 };
 
 extern ElegantOTAClass ElegantOTA;
