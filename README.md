@@ -155,7 +155,7 @@ ElegantOTA Lite covers a solid project end to end. ElegantOTA Pro adds the piece
 It is also a fantastic way to support the time that goes into building and maintaining the library.
 
 <a href="https://store.softt.io/products/elegantota-pro" target="_blank">
-  <img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/pro-preview.jpg" alt="ElegantOTA Pro" width="600">
+  <img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/pro-preview.png" alt="ElegantOTA Pro" width="600">
 </a>
 
 **Available at the [official store (store.softt.io)](https://store.softt.io/products/elegantota-pro).**
