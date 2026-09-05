@@ -1,6 +1,6 @@
 ---
 title: "Branding"
-description: "Learn how to customize the logo displayed on the ElegantOTA portal during OTA updates. This guide covers preparing your logo, converting it to a byte array, and modifying the necessary files in the ElegantOTA library."
+description: "Replace the logo shown on the ElegantOTA Pro portal with your own. This guide covers converting your artwork to a byte array and the light and dark variants the portal serves."
 ---
 
 import ProCallout from '@/components/ProCallout';
@@ -12,67 +12,69 @@ import { Callout, Steps } from 'nextra/components'
 
 <br/>
 
-<img src="/branding.png" alt="Branding" width="400px" />
+<img src="/branding.png" alt="Branding" width="420px" />
 
 <br/>
 
-Branding in this context refers to the logo that is displayed on the ElegantOTA portal during the OTA update process. You can customize the logo by defining the logo image as a byte array in the `logo.h` and `logo.cpp` files of the library's source code without even touching HTML or CSS.
+The portal serves its logo from the device itself, as a gzipped byte array in `logo.h` and `logo.cpp`. Replacing it is how you put your own product's name at the top of the update page - no HTML or CSS involved.
 
-## Procedure
+The portal asks for one of two variants depending on the viewer's colour scheme, so you supply a mark that reads on a dark background and one that reads on a light one:
 
-To add your custom logo on the ElegantOTA Pro portal, follow these steps:
+| Route | Served as |
+| --- | --- |
+| `/ota/logo/dark` | `ELEGANTOTA_DARK_LOGO` - shown in dark appearance |
+| `/ota/logo/light` | `ELEGANTOTA_LIGHT_LOGO` - shown in light appearance |
+
+## Replacing the logo
+
+SVG is ideal - it stays sharp at any size and compresses far better than a bitmap - but a PNG or JPEG works too. None of this requires building the portal.
 
 <Steps>
 
-### Prepare logo
+### Prepare the logo
 
-First, you need to create or obtain the logo image you want to display on the ElegantOTA portal during OTA updates. Ensure that the logo image is in a suitable format, such as a SVG (recommended) / PNG or JPG file and make sure your image is optimized & small in file size.
+Create the image you want to display. Keep it small: it lives in flash and is sent to the browser on every visit. Draw a variant that reads on a dark background and one that reads on a light one.
 
-### Convert logo to a byte array
+### Convert it to a byte array
 
-To include the logo in your library, you'll need to convert the image into a byte array.
-
-1. Go to [File2Raw utility](https://file2raw.labrat.one/) ( I created this utility a few years back for the purpose of converting files into byte array for C++ applications ).
+1. Go to the [File2Raw utility](https://file2raw.labrat.one/).
 2. Select your logo.
-3. Select "Gzip Compress" & "Use PROGMEM (Arduino)".
-4. Click "Convert".
+3. Tick **Gzip Compress** and **Use PROGMEM (Arduino)**.
+4. Click **Convert**.
+
+Do this once per variant if you want different light and dark artwork.
 
 ### Modify `logo.h`
 
-1. Open the `logo.h` file in your ElegantOTA library source code.
+Open `src/logo.h` and update:
 
-2. Locate the `ELEGANTOTA_LOGO` byte array declaration, which should look like this:
+```cpp
+#define ELEGANTOTA_LOGO_GZIPPED      1          // 1 if you ticked Gzip Compress
+#define ELEGANTOTA_LOGO_WIDTH        220        // display size in px
+#define ELEGANTOTA_LOGO_HEIGHT       34         // display size in px
 
-   ```cpp
-   extern const uint8_t ELEGANTOTA_LOGO[];
-   ```
+#define ELEGANTOTA_LIGHT_LOGO_MIME   "image/svg+xml"
+extern const uint8_t ELEGANTOTA_LIGHT_LOGO[2392];   // your array's length
 
-3. Replace the length of the `ELEGANTOTA_LOGO` array with your custom logo's byte array length.
+#define ELEGANTOTA_DARK_LOGO_MIME    "image/svg+xml"
+extern const uint8_t ELEGANTOTA_DARK_LOGO[2390];    // your array's length
+```
 
-4. Locate the `ELEGANTOTA_LOGO_MIME` variable, which defines the MIME type of your logo image. By default, it is set to `image/png`. If your logo is in a different format (e.g., JPEG), update the `ELEGANTOTA_LOGO_MIME` variable to the appropriate MIME type.
-
-5. Set `ELEGANTOTA_LOGO_WIDTH` & `ELEGANTOTA_LOGO_HEIGHT` according to your desired size which will be displayed on the webpage.
+Set the MIME type to match your file - `image/png` or `image/jpeg` if you did not use an SVG. Set the width and height to the proportions of your artwork; the portal draws the logo at exactly this size.
 
 ### Modify `logo.cpp`
 
-1. Open the `logo.cpp` file in your ElegantOTA library source code.
-
-2. Replace the contents of the `ELEGANTOTA_LOGO` array with your custom logo's byte array generated in File2Raw utility.
-
+Open `src/logo.cpp` and replace the contents of `ELEGANTOTA_LIGHT_LOGO` and `ELEGANTOTA_DARK_LOGO` with the arrays File2Raw produced. The lengths declared in `logo.h` must match the arrays exactly.
 
 ### Upload firmware
 
-After making these changes, compile and upload the firmware with modified ElegantOTA library to your device.
+Compile and upload the firmware with the modified library.
 
 </Steps>
 
-## Final Words
+## Final words
 
-Once you have uploaded the modified ElegantOTA library to your device, the custom logo will be displayed on the ElegantOTA Portal webpage during OTA updates.
-
-That's it! You have successfully added custom branding to the ElegantOTA portal by defining the logo as a byte array in the `logo.h` and `logo.cpp` files. Your logo will now be displayed on the ElegantOTA portal.
-
-<br/>
+Your logo now appears at the top of the portal, switching between variants as the viewer changes appearance.
 
 <Callout type="warning" emoji="⚠️">
   Please note that branding, including logos and images, may be subject to copyright and trademark laws. Ensure you have the necessary rights or permissions to use any branding elements in your project.

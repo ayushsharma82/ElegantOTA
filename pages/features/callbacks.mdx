@@ -3,6 +3,8 @@ title: "Callbacks"
 description: "Explore ElegantOTA's callback functions for customizing the OTA update process. Learn how to use onStart, onProgress, and onEnd callbacks to execute specific functions at different stages of the update."
 ---
 
+import ProCallout from '@/components/ProCallout';
+
 # Callbacks
 
 The ElegantOTA library offers three callbacks that allow you to customize the behavior of your OTA update process. These callbacks enable you to execute specific functions at different stages of the update process, giving you control over the update flow. Here are the available callbacks:
@@ -10,6 +12,10 @@ The ElegantOTA library offers three callbacks that allow you to customize the be
 1. `onStart(void callable(void));`
 2. `onProgress(void callable(size_t current, size_t final));`
 3. `onEnd(void callable(bool success));`
+
+ElegantOTA Pro adds a fourth for its [Auto](/ota-modes/auto):
+
+4. `onUpdateAvailable(void callable(const char* version, const char* notes));`
 
 Let's delve into the details of each callback and how to use them effectively.
 
@@ -27,6 +33,8 @@ ElegantOTA.onStart([]() {
 ```
 
 ## `onProgress` Callback
+
+<img src="/progress.png" alt="Progress" width="420px" />
 
 The `onProgress` callback is called periodically during the OTA update to provide information about the progress of the update. It's useful for tracking the percentage of completion or displaying progress information to the user. This callback passes two parameters: `current` (the number of bytes transferred so far) and `final` (the total number of bytes to be transferred).
 
@@ -54,6 +62,40 @@ ElegantOTA.onEnd([](bool success) {
   } else {
     Serial.println("OTA update failed.");
     // Add failure handling here.
+  }
+});
+```
+
+## `onUpdateAvailable` Callback
+
+<ProCallout />
+
+The `onUpdateAvailable` callback is Pro-only and fires when a check against your [Auto](/ota-modes/auto) finds a build newer than the one running. It hands you the version being offered and the release notes from the manifest, and lets you decide whether now is a good moment to install.
+
+**Example:**
+
+```cpp
+ElegantOTA.onUpdateAvailable([](const char* version, const char* notes) {
+  Serial.printf("Version %s is available\n", version);
+
+  // Install it whenever suits your product - right away, overnight,
+  // or once someone has confirmed on a display.
+  ElegantOTA.installUpdate();
+});
+```
+
+If you would rather not make the decision at all, `ElegantOTA.setAutoInstall(true)` installs every newer build as it is found.
+
+## Knowing where an update came from
+
+The three main callbacks fire for every update, no matter how it reached the device. In Pro, `ElegantOTA.source()` tells you which route it took:
+
+```cpp
+ElegantOTA.onStart([]() {
+  switch (ElegantOTA.source()) {
+    case OTA_SOURCE_UPLOAD:  Serial.println("uploaded from the portal"); break;
+    case OTA_SOURCE_DIRECT:  Serial.println("downloaded by the device"); break;
+    case OTA_SOURCE_CHANNEL: Serial.println("from the update channel"); break;
   }
 });
 ```

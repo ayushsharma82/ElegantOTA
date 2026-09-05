@@ -1,0 +1,137 @@
+# V4 - A New Beginning
+
+ElegantOTA Pro started as a nicer upload page. Version 4 turns it into an update system.
+
+Until now, every update needed someone in front of a browser with the firmware already on their laptop. That works for a device on your desk. It does not work for a hundred of them in the field. **v4 adds two more ways for firmware to reach your hardware**, and the device does the work in both.
+
+The C++ API is additive - **your existing 3.x sketches compile and run untouched.** Everything new is opt-in.
+
+<br/>
+
+## 🚀 Three OTA modes
+
+| Mode | How firmware arrives |
+| --- | --- |
+| **File** | A `.bin` dropped into the portal from your computer - as before |
+| **Direct Download** | You paste a URL; the device fetches the image itself over HTTP/HTTPS |
+| **Auto** | The device polls an update channel on its own schedule and installs what it finds |
+
+All three are on by default. Each can be turned off at runtime with `setFileMode()`, `setDirectDownloadMode()` and `setAutoMode()` - and a disabled mode disappears from the portal *and* its routes stop serving, so turning one off is a real restriction rather than a cosmetic one.
+
+### Direct Download
+
+Normally an update travels twice: from your build server down to the browser, then back up to the device. Direct Download removes the middle hop.
+
+```cpp
+ElegantOTA.pullFrom("https://example.com/firmware-1.2.0.bin");
+```
+
+Redirects are followed, so a GitHub release link works. Progress still shows in the portal, but the transfer belongs to the device - closing the tab no longer kills it. Pin a root CA with `setCACert()` when you want the certificate actually verified.
+
+### Auto Update
+
+Compile in an update channel and the device looks after itself:
+
+```cpp
+ElegantOTA.setUpdateURL("https://example.com/firmware/latest.json");
+ElegantOTA.setCheckInterval(6 * 60 * 60 * 1000UL);   // every 6 hours
+ElegantOTA.setAutoInstall(true);
+```
+
+Pointing at a small manifest:
+
+```json
+{
+  "version": "1.2.0",
+  "url": "https://example.com/firmware/my-device-1.2.0.bin",
+  "md5": "6f5902ac237024bdd0c176cb93063dc4",
+  "notes": "Reconnects to Wi-Fi after a router reboot"
+}
+```
+
+Versions are compared field by field, so `1.10.0` is correctly newer than `1.9.4`. Unknown keys are ignored - keep your own bookkeeping in the same file. With `setAutoInstall(false)`, `onUpdateAvailable()` fires instead and you call `installUpdate()` when it suits your product: overnight, on idle, or after a user confirms on a display.
+
+<br/>
+
+## 🎨 A rebuilt portal
+
+The portal was redesigned around a capacity strip that draws the target flash region to scale and refuses an oversized image before a single byte is written. Two new modes, richer status reporting, larger logo artwork - and it still **shrank**:
+
+```
+9,039 → 7,618 bytes gzipped   (−15.7%)
+```
+
+Tailwind and the `md5` npm package are gone, replaced by hand-written CSS and a compact MD5 implementation. Light and dark themes, keyboard reachable, readable down to 320px.
+
+<br/>
+
+## 🐛 Two fixes worth reading
+
+**MD5 verification was silently doing nothing.** `Update.setMD5()` was being called *before* `Update.begin()`, which clears the expected digest so every upload since the feature shipped went unverified. The digest is now validated up front and handed over after the flash region opens. Corrupted and truncated images are rejected.
+
+> ⚠️ If your tooling has been sending a digest that does not match the bytes it uploads, those uploads used to succeed and will now fail. That is the point but worth knowing before you roll this to a fleet.
+
+**Repeated updates failed on RP2040/RP2350** with `ERROR[4]: Not Enough Space`. The firmware budget was computed from whatever space happened to be *free* in the filesystem rather than the region itself, so the second update after a cold boot was refused. Both boards now report their capacity correctly.
+
+<br/>
+
+## 🧰 New API
+
+```cpp
+// OTA modes
+void setFileMode(bool);              bool checkFileMode();
+void setDirectDownloadMode(bool);    bool checkDirectDownloadMode();
+void setAutoMode(bool);              bool checkAutoMode();
+
+// Direct download
+bool pullFrom(const char * url, OTA_Mode mode = OTA_MODE_FIRMWARE, const char * md5 = NULL);
+void setCACert(const char * ca);
+
+// Update channel
+void setUpdateURL(const char * url);   const char * getUpdateURL();
+void setCheckInterval(uint32_t ms);
+void setAutoInstall(bool);             bool checkAutoInstall();
+bool checkForUpdate();                 bool installUpdate();
+
+// Where things stand
+OTA_State state();                     OTA_Source source();
+bool updateAvailable();
+const char * availableVersion();       const char * availableNotes();
+void onUpdateAvailable(std::function<void(const char * version, const char * notes)>);
+```
+
+`onStart()` and `onEnd()` can now ask `source()` where an update came from`OTA_SOURCE_UPLOAD`, `OTA_SOURCE_DIRECT` or `OTA_SOURCE_CHANNEL` so a hand-pushed build and an automatic one can be treated differently.
+
+New routes: `/ota/download`, `/ota/check`, `/ota/install`, `/ota/status`.
+
+### New build flags
+
+| Flag | Default | Purpose |
+| --- | --- | --- |
+| `ELEGANTOTA_ENABLE_REMOTE` | `1` | Set to `0` to compile out the HTTP/HTTPS client and reclaim the flash, if you only ever push from the browser |
+| `ELEGANTOTA_PULL_BUDGET` | `8192` | Bytes pulled from the network per `loop()` call |
+| `ELEGANTOTA_PULL_TIMEOUT` | `10000` | Abort a download stalled this long (ms) |
+| `ELEGANTOTA_TLS_RX_SIZE` / `_TX_SIZE` | `16384` / `512` | BearSSL buffers on ESP8266/RP2040 when MFLN is unavailable |
+
+<br/>
+
+## ⬆️ Upgrading from 3.x
+
+No code changes are required, but three things to check:
+
+1. **`ElegantOTA.loop()` is now load-bearing.** Downloads and channel checks are driven from it. If your sketch was getting away without it, it will not any more.
+2. **Whitelabel logos need re-converting.** The portal's logo is now `220×34` rather than `220×60`. Your existing artwork still renders, but at the old aspect ratio, re-convert your mark and update the arrays in `src/logo.h` and `src/logo.cpp`. The [branding guide](https://docs.elegantota.pro/branding) walks through it.
+3. **Dependencies moved.** `ESPAsyncWebServer ^3.12.0` and `AsyncTCP ^3.5.0`. Delete `.pio/libdeps` before rebuilding.
+
+Also: `keywords.txt` was dropped, and manifest parsing now lives in `src/parse.h` so it can be tested on a host machine rather than only on a board.
+
+<br/>
+
+## ✅ Coverage
+
+CI builds all three examples on ESP8266, ESP32, RP2040 and RP2350, against both the synchronous and async webservers, and on both Arduino-ESP32 2.x and 3.x. A hardware-in-the-loop bench walks a real board through the whole chain - USB flash, portal upload, direct download, update channel and confirms each step by asking the rebooted board what version it is running, then checks that an oversized image, a malformed digest and a wrong-but-well-formed digest all change nothing.
+
+---
+
+📚 Full documentation: **[docs.elegantota.pro](https://docs.elegantota.pro)**
+💬 Questions or trouble upgrading: open an issue or email [support@softt.io](mailto:support@softt.io)

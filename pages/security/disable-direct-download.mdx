@@ -1,0 +1,66 @@
+---
+title: "Disable Direct Download"
+description: "Stop the ElegantOTA Pro portal from accepting arbitrary firmware URLs. This guide covers turning Direct Download off, when you should, and what stays available when you do."
+---
+
+import ProCallout from '@/components/ProCallout';
+import { Callout } from 'nextra/components'
+
+# Disable Direct Download
+
+<ProCallout />
+
+<br/>
+
+[Direct Download](/ota-modes/direct-download) lets the portal hand the device a URL to fetch firmware from. It is **enabled by default**, which means anyone who can open the portal can point your device at any address they like.
+
+Behind [authentication](/security/authentication) that is a convenience. Without it, on a network you do not fully control, it is a way to install firmware you did not write. If your product never needs it, turn it off.
+
+#### Disable Direct Download
+```cpp
+// Pass 'false' to refuse URLs handed over from the portal
+ElegantOTA.setDirectDownloadMode(false);
+```
+
+#### Enable Direct Download
+```cpp
+// Pass 'true' to allow them again
+ElegantOTA.setDirectDownloadMode(true);
+```
+
+<Callout>
+  Direct Download is enabled by default on startup (cold boot).
+</Callout>
+
+#### Get Direct Download status
+```cpp
+if (ElegantOTA.checkDirectDownloadMode() == true) {
+    Serial.println("Direct Download is enabled");
+} else {
+    Serial.println("Direct Download is disabled");
+}
+```
+
+## What changes
+
+With Direct Download disabled:
+
+- The **Direct Download** tab disappears from the portal.
+- The endpoint refuses requests, whatever sends them.
+- `ElegantOTA.pullFrom()` returns `false` - including when your own code calls it.
+
+Uploading a `.bin` from the portal is unaffected, and so is the [Auto](/ota-modes/auto), which only ever visits the URL you compiled in.
+
+<Callout type="warning" emoji="⚠️">
+Turning this off is not a substitute for [authentication](/security/authentication). Someone who can reach an unprotected portal can still upload firmware by hand.
+</Callout>
+
+## Compiling it out entirely
+
+If you want neither Direct Download nor the Update Channel, you can leave the HTTP client out of the build altogether and get the flash back:
+
+```ini
+build_flags = -D ELEGANTOTA_ENABLE_REMOTE=0
+```
+
+The portal then shows only the file upload, and the related functions are not compiled at all.

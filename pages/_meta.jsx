@@ -8,6 +8,13 @@ const metadata = {
     "title": "Getting Started",
     open: true
   },
+  "ota-modes": {
+    "title": "OTA Modes",
+    head: {
+      titleTemplate: '%s - OTA Modes'
+    },
+    open: true
+  },
   security: {
     title: "Security",
     open: true

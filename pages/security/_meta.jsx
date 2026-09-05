@@ -7,6 +7,9 @@ const metadata = {
   },
   "disable-filesystem-ota": {
     title: <span className="flex items-center justify-center gap-2">Disable Filesystem OTA <Badge /></span>,
+  },
+  "disable-direct-download": {
+    title: <span className="flex items-center justify-center gap-2">Disable Direct Download <Badge /></span>,
   }
 };
 

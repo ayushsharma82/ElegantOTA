@@ -5,6 +5,8 @@ description: "Learn how to control the automatic reboot feature in ElegantOTA af
 
 # Auto Reboot
 
+<img src="/success.png" alt="Auto Reboot" width="420px" />
+
 Often there comes a situation where you don't want to reboot automatically. In these cases, you can use the `setAutoReboot` function which will enable/disable automatic reboot of your microcontroller after a successful OTA update. By default, auto reboot is enabled unless you explicitly disable it using example below.
 
 ## Set Auto Reboot
@@ -31,3 +33,5 @@ void loop() {
 ```
 
 In the above example, the `ElegantOTA.setAutoReboot(false);` function call disables automatic reboot.
+
+The portal follows along: with auto reboot on it says the device is rebooting to finish the update, and with it off it asks you to restart the device yourself.

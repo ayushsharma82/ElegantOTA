@@ -1,6 +1,6 @@
 ---
 title: "Disable Filesystem OTA"
-description: "Learn how to selectively enable or disable filesystem OTA updates in ElegantOTA for enhanced security and control. This guide covers enabling, disabling, and checking the status of filesystem OTA mode."
+description: "Learn how to selectively enable or disable filesystem OTA updates in ElegantOTA for enhanced security and control. This guide covers enabling, disabling, and checking the status of the filesystem update target."
 ---
 
 import ProCallout from '@/components/ProCallout';
@@ -14,7 +14,9 @@ import { Callout } from 'nextra/components'
 
 <img src="/ota-modes.png" alt="Modes" width="400px" />
 
-ElegantOTA allows you to selectively enable or disable OTA modes of your choice for security reasons or when you have a important task running where you don't want it to get interrupted by an OTA update. UI automatically hides the modes which have been disabled.
+ElegantOTA allows you to selectively enable or disable the update targets of your choice for security reasons, or when you have an important task running that you do not want interrupted by an OTA update. The portal automatically hides a target that has been disabled.
+
+This is about *what* an update is allowed to overwrite - the firmware or the filesystem image - and applies to every [OTA mode](/ota-modes/file).
 
 Using these functions you can enable or disable filesystem updates ( SPIFFS or LittleFS ).
 
@@ -24,7 +26,7 @@ Using these functions you can enable or disable filesystem updates ( SPIFFS or L
 ElegantOTA.setFilesystemMode(true);
 ```
 <Callout>
-  All OTA modes are enabled by default on startup (cold boot).
+  Both targets are enabled by default on startup (cold boot).
 </Callout>
 
 
@@ -34,7 +36,7 @@ ElegantOTA.setFilesystemMode(true);
 ElegantOTA.setFilesystemMode(false);
 ```
 
-#### Get Filesystem OTA mode status
+#### Get filesystem target status
 ```cpp
 // You can use this logic inside a function if neccessary
 if(ElegantOTA.checkFilesystemMode() == true) {
