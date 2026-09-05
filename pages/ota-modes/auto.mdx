@@ -1,44 +1,26 @@
-# V4 - A New Beginning
+---
+title: "Automatic"
+description: "Automatic OTA mode: give the device a manifest URL and it checks for its own firmware updates on a schedule. Covers the manifest format, version comparison, scheduled checks, automatic installation and the onUpdateAvailable callback."
+---
 
-ElegantOTA Pro started as a nicer upload page. Version 4 turns it into an update system.
+import ProCallout from '@/components/ProCallout';
+import { Callout, Steps } from 'nextra/components'
 
-Until now, every update needed someone in front of a browser with the firmware already on their laptop. That works for a device on your desk. It does not work for a hundred of them in the field. **v4 adds two more ways for firmware to reach your hardware**, and the device does the work in both.
+# Auto Update
 
-The C++ API is additive - **your existing 3.x sketches compile and run untouched.** Everything new is opt-in.
+<ProCallout />
 
 <br/>
 
-## 🚀 Three OTA modes
+<img src="/update-channel.png" alt="Update Channel" width="420px" />
 
-| Mode | How firmware arrives |
-| --- | --- |
-| **File** | A `.bin` dropped into the portal from your computer - as before |
-| **Direct Download** | You paste a URL; the device fetches the image itself over HTTP/HTTPS |
-| **Auto** | The device polls an update channel on its own schedule and installs what it finds |
+In **Auto** mode the device looks after itself. You compile in an **update channel** - a URL pointing at a small JSON manifest describing the latest release. The device fetches it on a schedule, compares the advertised version against its own, and can install what it finds - without anyone opening the portal.
 
-All three are on by default. Each can be turned off at runtime with `setFileMode()`, `setDirectDownloadMode()` and `setAutoMode()` - and a disabled mode disappears from the portal *and* its routes stop serving, so turning one off is a real restriction rather than a cosmetic one.
+This is the difference between updating devices you can reach and updating a fleet you cannot.
 
-### Direct Download
+## The manifest
 
-Normally an update travels twice: from your build server down to the browser, then back up to the device. Direct Download removes the middle hop.
-
-```cpp
-ElegantOTA.pullFrom("https://example.com/firmware-1.2.0.bin");
-```
-
-Redirects are followed, so a GitHub release link works. Progress still shows in the portal, but the transfer belongs to the device - closing the tab no longer kills it. Pin a root CA with `setCACert()` when you want the certificate actually verified.
-
-### Auto Update
-
-Compile in an update channel and the device looks after itself:
-
-```cpp
-ElegantOTA.setUpdateURL("https://example.com/firmware/latest.json");
-ElegantOTA.setCheckInterval(6 * 60 * 60 * 1000UL);   // every 6 hours
-ElegantOTA.setAutoInstall(true);
-```
-
-Pointing at a small manifest:
+Host a file like this anywhere the device can reach over HTTP or HTTPS - an S3 bucket, a GitHub release asset, your own server:
 
 ```json
 {
@@ -49,89 +31,169 @@ Pointing at a small manifest:
 }
 ```
 
-Versions are compared field by field, so `1.10.0` is correctly newer than `1.9.4`. Unknown keys are ignored - keep your own bookkeeping in the same file. With `setAutoInstall(false)`, `onUpdateAvailable()` fires instead and you call `installUpdate()` when it suits your product: overnight, on idle, or after a user confirms on a display.
+| Field | Required | Meaning |
+| --- | --- | --- |
+| `version` | **yes** | Compared against `setFWVersion()` |
+| `url` | **yes** | Where the `.bin` lives |
+| `md5` | no | Verified against what lands in flash |
+| `notes` | no | One line shown in the portal next to the offered version |
 
-<br/>
+Unknown fields are ignored, so you can keep your own bookkeeping in the same file.
 
-## 🎨 A rebuilt portal
+An update channel carries firmware. There is no field selecting a target,
+because a filesystem image has no version of its own for the device to compare
+against - push one with [File](/ota-modes/file) or
+[Direct Download](/ota-modes/direct-download), where you choose the target
+yourself.
 
-The portal was redesigned around a capacity strip that draws the target flash region to scale and refuses an oversized image before a single byte is written. Two new modes, richer status reporting, larger logo artwork - and it still **shrank**:
+<Callout emoji="🔒">
+Include `md5` whenever you can. It is the device's only way to know that what it wrote is what you published.
+</Callout>
 
-```
-9,039 → 7,618 bytes gzipped   (−15.7%)
-```
+## Setting it up
 
-Tailwind and the `md5` npm package are gone, replaced by hand-written CSS and a compact MD5 implementation. Light and dark themes, keyboard reachable, readable down to 320px.
+<Steps>
 
-<br/>
+### Tell the device what it is running
 
-## 🐛 Two fixes worth reading
-
-**MD5 verification was silently doing nothing.** `Update.setMD5()` was being called *before* `Update.begin()`, which clears the expected digest so every upload since the feature shipped went unverified. The digest is now validated up front and handed over after the flash region opens. Corrupted and truncated images are rejected.
-
-> ⚠️ If your tooling has been sending a digest that does not match the bytes it uploads, those uploads used to succeed and will now fail. That is the point but worth knowing before you roll this to a fleet.
-
-**Repeated updates failed on RP2040/RP2350** with `ERROR[4]: Not Enough Space`. The firmware budget was computed from whatever space happened to be *free* in the filesystem rather than the region itself, so the second update after a cold boot was refused. Both boards now report their capacity correctly.
-
-<br/>
-
-## 🧰 New API
+Version comparison only works if the device knows its own version.
 
 ```cpp
-// OTA modes
-void setFileMode(bool);              bool checkFileMode();
-void setDirectDownloadMode(bool);    bool checkDirectDownloadMode();
-void setAutoMode(bool);              bool checkAutoMode();
-
-// Direct download
-bool pullFrom(const char * url, OTA_Mode mode = OTA_MODE_FIRMWARE, const char * md5 = NULL);
-void setCACert(const char * ca);
-
-// Update channel
-void setUpdateURL(const char * url);   const char * getUpdateURL();
-void setCheckInterval(uint32_t ms);
-void setAutoInstall(bool);             bool checkAutoInstall();
-bool checkForUpdate();                 bool installUpdate();
-
-// Where things stand
-OTA_State state();                     OTA_Source source();
-bool updateAvailable();
-const char * availableVersion();       const char * availableNotes();
-void onUpdateAvailable(std::function<void(const char * version, const char * notes)>);
+ElegantOTA.setFWVersion("1.0.0");
 ```
 
-`onStart()` and `onEnd()` can now ask `source()` where an update came from`OTA_SOURCE_UPLOAD`, `OTA_SOURCE_DIRECT` or `OTA_SOURCE_CHANNEL` so a hand-pushed build and an automatic one can be treated differently.
+### Point it at the manifest
 
-New routes: `/ota/download`, `/ota/check`, `/ota/install`, `/ota/status`.
+```cpp
+ElegantOTA.setUpdateURL("https://example.com/firmware/latest.json");
+```
 
-### New build flags
+### Choose how often to look
 
-| Flag | Default | Purpose |
+```cpp
+ElegantOTA.setCheckInterval(6 * 60 * 60 * 1000UL);   // every 6 hours
+```
+
+Pass `0`, or leave this out, and the device only checks when you ask it to or when someone presses **Check for updates** in the portal.
+
+### Decide who presses the button
+
+```cpp
+ElegantOTA.setAutoInstall(true);    // install as soon as something newer appears
+```
+
+With `setAutoInstall(false)` - the default - a check that finds a newer build simply records it. The portal shows an **Install** button, and your code is free to decide when.
+
+</Steps>
+
+## How versions are compared
+
+The numeric parts of the version are compared field by field, so `1.10.0` correctly beats `1.9.4`. A leading `v` is ignored. A pre-release suffix after a hyphen sorts below the same version without one.
+
+| Running | Manifest says | Update offered? |
 | --- | --- | --- |
-| `ELEGANTOTA_ENABLE_REMOTE` | `1` | Set to `0` to compile out the HTTP/HTTPS client and reclaim the flash, if you only ever push from the browser |
-| `ELEGANTOTA_PULL_BUDGET` | `8192` | Bytes pulled from the network per `loop()` call |
-| `ELEGANTOTA_PULL_TIMEOUT` | `10000` | Abort a download stalled this long (ms) |
-| `ELEGANTOTA_TLS_RX_SIZE` / `_TX_SIZE` | `16384` / `512` | BearSSL buffers on ESP8266/RP2040 when MFLN is unavailable |
+| `1.0.0` | `1.0.1` | yes |
+| `1.9.4` | `1.10.0` | yes |
+| `1.2.0` | `v1.2.0` | no - same version |
+| `1.2.3` | `1.2` | no |
+| `1.0.0-rc1` | `1.0.0` | yes - a release beats its own candidate |
+| `1.0.0` | `1.0.0-rc1` | no |
 
-<br/>
+Versions with no digits at all - build hashes, code names - count as newer whenever they simply differ from what is running.
 
-## ⬆️ Upgrading from 3.x
+## Reacting to a new build
 
-No code changes are required, but three things to check:
+`onUpdateAvailable` fires whenever a check finds something newer. This is where you decide what a good moment looks like for your product: a machine that is idle, a battery that is charged, a user who has agreed.
 
-1. **`ElegantOTA.loop()` is now load-bearing.** Downloads and channel checks are driven from it. If your sketch was getting away without it, it will not any more.
-2. **Whitelabel logos need re-converting.** The portal's logo is now `220×34` rather than `220×60`. Your existing artwork still renders, but at the old aspect ratio, re-convert your mark and update the arrays in `src/logo.h` and `src/logo.cpp`. The [branding guide](https://docs.elegantota.pro/branding) walks through it.
-3. **Dependencies moved.** `ESPAsyncWebServer ^3.12.0` and `AsyncTCP ^3.5.0`. Delete `.pio/libdeps` before rebuilding.
+```cpp
+void onUpdateAvailable(const char* version, const char* notes) {
+  Serial.printf("Version %s is available\n", version);
+  if (strlen(notes)) Serial.println(notes);
 
-Also: `keywords.txt` was dropped, and manifest parsing now lives in `src/parse.h` so it can be tested on a host machine rather than only on a board.
+  if (machineIsIdle()) {
+    ElegantOTA.installUpdate();
+  }
+}
 
-<br/>
+void setup() {
+  // ...
+  ElegantOTA.begin(&server);
+  ElegantOTA.onUpdateAvailable(onUpdateAvailable);
+}
+```
 
-## ✅ Coverage
+From then on the ordinary [callbacks](/features/callbacks) take over - `onStart`, `onProgress`, `onEnd` - and `ElegantOTA.source()` reports `OTA_SOURCE_CHANNEL`.
 
-CI builds all three examples on ESP8266, ESP32, RP2040 and RP2350, against both the synchronous and async webservers, and on both Arduino-ESP32 2.x and 3.x. A hardware-in-the-loop bench walks a real board through the whole chain - USB flash, portal upload, direct download, update channel and confirms each step by asking the rebooted board what version it is running, then checks that an oversized image, a malformed digest and a wrong-but-well-formed digest all change nothing.
+## Checking on demand
 
----
+`setCheckInterval()` starts its clock the moment you call it, so the first scheduled check happens one interval later. Most projects want one at boot as well:
 
-📚 Full documentation: **[docs.elegantota.pro](https://docs.elegantota.pro)**
-💬 Questions or trouble upgrading: open an issue or email [support@softt.io](mailto:support@softt.io)
+```cpp
+ElegantOTA.begin(&server);
+ElegantOTA.checkForUpdate();    // ask once, now
+```
+
+Both `checkForUpdate()` and `installUpdate()` queue work and return straight away. The actual fetching happens inside `ElegantOTA.loop()`, so make sure that is being called.
+
+## Reference
+
+```cpp
+void setUpdateURL(const char * url);        // the manifest URL
+const char * getUpdateURL();
+
+void setCheckInterval(uint32_t ms);         // 0 disables scheduled checks
+void setAutoInstall(bool enable);           // install without being asked
+bool checkAutoInstall();
+
+bool checkForUpdate();                      // queue a check now
+bool installUpdate();                       // install what the last check found
+
+bool updateAvailable();                     // is something waiting?
+const char * availableVersion();            // its version, or ""
+const char * availableNotes();              // its notes, or ""
+
+void onUpdateAvailable(std::function<void(const char * version,
+                                          const char * notes)> callable);
+```
+
+## Turning it off
+
+All three modes are enabled by default. Turning this one off stops scheduled
+checks, removes the **Auto** tab from the portal, and makes
+`checkForUpdate()` and `installUpdate()` refuse:
+
+```cpp
+ElegantOTA.setAutoMode(false);
+```
+
+Useful for pausing automatic updates while something important is running, and
+turning them back on afterwards:
+
+```cpp
+ElegantOTA.setAutoMode(!machineIsBusy());
+```
+
+This is separate from simply not configuring a channel. Without
+`setUpdateURL()` there is nothing to check; with `setAutoMode(false)` there is
+a channel that is deliberately not being checked.
+
+```cpp
+if (ElegantOTA.checkAutoMode() == false) {
+    Serial.println("Automatic updates are paused");
+}
+```
+
+## HTTPS
+
+The manifest and the firmware are fetched by the same client, so `setCACert()` covers both. See [Direct Download](/ota-modes/direct-download#https) for how to pin a root certificate - and why you should.
+
+<Callout type="warning" emoji="⚠️">
+An update channel is a standing instruction to run whatever that URL offers. Treat the host serving your manifest as part of your firmware's trust boundary: pin a certificate, and make sure nobody else can write to that bucket.
+</Callout>
+
+## The other modes
+
+- **[File](/ota-modes/file)** - write a `.bin` from your computer, available in
+  Lite and Pro
+- **[Direct Download](/ota-modes/direct-download)** - hand the device a URL and
+  let it fetch that one build
