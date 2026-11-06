@@ -162,6 +162,14 @@ It is also a fantastic way to support the time that goes into building and maint
 
 <br/>
 
+## Building a product with ElegantOTA?
+
+<a href="https://softt.io/contact?utm_source=github&utm_medium=readme&utm_campaign=elegantota-oss" target="_blank"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/.github/softt-engineering-dark.svg"><img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/.github/softt-engineering-light.svg" alt="SOFTT Engineering: shipping a product with ElegantOTA? Book a free engineering review." width="100%"></picture></a>
+
+ElegantOTA is built and maintained by [SOFTT](https://softt.io/?utm_source=github&utm_medium=readme&utm_campaign=elegantota-oss), an IoT product studio. When the library is one piece of something bigger, the same engineers can design the rest of it, from the electronics and firmware to the cloud dashboard and mobile app, and take it from first brief to pilot run at a fixed price. Start with a **[free 30-minute engineering review](https://softt.io/contact?utm_source=github&utm_medium=readme&utm_campaign=elegantota-oss)**, see **[products we've shipped](https://softt.io/portfolio?utm_source=github&utm_medium=readme&utm_campaign=elegantota-oss)**, or write to **[hello@softt.io](mailto:hello@softt.io)**.
+
+<br/>
+
 ## Contributing
 
 Every contribution is highly appreciated. Spotted a bug? Open an issue or a pull request so it can be fixed for everyone.
